@@ -1,5 +1,0 @@
-<application>
-  <component name="HttpConfigurable">
-    <option name="USE_PAC_URL" value="true" />
-  </component>
-</application>
