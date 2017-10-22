@@ -12,11 +12,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+import cs309.travelender.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cs309.travelender.ZSQ.R;
 
 public class Main extends Activity implements View.OnClickListener{
 

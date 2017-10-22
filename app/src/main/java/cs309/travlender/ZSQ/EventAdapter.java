@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cs309.travelender.ZSQ.R;
+import cs309.travelender.R;
 
 /**
  * Created by Administrator on 2017/10/16.
