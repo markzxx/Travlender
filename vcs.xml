@@ -6,6 +6,10 @@
           <option name="url" value="https://github.com/jeremyzhangsq/travlender" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/markzxx/Travlender.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\Administrator\AndroidStudio_workspace" />
