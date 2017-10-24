@@ -15,6 +15,6 @@ public interface EventManagerContract {
 
         void editEvent(Event event);
 
-        void openEvent(int id);
+        Event openEvent(int id);
     }
 }
