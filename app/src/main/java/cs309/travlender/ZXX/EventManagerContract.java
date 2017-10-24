@@ -21,6 +21,6 @@ public interface EventManagerContract {
 
         List<Event> getALllEvent();
 
-        Event getEvent(String name);
+        List<Event> searchEvent(String title);
     }
 }

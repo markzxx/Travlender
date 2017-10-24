@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cs309.travlender.ZSQ.Event;
 
 /**
@@ -21,7 +24,7 @@ public class EventManager implements EventManagerContract.Manager {
     public void addEvent(Event event) {
         this.event = event;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values=event.getInfo();
+        ContentValues values=event.getValue();
         db.insert(DatabaseContract.DBevent.TABLE_NAME, null, values);
         db.close();
     }
@@ -38,7 +41,7 @@ public class EventManager implements EventManagerContract.Manager {
     public void editEvent(Event event) {
         this.event = event;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values=event.getInfo();
+        ContentValues values=event.getValue();
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         db.update(table_name,values,null,null);
         db.close();
@@ -53,5 +56,38 @@ public class EventManager implements EventManagerContract.Manager {
         Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,null);
         this.event = new Event(cursor);
         return event;
+    }
+
+    public List<Event> searchEvent(String title){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        List<Event> list = new ArrayList<>();
+
+        String table_name = DatabaseContract.DBevent.TABLE_NAME;
+        String[] selection = {"*"};
+        String where = DatabaseContract.DBevent.KEY_TITLE + " = ? ";
+        String[] whereArgs = {title};
+        String order = DatabaseContract.DBevent.KEY_ADDTIME + " DESC";
+
+        Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,order);
+        if(cursor.moveToFirst()){
+            do{
+                list.add(new Event(cursor));
+            }while(cursor.moveToNext());
+        }
+        return list;
+    }
+
+    public List<Event> getALllEvent(){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        List<Event> list = new ArrayList<>();
+        String table_name = DatabaseContract.DBevent.TABLE_NAME;
+        String[] selection = {"*"};
+        Cursor cursor = db.query(table_name,selection,null,null,null,null,null);
+        if(cursor.moveToFirst()){
+            do{
+                list.add(new Event(cursor));
+            }while(cursor.moveToNext());
+        }
+        return list;
     }
 }
