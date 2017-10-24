@@ -1,5 +1,7 @@
 package cs309.travlender.ZXX;
 
+import java.util.List;
+
 import cs309.travlender.ZSQ.Event;
 
 /**
@@ -16,5 +18,9 @@ public interface EventManagerContract {
         void editEvent(Event event);
 
         Event openEvent(int id);
+
+        List<Event> getALllEvent();
+
+        Event getEvent(String name);
     }
 }

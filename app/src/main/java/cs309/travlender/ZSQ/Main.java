@@ -2,7 +2,6 @@ package cs309.travlender.ZSQ;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cs309.travelender.R;
+import cs309.travlender.ZXX.EventManager;
 
 public class Main extends Activity implements View.OnClickListener{
 
@@ -25,7 +25,7 @@ public class Main extends Activity implements View.OnClickListener{
     private Button btnAdd,btnSearch;
     private DatabaseHandler dbHandler;
     private List<Event> EventList;
-
+    private EventManager eventManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,7 @@ public class Main extends Activity implements View.OnClickListener{
         btnAdd.setOnClickListener(this);
 
         dbHandler=new DatabaseHandler(this);
-
+        eventManager = new EventManager(this);
         //获取全部事件信息
         EventList=dbHandler.getALllEvent();
         adapter=new EventAdapter(this,EventList);
@@ -54,14 +54,15 @@ public class Main extends Activity implements View.OnClickListener{
 
                 //注意这里的request是为了区分是通过什么跳转到详细界面的
                 intent.putExtra("request","Look");
-                ContentValues values = EventList.get(i).getInfo();
-                for(String key:values.keySet()){
-                    intent.putExtra(key,(String)values.get(key));
-                }
-//                intent.putExtra("id",EventList.get(i).getId());
-//                intent.putExtra("title",EventList.get(i).getTitle());
-//                intent.putExtra("start",EventList.get(i).getStart());
-//                intent.putExtra("end",EventList.get(i).getEnd());
+//                ContentValues values = EventList.get(i).getValue();
+//                for(String key:values.keySet()){
+//                    intent.putExtra(key,(String)values.get(key));
+//                }
+
+                intent.putExtra("id",EventList.get(i).getId());
+                intent.putExtra("title",EventList.get(i).getTitle());
+                intent.putExtra("start",EventList.get(i).getStart());
+                intent.putExtra("end",EventList.get(i).getEnd());
                 //
                 startActivityForResult(intent, 0);
             }
@@ -108,14 +109,15 @@ public class Main extends Activity implements View.OnClickListener{
                                     dialog.dismiss();
                                     Intent intent = new Intent(Main.this, EventAdapter.class);
                                     intent.putExtra("request", "Look");
-                                    ContentValues values = searchEvent.getInfo();
-                                    for(String key:values.keySet()){
-                                        intent.putExtra(key,(String) values.get(key));
-                                    }
-//                                    intent.putExtra("id", searchEvent.getId());
-//                                    intent.putExtra("title",searchEvent.getTitle());
-//                                    intent.putExtra("start",searchEvent.getStart());
-//                                    intent.putExtra("end",searchEvent.getEnd());
+//                                    ContentValues values = searchEvent.getValue();
+//                                    for(String key:values.keySet()){
+//                                        intent.putExtra(key,(String) values.get(key));
+//                                    }
+
+                                    intent.putExtra("id", searchEvent.getId());
+                                    intent.putExtra("title",searchEvent.getTitle());
+                                    intent.putExtra("start",searchEvent.getStart());
+                                    intent.putExtra("end",searchEvent.getEnd());
                                     startActivityForResult(intent, 0);
                                 }
                             });
