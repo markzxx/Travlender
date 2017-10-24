@@ -10,6 +10,10 @@
           <option name="url" value="https://github.com/markzxx/android-architecture.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/googlesamples/android-architecture.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\markz\AndroidStudioProjects" />
