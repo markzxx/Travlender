@@ -44,12 +44,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void addEvent(Event event){
         SQLiteDatabase db=this.getWritableDatabase();
-
-        //使用ContentValues添加数据
-        ContentValues values=new ContentValues();
-        values.put(KEY_TITLE,event.getTitle());
-        values.put(KEY_START,event.getStart());
-        values.put(KEY_END,event.getEnd());
+        System.out.println(event.getId());        //使用ContentValues添加数据
+        ContentValues values=event.getInfo();
+//        values.put(KEY_TITLE,event.getTitle());
+//        values.put(KEY_START,event.getStart());
+//        values.put(KEY_END,event.getEnd());
         db.insert(TABLE_NAME, null, values);
         db.close();
     }
