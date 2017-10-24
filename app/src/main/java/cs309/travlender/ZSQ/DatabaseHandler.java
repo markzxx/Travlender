@@ -44,11 +44,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void addEvent(Event event){
         SQLiteDatabase db=this.getWritableDatabase();
-        System.out.println(event.getId());        //使用ContentValues添加数据
-        ContentValues values=event.getInfo();
-//        values.put(KEY_TITLE,event.getTitle());
-//        values.put(KEY_START,event.getStart());
-//        values.put(KEY_END,event.getEnd());
+
+//        ContentValues values=event.getValue();
+        ContentValues values = new ContentValues();
+        values.put(KEY_EVENT_ID,event.getId());
+        values.put(KEY_TITLE,event.getTitle());
+        values.put(KEY_START,event.getStart());
+        values.put(KEY_END,event.getEnd());
         db.insert(TABLE_NAME, null, values);
         db.close();
     }
@@ -85,7 +87,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor=db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
             do{
-                Event event=new Event();
+//                Event event=new Event(cursor);
+                Event event = new Event();
                 event.setId(Integer.parseInt(cursor.getString(0)));
                 event.setTitle(cursor.getString(1));
                 event.setStart(cursor.getString(2));
@@ -100,6 +103,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public int updateEvent(Event event){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values=new ContentValues();
+//        ContentValues values = event.getValue();
         values.put(KEY_TITLE,event.getTitle());
         values.put(KEY_START,event.getStart());
         values.put(KEY_END,event.getEnd());

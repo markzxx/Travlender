@@ -17,7 +17,7 @@ public class Event implements Serializable {
     private String title;
     private String start;
     private String end;
-    private ContentValues info;
+    private ContentValues value;
     private Map<String,Object> map;
 
 
@@ -28,11 +28,11 @@ public class Event implements Serializable {
         this.title = title;
         this.start = start;
         this.end = end;
-        info = new ContentValues();
-        info.put("id",id);
-        info.put("title",title);
-        info.put("start",start);
-        info.put("end",end);
+        value = new ContentValues();
+        value.put("id",id);
+        value.put("title",title);
+        value.put("start",start);
+        value.put("end",end);
         map = new HashMap<>();
         map.put("id",id);
         map.put("title",title);
@@ -45,15 +45,13 @@ public class Event implements Serializable {
         this.title = cursor.getString(1);
         this.start = cursor.getString(2);
         this.end = cursor.getString(3);
-
-
     }
 
-    public ContentValues getInfo(){
-        return this.info;
+    public ContentValues getValue(){
+        return this.value;
     }
-    public void setInfo(ContentValues info) {
-        this.info = info;
+    public void setValue(ContentValues value) {
+        this.value = value;
     }
 
     public Map<String, Object> getMap() {
