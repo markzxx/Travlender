@@ -2,8 +2,8 @@ package cs309.travlender.ZSQ;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,10 +12,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
-import cs309.travelender.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cs309.travelender.R;
 
 public class Main extends Activity implements View.OnClickListener{
 
@@ -24,7 +25,6 @@ public class Main extends Activity implements View.OnClickListener{
     private Button btnAdd,btnSearch;
     private DatabaseHandler dbHandler;
     private List<Event> EventList;
-    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +54,14 @@ public class Main extends Activity implements View.OnClickListener{
 
                 //注意这里的request是为了区分是通过什么跳转到详细界面的
                 intent.putExtra("request","Look");
-                intent.putExtra("id",EventList.get(i).getId());
-                intent.putExtra("title",EventList.get(i).getTitle());
-                intent.putExtra("start",EventList.get(i).getStart());
-                intent.putExtra("end",EventList.get(i).getEnd());
+                ContentValues values = EventList.get(i).getInfo();
+                for(String key:values.keySet()){
+                    intent.putExtra(key,(String)values.get(key));
+                }
+//                intent.putExtra("id",EventList.get(i).getId());
+//                intent.putExtra("title",EventList.get(i).getTitle());
+//                intent.putExtra("start",EventList.get(i).getStart());
+//                intent.putExtra("end",EventList.get(i).getEnd());
                 //
                 startActivityForResult(intent, 0);
             }
@@ -104,10 +108,14 @@ public class Main extends Activity implements View.OnClickListener{
                                     dialog.dismiss();
                                     Intent intent = new Intent(Main.this, EventAdapter.class);
                                     intent.putExtra("request", "Look");
-                                    intent.putExtra("id", searchEvent.getId());
-                                    intent.putExtra("title",searchEvent.getTitle());
-                                    intent.putExtra("start",searchEvent.getStart());
-                                    intent.putExtra("end",searchEvent.getEnd());
+                                    ContentValues values = searchEvent.getInfo();
+                                    for(String key:values.keySet()){
+                                        intent.putExtra(key,(String) values.get(key));
+                                    }
+//                                    intent.putExtra("id", searchEvent.getId());
+//                                    intent.putExtra("title",searchEvent.getTitle());
+//                                    intent.putExtra("start",searchEvent.getStart());
+//                                    intent.putExtra("end",searchEvent.getEnd());
                                     startActivityForResult(intent, 0);
                                 }
                             });
