@@ -15,7 +15,9 @@ public class DatabaseContract {
         public static final String TABLE_NAME = "entry";
         public static final String _ID = "event_id";
         public static final String KEY_TITLE = "title";
-        public static final String KEY_ADDTIME = "addtime";
+        //public static final String KEY_ADDTIME = "addtime";
+        private static final String KEY_START="starttime";
+        private static final String KEY_END="endtime";
     }
 
     public static class DBpreference implements BaseColumns {
