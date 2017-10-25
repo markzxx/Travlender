@@ -45,3 +45,7 @@ proguard/
 /.gradle
 /.idea
 /FuruiApplication.iml
+Travlender.iml
+app/app.iml
+app/src/androidTest/
+app/src/test/
