@@ -65,7 +65,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Event event=null;
         //注意返回结果有可能为空
         if(cursor.moveToFirst()){
-            event=new Event(cursor.getInt(0),cursor.getString(1), cursor.getString(2),cursor.getString(3));
+           // event=new Event(cursor.getInt(0),cursor.getString(1), cursor.getString(2),cursor.getString(3));
         }
         return event;
     }

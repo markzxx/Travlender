@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -15,6 +14,7 @@ import java.util.Map;
 public class Event implements Serializable {
     private int id;
     private String title;
+    private String addtime;
     private String start;
     private String end;
     private ContentValues value;
@@ -23,28 +23,28 @@ public class Event implements Serializable {
 
     public Event(){}
 
-    public Event(int id, String title, String start,String end) {
-        this.id = id;
+    public Event(String title,String addtime, String start,String end) {
         this.title = title;
         this.start = start;
         this.end = end;
+        this.addtime = addtime;
         value = new ContentValues();
-        value.put("id",id);
+        value.put("addtime",addtime);
         value.put("title",title);
         value.put("start",start);
         value.put("end",end);
-        map = new HashMap<>();
-        map.put("id",id);
-        map.put("title",title);
-        map.put("start",start);
-        map.put("end",end);
+//        map = new HashMap<>();
+//        map.put("title",title);
+//        map.put("start",start);
+//        map.put("end",end);
     }
 
     public Event(Cursor cursor){
-        this.id = Integer.parseInt(cursor.getString(0));
+        this.id = cursor.getInt(0);
         this.title = cursor.getString(1);
-        this.start = cursor.getString(2);
-        this.end = cursor.getString(3);
+        this.addtime = cursor.getString(2);
+        this.start = cursor.getString(3);
+        this.end = cursor.getString(4);
     }
 
     public ContentValues getValue(){
