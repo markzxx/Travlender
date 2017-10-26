@@ -11,7 +11,7 @@ import cs309.travlender.ZSQ.Event;
 public interface EventManagerContract {
     interface Manager {
 
-        void addEvent(Event event);
+        int addEvent(Event event);
 
         void deleteEvent(int id);
 
