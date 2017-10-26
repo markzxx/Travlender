@@ -17,12 +17,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //create tables
     private static final String CREATE_EVENT=
-            "create table" + DBevent.TABLE_NAME + "("
+            "create table " + DBevent.TABLE_NAME + " ("
                     +DBevent._ID + INT_TYPE + " primary key,"
                     +DBevent.KEY_TITLE + TEXT_TYPE + COMMA
                     +DBevent.KEY_ADDTIME + TEXT_TYPE + COMMA
                     +DBevent.KEY_STARTTIME + TEXT_TYPE + COMMA
-                    +DBevent.KEY_ENDTIME + TEXT_TYPE + COMMA
+                    +DBevent.KEY_ENDTIME + TEXT_TYPE
                     +")";
 
     public DatabaseHandler(Context context) {
