@@ -17,13 +17,15 @@
             </intent-filter>
         </activity>
         <activity android:name="cs309.travlender.ZSQ.EventActivity" />
-        <activity android:name="cs309.travlender.ZXX.MainActivity">
+        <activity android:name="cs309.travlender.ZSQ.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="cs309.travlender.ZXX.SearchActivity" />
+        <activity android:name="cs309.travlender.ZXX.SearchResultActivity"></activity>
     </application>
 
 </manifest>
