@@ -18,7 +18,7 @@ import static android.R.attr.id;
  */
 
 public class EventManager implements EventManagerContract.Manager {
-    DatabaseHandler dbHelper;
+    public DatabaseHandler dbHelper;
     static Event event;
     static List<Event> SearchList;
     public EventManager(@NonNull Context context){

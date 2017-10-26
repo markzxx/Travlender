@@ -42,16 +42,7 @@
         android:background="#5ABC4F"
         android:layout_width="match_parent"
         android:layout_height="45dp" />
-    <Button
-        android:id="@+id/btn_delete"
-        android:text="Delete"
-        android:textSize="25sp"
-        android:textColor="#ffffff"
-        android:gravity="center"
-        android:layout_margin="10dp"
-        android:background="#5ABC4F"
-        android:layout_width="match_parent"
-        android:layout_height="45dp" />
+
     <Button
         android:id="@+id/btn_add_event"
         android:text="Add"
