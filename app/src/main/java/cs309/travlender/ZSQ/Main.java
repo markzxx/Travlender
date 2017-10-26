@@ -35,7 +35,8 @@ public class Main extends Activity implements View.OnClickListener{
         eventManager=new EventManager(this);
 
         //获取全部事件信息
-        EventList=eventManager.getALllEvent();
+        DatabaseHandler databaseHandler = new DatabaseHandler(this);
+        EventList=databaseHandler.getALllEvent();
         adapter=new EventAdapter(this,EventList);
         Events.setAdapter(adapter);
 

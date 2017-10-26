@@ -17,7 +17,8 @@ import cs309.travlender.ZSQ.Event;
 
 public class EventManager implements EventManagerContract.Manager {
     DatabaseHandler dbHelper;
-    Event event;
+    static Event event;
+    static List<Event> SearchList;
     public EventManager(@NonNull Context context){
         dbHelper = new DatabaseHandler(context);
     }

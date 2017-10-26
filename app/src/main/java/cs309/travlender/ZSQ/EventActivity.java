@@ -22,7 +22,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
     private int id;
     private EventManager handler;
     private Intent intent;
-
+    private DatabaseHandler databaseHandler = new DatabaseHandler(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +70,10 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 String addtime =String.valueOf(System.currentTimeMillis());
 //                Event newEvent=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
 //                        etEnd.getText().toString());
-                Event newEvent = new Event("aaa",addtime,"12","13");
+                Event newEvent = new Event("aa",addtime,"12","13");
+                handler.getALllEvent();
                 handler.addEvent(newEvent);
+                handler.getALllEvent();
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
@@ -90,5 +92,6 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 finish();
                 break;
         }
+
     }
 }
