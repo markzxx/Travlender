@@ -71,9 +71,11 @@ public class EventActivity extends Activity implements View.OnClickListener{
 //                Event newEvent=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
 //                        etEnd.getText().toString());
                 Event newEvent = new Event("aa",addtime,"12","13");
-                handler.getALllEvent();
-                handler.addEvent(newEvent);
-                handler.getALllEvent();
+                //       handler.getALllEvent();
+//                handler.dbHelper = new cs309.travlender.ZXX.DatabaseHandler(this);
+//                SQLiteDatabase db = handler.dbHelper.getWritableDatabase();
+                databaseHandler.addEvent(newEvent);
+//                handler.getALllEvent();
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
