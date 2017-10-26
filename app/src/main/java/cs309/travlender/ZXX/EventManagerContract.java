@@ -19,7 +19,9 @@ public interface EventManagerContract {
 
         Event openEvent(int id);
 
-        List<Event> getALllEvent();
+        List<Event> getAllEvent();
+
+        void deleteAllEvent();
 
         List<Event> searchEvent(String name);
     }
