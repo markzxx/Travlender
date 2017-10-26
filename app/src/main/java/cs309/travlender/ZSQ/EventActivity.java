@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import cs309.travelender.R;
+import cs309.travlender.ZXX.EventManager;
 
 
 /**
@@ -19,7 +20,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
     private EditText etTitle,etStart,etEnd;
     private Button btnChange,btnDelete,btnAdd;
     private int id;
-    private DatabaseHandler handler;
+    private EventManager handler;
     private Intent intent;
 
     @Override
@@ -27,6 +28,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event);
 
+        //UI 部分
         etTitle= (EditText) findViewById(R.id.event_name);
         etStart= (EditText) findViewById(R.id.event_start);
         etEnd= (EditText) findViewById(R.id.event_end);
@@ -35,7 +37,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
         btnAdd= (Button) findViewById(R.id.btn_add_event);
 
 
-        handler=new DatabaseHandler(this);
+        handler=new EventManager(this);
         //获取传递过来的intent
         intent=getIntent();
 
@@ -65,24 +67,25 @@ public class EventActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_add_event:
-                Event newEvent=new Event(id,etTitle.getText().toString(),etStart.getText().toString(),
-                        etEnd.getText().toString());
+                String addtime =String.valueOf(System.currentTimeMillis());
+//                Event newEvent=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
+//                        etEnd.getText().toString());
+                Event newEvent = new Event("aaa",addtime,"12","13");
                 handler.addEvent(newEvent);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
             case R.id.btn_change:
-                Event Event=new Event(id,etTitle.getText().toString(),etStart.getText().toString(),
+                addtime =String.valueOf(System.currentTimeMillis());
+                Event Event=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
                         etEnd.getText().toString());
-                handler.updateEvent(Event);
+                handler.editEvent(Event);
                 //这里设置resultCode是为了区分是修改后返回主界面的还是删除后返回主界面的。
                 setResult(2,intent);
                 finish();
                 break;
             case R.id.btn_delete:
-                Event s=new Event(id,etTitle.getText().toString(),etStart.getText().toString(),
-                        etEnd.getText().toString());
-                handler.deleteEvent(s);
+                handler.deleteEvent(id);
                 setResult(3, intent);
                 finish();
                 break;
