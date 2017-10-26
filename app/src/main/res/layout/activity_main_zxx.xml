@@ -6,4 +6,16 @@
     android:layout_height="match_parent"
     tools:context="cs309.travlender.ZXX.MainActivity">
 
+    <Button
+        android:id="@+id/btn_search"
+        android:text="Search"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:background="#5ABC4F"
+        android:layout_width="105dp"
+        android:layout_weight="1"
+        android:layout_height="62dp"
+        tools:layout_editor_absoluteY="550dp"
+        tools:layout_editor_absoluteX="245dp" />
 </android.support.constraint.ConstraintLayout>
