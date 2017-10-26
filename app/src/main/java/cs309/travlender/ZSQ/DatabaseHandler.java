@@ -47,7 +47,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 //        ContentValues values=event.getValue();
         ContentValues values = new ContentValues();
-        values.put(KEY_EVENT_ID,event.getId());
         values.put(KEY_TITLE,event.getTitle());
         values.put(KEY_START,event.getStart());
         values.put(KEY_END,event.getEnd());
