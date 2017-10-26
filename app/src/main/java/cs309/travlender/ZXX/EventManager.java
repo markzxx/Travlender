@@ -21,12 +21,13 @@ public class EventManager implements EventManagerContract.Manager {
     public EventManager(@NonNull Context context){
         dbHelper = new DatabaseHandler(context);
     }
-    public void addEvent(Event event) {
+    public int addEvent(Event event) {
         this.event = event;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values=event.getValue();
-        db.insert(DatabaseContract.DBevent.TABLE_NAME, null, values);
+        long id = db.insert(DatabaseContract.DBevent.TABLE_NAME, null, values);
         db.close();
+        return (int)id;
     }
 
     public void deleteEvent(int id) {
