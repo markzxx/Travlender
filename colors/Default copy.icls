@@ -7,15 +7,8 @@
   <option name="CONSOLE_LINE_SPACING" value="1.0" />
   <option name="EDITOR_FONT_NAME" value="Lucida Sans Typewriter" />
   <attributes>
-    <option name="DEFAULT_TAG" baseAttributes="TEXT" />
     <option name="MATCHED_BRACE_ATTRIBUTES">
       <value />
-    </option>
-    <option name="TEXT">
-      <value>
-        <option name="FOREGROUND" value="0" />
-        <option name="BACKGROUND" value="ffffff" />
-      </value>
     </option>
   </attributes>
 </scheme>
