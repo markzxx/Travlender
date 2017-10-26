@@ -24,6 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="cs309.travlender.ZXX.SearchActivity" />
+        <activity android:name="cs309.travlender.ZXX.SearchResultActivity"></activity>
     </application>
 
 </manifest>
