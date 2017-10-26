@@ -19,6 +19,7 @@ public class SearchResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
 
+        Events= (ListView) findViewById(R.id.event_list);
         searchResult = new EventManager(this).SearchList;
         adapter=new EventAdapter(this,searchResult);
         Events.setAdapter(adapter);

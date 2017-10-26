@@ -66,8 +66,8 @@ public class EventManager implements EventManagerContract.Manager {
 
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         String[] selection = {"*"};
-        String where = DatabaseContract.DBevent.KEY_TITLE + " = ? ";
-        String[] whereArgs = {title};
+        String where = DatabaseContract.DBevent.KEY_TITLE + " like ? ";
+        String[] whereArgs = {"%"+title+"%"};
         String order = DatabaseContract.DBevent.KEY_ADDTIME + " DESC";
 
         Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,order);
@@ -76,6 +76,7 @@ public class EventManager implements EventManagerContract.Manager {
                 list.add(new Event(cursor));
             }while(cursor.moveToNext());
         }
+        SearchList = list;
         return list;
     }
 
