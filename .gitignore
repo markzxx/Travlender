@@ -49,3 +49,8 @@ Travlender.iml
 app/app.iml
 app/src/androidTest/
 app/src/test/
+github_settings.xml
+colors.scheme.xml
+editor.codeinsight.xml
+editor.xml
+app/src/main/res/layout/activity_search.xml

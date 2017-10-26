@@ -4,18 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cs309.travlender.ZXX.MainActivity">
-
+    tools:context="cs309.travlender.ZXX.MainActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+    <ListView
+        android:id="@+id/event_list"
+        android:layout_alignParentTop="true"
+        android:divider="#5ABC4F"
+        android:dividerHeight="1dp"
+        android:layout_width="418dp"
+        android:layout_height="627dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="4dp">
+    </ListView>
     <Button
         android:id="@+id/btn_search"
-        android:text="Search"
+        android:text="search"
         android:textSize="20sp"
         android:textColor="#ffffff"
         android:gravity="center"
         android:background="#5ABC4F"
-        android:layout_width="105dp"
+        android:layout_width="100dp"
         android:layout_weight="1"
-        android:layout_height="62dp"
-        tools:layout_editor_absoluteY="550dp"
-        tools:layout_editor_absoluteX="245dp" />
+        android:layout_height="0dp"
+        android:layout_marginEnd="94dp"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="94dp"
+        android:layout_marginRight="45dp" />
+
+    <Button
+        android:id="@+id/btn_clear"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="94dp"
+        android:layout_weight="1"
+        android:background="#5ABC4F"
+        android:gravity="center"
+        android:text="clear"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginRight="33dp" />
+
 </android.support.constraint.ConstraintLayout>

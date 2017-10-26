@@ -11,6 +11,8 @@ import java.util.List;
 
 import cs309.travlender.ZSQ.Event;
 
+import static android.R.attr.id;
+
 /**
  * Created by markz on 2017-10-24.
  */
@@ -80,7 +82,16 @@ public class EventManager implements EventManagerContract.Manager {
         return list;
     }
 
-    public List<Event> getALllEvent(){
+    public void deleteAllEvent() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String table_name = DatabaseContract.DBevent.TABLE_NAME;
+        String where = DatabaseContract.DBevent._ID + " = ? ";
+        String[] whereArgs = {String.valueOf(id)};
+        db.delete(table_name,null,null);
+        db.close();
+    }
+
+    public List<Event> getAllEvent(){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<Event> list = new ArrayList<>();
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
