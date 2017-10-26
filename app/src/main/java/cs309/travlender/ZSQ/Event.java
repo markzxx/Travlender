@@ -29,7 +29,7 @@ public class Event implements Serializable {
         this.end = end;
         this.addtime = addtime;
         value = new ContentValues();
-        value.put("addtime",addtime);
+//        value.put("addtime",addtime);
         value.put("title",title);
         value.put("starttime",start);
         value.put("endtime",end);

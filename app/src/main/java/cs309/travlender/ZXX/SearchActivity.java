@@ -22,7 +22,7 @@ public class SearchActivity extends Activity implements View.OnClickListener{
         btnSearch= (Button) findViewById(R.id.btn_search_dialog);
         btnSearch.setOnClickListener(this);
         EM = new EventManager(this);
-        text.setText("test1");
+        text.setText("test");
     }
 
     @Override

@@ -71,9 +71,9 @@ public class EventActivity extends Activity implements View.OnClickListener{
 //                Event newEvent=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
 //                        etEnd.getText().toString());
                 Event newEvent = new Event("aa",addtime,"12","13");
-                handler.getALllEvent();
+                handler.getAllEvent();
                 handler.addEvent(newEvent);
-                handler.getALllEvent();
+                handler.getAllEvent();
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
