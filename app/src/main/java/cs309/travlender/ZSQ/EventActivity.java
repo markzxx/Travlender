@@ -18,7 +18,7 @@ import cs309.travlender.ZXX.EventManager;
 public class EventActivity extends Activity implements View.OnClickListener{
 
     private EditText etTitle,etStart,etEnd;
-    private Button btnChange,btnDelete,btnAdd;
+    private Button btnChange,btnAdd;
     private int id;
     private EventManager handler;
     private Intent intent;
@@ -32,7 +32,6 @@ public class EventActivity extends Activity implements View.OnClickListener{
         etStart= (EditText) findViewById(R.id.event_start);
         etEnd= (EditText) findViewById(R.id.event_end);
         btnChange= (Button) findViewById(R.id.btn_change);
-        btnDelete= (Button) findViewById(R.id.btn_delete);
         btnAdd= (Button) findViewById(R.id.btn_add_event);
 
 
@@ -46,7 +45,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
             //点击添加按钮进入的，则只显示btnAdd
             case "Add":
                 btnChange.setVisibility(View.GONE);
-                btnDelete.setVisibility(View.GONE);
+
                 btnAdd.setVisibility(View.VISIBLE);
                 break;
             //通过ListView Item进入的
@@ -59,7 +58,6 @@ public class EventActivity extends Activity implements View.OnClickListener{
         }
         btnAdd.setOnClickListener(this);
         btnChange.setOnClickListener(this);
-        btnDelete.setOnClickListener(this);
     }
 
     @Override
@@ -80,11 +78,6 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 handler.editEvent(Event);
                 //这里设置resultCode是为了区分是修改后返回主界面的还是删除后返回主界面的。
                 setResult(2,intent);
-                finish();
-                break;
-            case R.id.btn_delete:
-                handler.deleteEvent(id);
-                setResult(3, intent);
                 finish();
                 break;
         }

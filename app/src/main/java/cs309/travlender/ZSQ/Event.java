@@ -49,6 +49,7 @@ public class Event implements Serializable {
         value.put("title",title);
         value.put("starttime",start);
         value.put("endtime",end);
+//        value.put("addtime",addtime);
     }
 
     public ContentValues getValue(){
