@@ -22,7 +22,6 @@ public class EventActivity extends Activity implements View.OnClickListener{
     private int id;
     private EventManager handler;
     private Intent intent;
-    private DatabaseHandler databaseHandler = new DatabaseHandler(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +53,8 @@ public class EventActivity extends Activity implements View.OnClickListener{
             case "Look":
                 id=intent.getExtras().getInt("id");
                 etTitle.setText(intent.getStringExtra("title"));
-                etStart.setText(intent.getStringExtra("start"));
-                etEnd.setText(intent.getStringExtra("end"));
+                etStart.setText(intent.getStringExtra("starttime"));
+                etEnd.setText(intent.getStringExtra("endtime"));
                 break;
         }
         btnAdd.setOnClickListener(this);
@@ -68,14 +67,9 @@ public class EventActivity extends Activity implements View.OnClickListener{
         switch (view.getId()){
             case R.id.btn_add_event:
                 String addtime =String.valueOf(System.currentTimeMillis());
-//                Event newEvent=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
-//                        etEnd.getText().toString());
-                Event newEvent = new Event("aa",addtime,"12","13");
-                //       handler.getALllEvent();
-//                handler.dbHelper = new cs309.travlender.ZXX.DatabaseHandler(this);
-//                SQLiteDatabase db = handler.dbHelper.getWritableDatabase();
-                databaseHandler.addEvent(newEvent);
-//                handler.getALllEvent();
+                Event newEvent=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
+                        etEnd.getText().toString());
+                handler.addEvent(newEvent);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;

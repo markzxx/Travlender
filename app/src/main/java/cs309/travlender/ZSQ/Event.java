@@ -45,6 +45,10 @@ public class Event implements Serializable {
         this.addtime = cursor.getString(2);
         this.start = cursor.getString(3);
         this.end = cursor.getString(4);
+        value = new ContentValues();
+        value.put("title",title);
+        value.put("starttime",start);
+        value.put("endtime",end);
     }
 
     public ContentValues getValue(){

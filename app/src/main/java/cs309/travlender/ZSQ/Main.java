@@ -1,9 +1,11 @@
 package cs309.travlender.ZSQ;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,32 +37,24 @@ public class Main extends Activity implements View.OnClickListener{
         eventManager=new EventManager(this);
 
         //获取全部事件信息
-        DatabaseHandler databaseHandler = new DatabaseHandler(this);
-        EventList=databaseHandler.getALllEvent();
+        EventList=eventManager.getALllEvent();
         adapter=new EventAdapter(this,EventList);
         Events.setAdapter(adapter);
 
-//        //点击ListView item跳转到详细界面
-//        Events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent=new Intent(Main.this,EventActivity.class);
-//
-//                //注意这里的request是为了区分是通过什么跳转到详细界面的
-//                intent.putExtra("request","Look");
-////                ContentValues values = EventList.get(i).getValue();
-////                for(String key:values.keySet()){
-////                    intent.putExtra(key,(String)values.get(key));
-////                }
-//
-//                intent.putExtra("id",EventList.get(i).getId());
-//                intent.putExtra("title",EventList.get(i).getTitle());
-//                intent.putExtra("start",EventList.get(i).getStart());
-//                intent.putExtra("end",EventList.get(i).getEnd());
-//                //
-//                startActivityForResult(intent, 0);
-//            }
-//        });
+        //点击ListView item跳转到详细界面
+        Events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(Main.this,EventActivity.class);
+                //注意这里的request是为了区分是通过什么跳转到详细界面的
+                intent.putExtra("request","Look");
+                ContentValues values = EventList.get(i).getValue();
+                for(String key:values.keySet()){
+                    intent.putExtra(key,(String)values.get(key));
+                }
+                startActivityForResult(intent, 0);
+            }
+        });
     }
 
 
