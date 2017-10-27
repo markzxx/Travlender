@@ -46,7 +46,7 @@ public class EventManager implements EventManagerContract.Manager {
         this.event = event;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values=event.getValue();
-        String where = DatabaseContract.DBevent._ID+" = " + event.getId();
+        String where = DatabaseContract.DBevent._ID+" = " + event.getEventId();
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         db.update(table_name,values,where,null);
         db.close();

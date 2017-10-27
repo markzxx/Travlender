@@ -19,17 +19,17 @@ public interface ZHANGSHQIContract {
         String getTitle();
         void setTitle(String title);
 
-        String getStarttime();
-        void setStarttime(String start);
+        long getStarttime();
+        void setStarttime(long start);
 
-        String getEndtime();
-        void setEndtime(String end);
+        long getEndtime();
+        void setEndtime(long end);
 
-        String getAddtime();
-        void setAddtime(String addtime);
+        long getAddtime();
+        void setAddtime(long addtime);
 
-        String getEdittime();
-        void setEdittime(String edittime);
+        long getEdittime();
+        void setEdittime(long edittime);
 
         String getLocation();
         void setLocation(String location);

@@ -10,13 +10,11 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
-import java.util.Random;
 
 import cs309.travelender.R;
 import cs309.travlender.ZSQ.Event;
 import cs309.travlender.ZSQ.EventActivity;
 import cs309.travlender.ZSQ.EventAdapter;
-import cs309.travlender.ZSQ.Main;
 
 public class MainActivity extends Activity implements View.OnClickListener{
     private Button btnAdd,btnSearch,btnClear;
@@ -30,9 +28,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_main_zxx);
 
         EM = new EventManager(this);
-     //   Random random = new Random();
-    //    EM.addEvent(new Event("test"+random.nextInt(1000),random.nextInt(1000)+"",random.nextInt(1000)+"",random.nextInt(1000)+""));
-
         Events= (ListView) findViewById(R.id.event_list);
         eventList = EM.getAllEvent();
         adapter=new EventAdapter(this,eventList);
@@ -44,7 +39,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 Intent intent=new Intent(MainActivity.this,EventActivity.class);
                 //注意这里的request是为了区分是通过什么跳转到详细界面的
                 intent.putExtra("request","Look");
-                intent.putExtra("id",eventList.get(i).getId());
+                intent.putExtra("id",eventList.get(i).getEventId());
                 ContentValues values = eventList.get(i).getValue();
                 for(String key:values.keySet()){
                     intent.putExtra(key,(String)values.get(key));

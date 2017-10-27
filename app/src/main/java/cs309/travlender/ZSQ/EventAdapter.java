@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import cs309.travelender.R;
@@ -51,11 +53,13 @@ public class EventAdapter extends BaseAdapter {
         TextView tvId= (TextView) view.findViewById(R.id.id);
         TextView tvAddTime= (TextView) view.findViewById(R.id.addtime);
 
+        SimpleDateFormat df = new SimpleDateFormat("MM-dd HH:mm");
+
         tvName.setText("Event Title  "+events.get(i).getTitle());
-        tvStart.setText("Start Time  "+events.get(i).getStarttime());
-        tvEnd.setText("End Time  "+events.get(i).getEndtime());
+        tvStart.setText("Start Time  "+df.format(new Timestamp(events.get(i).getStarttime())));
+        tvEnd.setText("End Time  "+df.format(new Timestamp(events.get(i).getEndtime())));
         tvId.setText("Id  "+events.get(i).getEventId());
-        tvAddTime.setText("Add Time  "+events.get(i).getAddtime());
+        tvAddTime.setText("Add Time  "+df.format(new Timestamp(events.get(i).getAddtime())));
         return view;
     }
 }

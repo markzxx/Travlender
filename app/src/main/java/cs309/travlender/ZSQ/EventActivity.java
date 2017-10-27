@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
@@ -46,24 +48,24 @@ public class EventActivity extends Activity implements View.OnClickListener{
 
         //通过request判断，是通过那个Button点击进入的，之后隐藏或者显示相应的Button
         String request=intent.getStringExtra("request");
+        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
         switch (request){
             //点击添加按钮进入的，则只显示btnAdd
             case "Add":
                 btnChange.setVisibility(View.GONE);
                 Random r = new Random();
                 Calendar c = Calendar.getInstance();
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 etTitle.setText("test"+r.nextInt(1000));
-                c.set(2017,10,r.nextInt(30),r.nextInt(24),r.nextInt(60));
-                etStart.setText(c.toString());
-                c.set(2017,10,r.nextInt(30),r.nextInt(24),r.nextInt(60));
-                etEnd.setText(c.toString());
+                c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),r.nextInt(30),r.nextInt(24),r.nextInt(60));
+                etStart.setText(format.format(c.getTime()));
+                c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.HOUR)+1,r.nextInt(60));
+                etEnd.setText(format.format(c.getTime()));
                 btnAdd.setVisibility(View.VISIBLE);
                 break;
             //通过ListView Item进入的
             case "Look":
                 id=intent.getExtras().getInt("id");
-                etTitle.setText(intent.getStringExtra("title"));
+                etTitle.setText(format.format(new Date(Long.valueOf(intent.getStringExtra("title")))));
                 etStart.setText(intent.getStringExtra("starttime"));
                 etEnd.setText(intent.getStringExtra("endtime"));
                 break;
@@ -76,15 +78,15 @@ public class EventActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_add_event:
+                Timestamp ts = new Timestamp(System.currentTimeMillis());
                 String addtime =String.valueOf(System.currentTimeMillis());
                 ContentValues value = new ContentValues();
                 value.put("addtime",addtime);
                 value.put("title",etTitle.getText().toString());
-                value.put("starttime",etStart.getText().toString());
-                value.put("endtime",etEnd.getText().toString());
+                value.put("starttime",ts.valueOf(etStart.getText().toString()+":00").getTime());
+                value.put("endtime",ts.valueOf(etEnd.getText().toString()+":00").getTime());
                 Event newEvent=new Event(value);
                 handler.addEvent(newEvent);
-                setResult(RESULT_OK, intent);
                 finish();
                 break;
             case R.id.btn_change:
@@ -101,7 +103,6 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 event.setEventId(intent.getIntExtra("id",0));
                 handler.editEvent(event);
                 //这里设置resultCode是为了区分是修改后返回主界面的还是删除后返回主界面的。
-                setResult(2,intent);
                 finish();
                 break;
         }

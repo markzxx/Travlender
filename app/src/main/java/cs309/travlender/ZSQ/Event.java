@@ -2,13 +2,7 @@ package cs309.travlender.ZSQ;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
-import java.util.Map;
-
-import cs309.travlender.ZSQ.ZHANGSHQIContract;
+import android.database.DatabaseUtils;
 
 
 /**
@@ -27,12 +21,16 @@ public class Event implements ZHANGSHQIContract.EventInterface {
 
     public Event(Cursor cursor){
         value = new ContentValues();
+        DatabaseUtils.cursorRowToContentValues(cursor,value);
         String[] names = cursor.getColumnNames();
         for(int i = 0;i<names.length;i++){
-            if(names[i].equals("event_id"))
-                value.put(names[i],cursor.getInt(i));
-            else
-                value.put(names[i],cursor.getString(i));
+            switch (cursor.getType(i)){
+                case Cursor.FIELD_TYPE_INTEGER:
+                    value.put(names[i],cursor.getInt(i));
+                    break;
+                case Cursor.FIELD_TYPE_FLOAT:
+                    value.put(names[i],cursor.getFloat(i));
+            }
         }
     }
 
@@ -45,7 +43,7 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
 
     public int getEventId() {
-        return (int)value.get("event_id");
+        return Integer.parseInt((String)value.get("event_id"));
     }
 
     public void setEventId(int id) {
@@ -60,34 +58,34 @@ public class Event implements ZHANGSHQIContract.EventInterface {
         value.put("title",title);
     }
 
-    public String getStarttime() {
-        return (String) value.get("starttime");
+    public long getStarttime() {
+        return Long.valueOf((String) value.get("starttime"));
     }
 
-    public void setStarttime(String starttime) {
+    public void setStarttime(long starttime) {
         value.put("starttime",starttime);
     }
 
-    public String getEndtime() {
-        return (String) value.get("endtime");
+    public long getEndtime() {
+        return Long.valueOf((String) value.get("endtime"));
     }
 
-    public void setEndtime(String endtime) {
+    public void setEndtime(long endtime) {
         value.put("endtime",endtime);
 
     }
 
-    public String getAddtime() {
-        return (String) value.get("addtime");
+    public long getAddtime() {
+        return Long.valueOf((String)value.get("addtime"));
     }
 
-    public void setAddtime(String addtime) {
+    public void setAddtime(long addtime) {
         value.put("addtime",addtime);
     }
-    public String getEdittime(){
-        return (String) value.get("edittime");
+    public long getEdittime(){
+        return Long.valueOf((String) value.get("edittime"));
     }
-    public void setEdittime(String edittime){
+    public void setEdittime(long edittime){
         value.put("edittime",edittime);
     }
     public String getLocation(){
