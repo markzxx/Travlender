@@ -11,23 +11,33 @@ public interface ZHANGSHQIContract {
     interface EventInterface {
 
         ContentValues getValue();
-
         void setValue(ContentValues value);
 
-        int getId();
-
-        void setId(int id);
+        int getEventId();
+        void setEventId(int id);
 
         String getTitle();
-
         void setTitle(String title);
 
         String getStarttime();
-
         void setStarttime(String start);
 
         String getEndtime();
-
         void setEndtime(String end);
+
+        String getAddtime();
+        void setAddtime(String addtime);
+
+        String getEdittime();
+        void setEdittime(String edittime);
+
+        String getLocation();
+        void setLocation(String location);
+
+        String getTransport();
+        void setTransport(String transport);
+
+
+
     }
 }

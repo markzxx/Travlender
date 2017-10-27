@@ -1,4 +1,4 @@
-package cs309.travlendtimeer.ZSQ;
+package cs309.travlender.ZSQ;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -16,36 +16,24 @@ import cs309.travlender.ZSQ.ZHANGSHQIContract;
  */
 
 public class Event implements ZHANGSHQIContract.EventInterface {
-    private int id;
-    private String title;
-    private String addtime;
-    private String starttime;
-    private String endtime;
+
     private ContentValues value;
 
     public Event(){}
 
     public Event(ContentValues value) {
-
-
         this.value = value;
-        this.title = value.get("title");
-        this.starttime = value.get("starttime");
-        this.endtime = value.get("endtime");
-        this.addtime = value.get("addtime");
     }
 
     public Event(Cursor cursor){
-        this.id = cursor.getInt(0);
-        this.title = cursor.getString(1);
-        this.addtime = cursor.getString(2);
-        this.starttime = cursor.getString(3);
-        this.endtime = cursor.getString(4);
         value = new ContentValues();
-        value.put("title",title);
-        value.put("starttime",starttime);
-        value.put("endtime",endtime);
-        value.put("addtime",addtime);
+        String[] names = cursor.getColumnNames();
+        for(int i = 0;i<names.length;i++){
+            if(names[i].equals("event_id"))
+                value.put(names[i],cursor.getInt(i));
+            else
+                value.put(names[i],cursor.getString(i));
+        }
     }
 
     public ContentValues getValue(){
@@ -56,47 +44,64 @@ public class Event implements ZHANGSHQIContract.EventInterface {
         this.value = value;
     }
 
-    public int getId() {
-        return id;
+    public int getEventId() {
+        return (int)value.get("event_id");
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEventId(int id) {
+        value.put("event_id",id);
     }
 
     public String getTitle() {
-        return title;
+        return (String) value.get("title");
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        value.put("title",title);
     }
 
-    public String getstarttime() {
-        return starttime;
+    public String getStarttime() {
+        return (String) value.get("starttime");
     }
 
-    public void setstarttime(String starttime) {
-        this.starttime = starttime;
+    public void setStarttime(String starttime) {
+        value.put("starttime",starttime);
     }
 
-    public String getendtime() {
-        return endtime;
+    public String getEndtime() {
+        return (String) value.get("endtime");
     }
 
-    public void setendtime(String endtime) {
-        this.endtime = endtime;
+    public void setEndtime(String endtime) {
+        value.put("endtime",endtime);
+
     }
 
     public String getAddtime() {
-        return addtime;
+        return (String) value.get("addtime");
     }
 
     public void setAddtime(String addtime) {
-        this.addtime = addtime;
+        value.put("addtime",addtime);
     }
-
-
+    public String getEdittime(){
+        return (String) value.get("edittime");
+    }
+    public void setEdittime(String edittime){
+        value.put("edittime",edittime);
+    }
+    public String getLocation(){
+        return (String) value.get("location");
+    }
+    public void setLocation(String location){
+        value.put("location",location);
+    }
+    public String getTransport(){
+        return (String) value.get("transport");
+    }
+    public void setTransport(String transport){
+        value.put("transport",transport);
+    }
 //    @Override
 //    public int describeContents() {
 //        return 0;

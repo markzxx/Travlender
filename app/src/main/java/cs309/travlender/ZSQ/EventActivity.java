@@ -84,11 +84,17 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.btn_change:
                 addtime =String.valueOf(System.currentTimeMillis());
-                Event event=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
-                        etEnd.getText().toString());
+
+                ContentValues values = new ContentValues();
+                values.put("addtime",addtime);
+                values.put("title",etTitle.getText().toString());
+                values.put("starttime",etStart.getText().toString());
+                values.put("endtime",etEnd.getText().toString());
+
+                Event event=new Event(values);
                 intent=getIntent();
-                Event.setId(intent.getIntExtra("id",0));
-                handler.editEvent(Event);
+                event.setEventId(intent.getIntExtra("id",0));
+                handler.editEvent(event);
                 //这里设置resultCode是为了区分是修改后返回主界面的还是删除后返回主界面的。
                 setResult(2,intent);
                 finish();
