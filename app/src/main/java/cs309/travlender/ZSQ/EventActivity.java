@@ -7,8 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Random;
+
 import cs309.travelender.R;
 import cs309.travlender.ZXX.EventManager;
+import cs309.travlender.ZXX.MainActivity;
 
 
 /**
@@ -45,7 +48,10 @@ public class EventActivity extends Activity implements View.OnClickListener{
             //点击添加按钮进入的，则只显示btnAdd
             case "Add":
                 btnChange.setVisibility(View.GONE);
-
+                Random random = new Random();
+                etTitle.setText("test"+random.nextInt(1000));
+                etStart.setText(random.nextInt(1000)+"");
+                etEnd.setText(random.nextInt(1000)+"");
                 btnAdd.setVisibility(View.VISIBLE);
                 break;
             //通过ListView Item进入的
@@ -70,15 +76,19 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 handler.addEvent(newEvent);
                 setResult(RESULT_OK, intent);
                 finish();
+                startActivity(new Intent(this,MainActivity.class));
                 break;
             case R.id.btn_change:
                 addtime =String.valueOf(System.currentTimeMillis());
                 Event Event=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
                         etEnd.getText().toString());
+                intent=getIntent();
+                Event.setId(intent.getIntExtra("id",0));
                 handler.editEvent(Event);
                 //这里设置resultCode是为了区分是修改后返回主界面的还是删除后返回主界面的。
                 setResult(2,intent);
                 finish();
+                startActivity(new Intent(this,MainActivity.class));
                 break;
         }
 
