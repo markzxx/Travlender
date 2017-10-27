@@ -8,11 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Random;
 
 import cs309.travelender.R;
 import cs309.travlender.ZXX.EventManager;
-import cs309.travlender.ZXX.MainActivity;
 
 
 /**
@@ -49,10 +50,14 @@ public class EventActivity extends Activity implements View.OnClickListener{
             //点击添加按钮进入的，则只显示btnAdd
             case "Add":
                 btnChange.setVisibility(View.GONE);
-                Random random = new Random();
-                etTitle.setText("test"+random.nextInt(1000));
-                etStart.setText(random.nextInt(1000)+"");
-                etEnd.setText(random.nextInt(1000)+"");
+                Random r = new Random();
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                etTitle.setText("test"+r.nextInt(1000));
+                c.set(2017,10,r.nextInt(30),r.nextInt(24),r.nextInt(60));
+                etStart.setText(c.toString());
+                c.set(2017,10,r.nextInt(30),r.nextInt(24),r.nextInt(60));
+                etEnd.setText(c.toString());
                 btnAdd.setVisibility(View.VISIBLE);
                 break;
             //通过ListView Item进入的

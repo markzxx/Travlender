@@ -1,4 +1,4 @@
-package cs309.travlendtimeer.ZSQ;
+package cs309.travlender.ZSQ;
 
 import android.content.ContentValues;
 import android.database.Cursor;
