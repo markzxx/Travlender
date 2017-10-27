@@ -18,6 +18,9 @@ public class DatabaseContract {
         public static final String KEY_ADDTIME = "addtime";
         public static final String KEY_STARTTIME="starttime";
         public static final String KEY_ENDTIME="endtime";
+        public static final String KEY_LOCATION="location";
+        public static final String KEY_TRANSPORT="transport";
+        public static final String KEY_EDITTIME = "edittime";
     }
 
     public static class DBpreference implements BaseColumns {

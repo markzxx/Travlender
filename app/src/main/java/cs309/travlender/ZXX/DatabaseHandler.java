@@ -22,7 +22,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     +DBevent.KEY_TITLE + TEXT_TYPE + COMMA
                     +DBevent.KEY_ADDTIME + TEXT_TYPE + COMMA
                     +DBevent.KEY_STARTTIME + TEXT_TYPE + COMMA
-                    +DBevent.KEY_ENDTIME + TEXT_TYPE
+                    +DBevent.KEY_ENDTIME + TEXT_TYPE+ COMMA
+                    +DBevent.KEY_LOCATION + TEXT_TYPE+ COMMA
+                    +DBevent.KEY_TRANSPORT + TEXT_TYPE+ COMMA
+                    +DBevent.KEY_EDITTIME + TEXT_TYPE+ COMMA
                     +")";
 
     public DatabaseHandler(Context context) {
