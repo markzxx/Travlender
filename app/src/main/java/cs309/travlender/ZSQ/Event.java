@@ -23,8 +23,6 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     private String endtime;
     private ContentValues value;
 
-
-
     public Event(){}
 
     public Event(ContentValues value) {
@@ -32,8 +30,8 @@ public class Event implements ZHANGSHQIContract.EventInterface {
 
         this.value = value;
         this.title = value.get("title");
-        this.starttime = value.get("starttimetime");
-        this.endtime = value.get("endtimetime");
+        this.starttime = value.get("starttime");
+        this.endtime = value.get("endtime");
         this.addtime = value.get("addtime");
     }
 
