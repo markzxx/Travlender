@@ -40,3 +40,4 @@ editor.xml
 *.iml
 out
 gen
+app/src/main/libs/
