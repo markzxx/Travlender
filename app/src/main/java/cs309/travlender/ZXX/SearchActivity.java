@@ -31,6 +31,7 @@ public class SearchActivity extends Activity implements View.OnClickListener{
             case R.id.btn_search_dialog:
                 Intent i = new Intent(this,SearchResultActivity.class);
                 EM.searchEvent(text.getText().toString());
+                finish();
                 startActivity(i);
                 break;
         }

@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="cs309.travlender.ZSQ.EventActivity" />
+        <activity android:name="cs309.travlender.ZSQ.EventActivity"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
         <activity android:name="cs309.travlender.ZXX.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
