@@ -1,6 +1,7 @@
 package cs309.travlender.ZSQ;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -71,15 +72,19 @@ public class EventActivity extends Activity implements View.OnClickListener{
         switch (view.getId()){
             case R.id.btn_add_event:
                 String addtime =String.valueOf(System.currentTimeMillis());
-                Event newEvent=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
-                        etEnd.getText().toString());
+                ContentValues value = new ContentValues();
+                value.put("addtime",addtime);
+                value.put("title",etTitle.getText().toString());
+                value.put("starttime",etStart.getText().toString());
+                value.put("endtime",etEnd.getText().toString());
+                Event newEvent=new Event(value);
                 handler.addEvent(newEvent);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
             case R.id.btn_change:
                 addtime =String.valueOf(System.currentTimeMillis());
-                Event Event=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
+                Event event=new Event(etTitle.getText().toString(),addtime,etStart.getText().toString(),
                         etEnd.getText().toString());
                 intent=getIntent();
                 Event.setId(intent.getIntExtra("id",0));
