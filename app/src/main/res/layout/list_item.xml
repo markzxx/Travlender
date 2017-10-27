@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <TextView
         android:id="@+id/title"
         android:text="Event Title"
@@ -13,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView
-        android:id="@+id/start"
+        android:id="@+id/id"
         android:layout_below="@+id/title"
-        android:text="Start Time"
+        android:text="ID"
         android:textSize="15sp"
         android:textColor="#5ABC4F"
         android:layout_marginTop="8dp"
@@ -23,13 +22,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView
+        android:id="@+id/addtime"
+        android:layout_below="@+id/title"
+        android:text="Add Time"
+        android:textSize="15sp"
+        android:textColor="#5ABC4F"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="180dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/start"
+        android:layout_below="@+id/id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="10dp"
+        android:text="Start Time"
+        android:textColor="#5ABC4F"
+        android:textSize="15sp" />
+    <TextView
         android:id="@+id/end"
-        android:layout_below="@+id/start"
+        android:layout_below="@+id/id"
         android:text="End Time"
         android:textSize="15sp"
         android:textColor="#5ABC4F"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="180dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

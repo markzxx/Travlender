@@ -2,6 +2,8 @@ package cs309.travlender.ZSQ;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -11,7 +13,7 @@ import java.util.Map;
  * Created by Administrator on 2017/10/16.
  */
 
-public class Event implements Serializable {
+public class Event implements Parcelable {
     private int id;
     private String title;
     private String addtime;
@@ -29,7 +31,7 @@ public class Event implements Serializable {
         this.end = end;
         this.addtime = addtime;
         value = new ContentValues();
-//        value.put("addtime",addtime);
+        value.put("addtime",addtime);
         value.put("title",title);
         value.put("starttime",start);
         value.put("endtime",end);
@@ -99,5 +101,36 @@ public class Event implements Serializable {
         this.end = end;
     }
 
+    public String getAddtime() {
+        return addtime;
+    }
 
+    public void setAddtime(String addtime) {
+        this.addtime = addtime;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(title);
+    }
+    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>(){
+        public Event createFromParcel(Parcel in)
+        {
+            return new Event(in);
+        }
+
+        public Event[] newArray(int size)
+        {
+            return new Event[size];
+        }
+    };
+    public Event(Parcel in){
+        title = in.readString();
+    }
 }

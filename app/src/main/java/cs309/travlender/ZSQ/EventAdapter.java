@@ -48,10 +48,14 @@ public class EventAdapter extends BaseAdapter {
         TextView tvName= (TextView) view.findViewById(R.id.title);
         TextView tvStart= (TextView) view.findViewById(R.id.start);
         TextView tvEnd= (TextView) view.findViewById(R.id.end);
+        TextView tvId= (TextView) view.findViewById(R.id.id);
+        TextView tvAddTime= (TextView) view.findViewById(R.id.addtime);
 
         tvName.setText("Event Title  "+events.get(i).getTitle());
         tvStart.setText("Start Time  "+events.get(i).getStart());
         tvEnd.setText("End Time  "+events.get(i).getEnd());
+        tvId.setText("Id  "+events.get(i).getId());
+        tvAddTime.setText("Add Time  "+events.get(i).getAddtime());
         return view;
     }
 }
