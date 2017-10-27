@@ -66,16 +66,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
             case R.id.btn_add:
                 Intent a = new Intent(this,EventActivity.class);
                 a.putExtra("request", "Add");
-                startActivity(a);
+                startActivityForResult(a,1);
                 break;
             case R.id.btn_search:
                 Intent s = new Intent(this,SearchActivity.class);
-                startActivity(s);
+                startActivityForResult(s,1);
                 break;
             case R.id.btn_clear:
                 EM.deleteAllEvent();
-                Intent d = new Intent(this,MainActivity.class);
-                startActivity(d);
+                onCreate(null);
         }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        onCreate(null);
     }
 }

@@ -76,7 +76,6 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 handler.addEvent(newEvent);
                 setResult(RESULT_OK, intent);
                 finish();
-                startActivity(new Intent(this,MainActivity.class));
                 break;
             case R.id.btn_change:
                 addtime =String.valueOf(System.currentTimeMillis());
@@ -88,7 +87,6 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 //这里设置resultCode是为了区分是修改后返回主界面的还是删除后返回主界面的。
                 setResult(2,intent);
                 finish();
-                startActivity(new Intent(this,MainActivity.class));
                 break;
         }
 
