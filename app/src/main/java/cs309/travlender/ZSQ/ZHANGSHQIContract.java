@@ -22,12 +22,12 @@ public interface ZHANGSHQIContract {
 
         void setTitle(String title);
 
-        String getStart();
+        String getStarttime();
 
-        void setStart(String start);
+        void setStarttime(String start);
 
-        String getEnd();
+        String getEndtime();
 
-        void setEnd(String end);
+        void setEndtime(String end);
     }
 }
