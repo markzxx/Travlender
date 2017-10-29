@@ -20,9 +20,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             "create table " + DBevent.TABLE_NAME + " ("
                     +DBevent._ID + INT_TYPE + " primary key,"
                     +DBevent.KEY_TITLE + TEXT_TYPE + COMMA
-                    +DBevent.KEY_ADDTIME + TEXT_TYPE + COMMA
-                    +DBevent.KEY_STARTTIME + TEXT_TYPE + COMMA
-                    +DBevent.KEY_ENDTIME + TEXT_TYPE
+                    +DBevent.KEY_ADDTIME + INT_TYPE + COMMA
+                    +DBevent.KEY_STARTTIME + INT_TYPE + COMMA
+                    +DBevent.KEY_ENDTIME + INT_TYPE+ COMMA
+                    +DBevent.KEY_LOCATION + TEXT_TYPE+ COMMA
+                    +DBevent.KEY_TRANSPORT + TEXT_TYPE+ COMMA
+                    +DBevent.KEY_EDITTIME + INT_TYPE
                     +")";
 
     public DatabaseHandler(Context context) {
@@ -31,6 +34,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+DBevent.TABLE_NAME);
         sqLiteDatabase.execSQL(CREATE_EVENT);
     }
 

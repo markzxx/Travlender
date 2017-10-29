@@ -2,135 +2,115 @@ package cs309.travlender.ZSQ;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
-import java.util.Map;
+import android.database.DatabaseUtils;
 
 
 /**
  * Created by Administrator on 2017/10/16.
  */
 
-public class Event implements Parcelable {
-    private int id;
-    private String title;
-    private String addtime;
-    private String start;
-    private String end;
-    private ContentValues value;
-    private Map<String,Object> map;
+public class Event implements ZHANGSHQIContract.EventInterface {
 
+    private ContentValues value;
 
     public Event(){}
 
-    public Event(String title,String addtime, String start,String end) {
-        this.title = title;
-        this.start = start;
-        this.end = end;
-        this.addtime = addtime;
-        value = new ContentValues();
-        value.put("addtime",addtime);
-        value.put("title",title);
-        value.put("starttime",start);
-        value.put("endtime",end);
-//        map = new HashMap<>();
-//        map.put("title",title);
-//        map.put("start",start);
-//        map.put("end",end);
+    public Event(ContentValues value) {
+        this.value = value;
     }
 
     public Event(Cursor cursor){
-        this.id = cursor.getInt(0);
-        this.title = cursor.getString(1);
-        this.addtime = cursor.getString(2);
-        this.start = cursor.getString(3);
-        this.end = cursor.getString(4);
         value = new ContentValues();
-        value.put("title",title);
-        value.put("starttime",start);
-        value.put("endtime",end);
-//        value.put("addtime",addtime);
+        DatabaseUtils.cursorRowToContentValues(cursor,value);
     }
 
     public ContentValues getValue(){
         return this.value;
     }
+
     public void setValue(ContentValues value) {
         this.value = value;
     }
 
-    public Map<String, Object> getMap() {
-        return map;
+    public int getEventId() {
+        return Integer.parseInt((String)value.get("event_id"));
     }
 
-    public void setMap(Map<String, Object> map) {
-        this.map = map;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setEventId(int id) {
+        value.put("event_id",id);
     }
 
     public String getTitle() {
-        return title;
+        return (String) value.get("title");
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        value.put("title",title);
     }
 
-    public String getStart() {
-        return start;
+    public long getStarttime() {
+        return Long.valueOf((String) value.get("starttime"));
     }
 
-    public void setStart(String start) {
-        this.start = start;
+    public void setStarttime(long starttime) {
+        value.put("starttime",starttime);
     }
 
-    public String getEnd() {
-        return end;
+    public long getEndtime() {
+        return Long.valueOf((String) value.get("endtime"));
     }
 
-    public void setEnd(String end) {
-        this.end = end;
+    public void setEndtime(long endtime) {
+        value.put("endtime",endtime);
+
     }
 
-    public String getAddtime() {
-        return addtime;
+    public long getAddtime() {
+        return Long.valueOf((String)value.get("addtime"));
     }
 
-    public void setAddtime(String addtime) {
-        this.addtime = addtime;
+    public void setAddtime(long addtime) {
+        value.put("addtime",addtime);
     }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public long getEdittime(){
+        return Long.valueOf((String) value.get("edittime"));
     }
-
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeString(title);
+    public void setEdittime(long edittime){
+        value.put("edittime",edittime);
     }
-    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>(){
-        public Event createFromParcel(Parcel in)
-        {
-            return new Event(in);
-        }
-
-        public Event[] newArray(int size)
-        {
-            return new Event[size];
-        }
-    };
-    public Event(Parcel in){
-        title = in.readString();
+    public String getLocation(){
+        return (String) value.get("location");
     }
+    public void setLocation(String location){
+        value.put("location",location);
+    }
+    public String getTransport(){
+        return (String) value.get("transport");
+    }
+    public void setTransport(String transport){
+        value.put("transport",transport);
+    }
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel out, int flags) {
+//        out.writeString(title);
+//    }
+//    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>(){
+//        public Event createFromParcel(Parcel in)
+//        {
+//            return new Event(in);
+//        }
+//
+//        public Event[] newArray(int size)
+//        {
+//            return new Event[size];
+//        }
+//    };
+//    public Event(Parcel in){
+//        title = in.readString();
+//    }
 }
