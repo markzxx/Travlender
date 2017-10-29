@@ -12,7 +12,7 @@ public class DatabaseContract {
     private DatabaseContract(){}
 
     public static class DBevent implements BaseColumns {
-        public static final String TABLE_NAME = "entry";
+        public static final String TABLE_NAME = "event";
         public static final String _ID = "event_id";
         public static final String KEY_TITLE = "title";
         public static final String KEY_ADDTIME = "addtime";

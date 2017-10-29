@@ -52,6 +52,8 @@ public class EventAdapter extends BaseAdapter {
         TextView tvEnd= (TextView) view.findViewById(R.id.end);
         TextView tvId= (TextView) view.findViewById(R.id.id);
         TextView tvAddTime= (TextView) view.findViewById(R.id.addtime);
+        TextView tvLocation= (TextView) view.findViewById(R.id.location);
+        TextView tvTransport= (TextView) view.findViewById(R.id.transport);
 
         SimpleDateFormat df = new SimpleDateFormat("MM-dd HH:mm");
 
@@ -60,6 +62,9 @@ public class EventAdapter extends BaseAdapter {
         tvEnd.setText("End Time  "+df.format(new Timestamp(events.get(i).getEndtime())));
         tvId.setText("Id  "+events.get(i).getEventId());
         tvAddTime.setText("Add Time  "+df.format(new Timestamp(events.get(i).getAddtime())));
+        tvLocation.setText("Location  "+events.get(i).getLocation());
+        tvTransport.setText("Transport  "+events.get(i).getTransport());
+
         return view;
     }
 }
