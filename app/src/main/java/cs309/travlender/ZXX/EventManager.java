@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,14 +108,14 @@ public class EventManager implements EventManagerContract.Manager {
         return list;
     }
 
-    public List<Event> searchEvents(Long starttime,Long endtime) // timestamps
+    public List<Event> searchEvents(long starttime,long endtime) // timestamps
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<Event> list = new ArrayList<>();
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         String[] selection = {"*"};
         String where = "(starttime>? and starttime<?) or (endtime>? and endtime<?)";
-        String[] whereArgs ={starttime.toString(),endtime.toString(),starttime.toString(),endtime.toString()};
+        String[] whereArgs ={starttime+"",endtime+"",starttime+"",endtime+""};
         String order = DatabaseContract.DBevent.KEY_STARTTIME;
         Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,order);
         if(cursor.moveToFirst()){
@@ -122,16 +123,19 @@ public class EventManager implements EventManagerContract.Manager {
                 list.add(new Event(cursor));
             }while(cursor.moveToNext());
         }
+        SearchList = list;
         return list;
     }
+
     public List<Event> searchEvents(String starttime,String endtime) // format like yyyy-mm-dd HH:MM:SS
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<Event> list = new ArrayList<>();
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         String[] selection = {"*"};
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
         String where = "(starttime>? and starttime<?) or (endtime>? and endtime<?)";
-        String[] whereArgs ={starttime.toString(),endtime.toString(),starttime.toString(),endtime.toString()};
+        String[] whereArgs ={ts.valueOf(starttime).getTime()+"",ts.valueOf(endtime.toString()).getTime()+"",ts.valueOf(starttime).getTime()+"",ts.valueOf(endtime.toString()).getTime()+""};
         String order = DatabaseContract.DBevent.KEY_STARTTIME;
         Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,order);
         if(cursor.moveToFirst()){
@@ -139,6 +143,7 @@ public class EventManager implements EventManagerContract.Manager {
                 list.add(new Event(cursor));
             }while(cursor.moveToNext());
         }
+        SearchList = list;
         return list;
     }
 }

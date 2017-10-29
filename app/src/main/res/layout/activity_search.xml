@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="cs309.travlender.ZXX.SearchActivity">
+    android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/search_title"
@@ -14,9 +13,29 @@
         android:hint="Event Title"
         android:layout_width="167dp"
         android:layout_margin="10dp"
+        android:layout_height="61dp"/>
+
+    <EditText
+        android:id="@+id/search_starttime"
+        android:layout_width="167dp"
         android:layout_height="61dp"
-        tools:layout_editor_absoluteY="251dp"
-        tools:layout_editor_absoluteX="121dp" />
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:hint="Start Time"
+        android:inputType="number"
+        android:textColor="#5ABC4F"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/search_endtime"
+        android:layout_width="167dp"
+        android:layout_height="61dp"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:hint="End Time"
+        android:inputType="number"
+        android:textColor="#5ABC4F"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btn_search_dialog"
@@ -28,7 +47,5 @@
         android:background="#5ABC4F"
         android:layout_width="168dp"
         android:layout_height="55dp"
-        tools:layout_editor_absoluteX="121dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/search_title" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_marginTop="8dp" />
+</TableLayout>
