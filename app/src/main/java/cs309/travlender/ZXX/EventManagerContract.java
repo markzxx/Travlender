@@ -24,5 +24,9 @@ public interface EventManagerContract {
         void deleteAllEvent();
 
         List<Event> searchEvent(String name);
+
+        List<Event> searchEvents(Long starttime,Long endtime); // timestamps
+
+        List<Event> searchEvents(String starttime,String endtime); // format like yyyy-mm-dd HH:MM:SS
     }
 }

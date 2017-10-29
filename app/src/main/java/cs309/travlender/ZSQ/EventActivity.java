@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -24,7 +25,8 @@ import cs309.travlender.ZXX.EventManager;
 
 public class EventActivity extends Activity implements View.OnClickListener{
 
-    private EditText etTitle,etStart,etEnd;
+    private EditText etTitle,etStart,etEnd,etLocation;
+    private Spinner etTransport;
     private Button btnChange,btnAdd;
     private int id;
     private EventManager handler;
@@ -38,6 +40,8 @@ public class EventActivity extends Activity implements View.OnClickListener{
         etTitle= (EditText) findViewById(R.id.event_name);
         etStart= (EditText) findViewById(R.id.event_start);
         etEnd= (EditText) findViewById(R.id.event_end);
+        etLocation= (EditText) findViewById(R.id.event_location);
+        etTransport= (Spinner) findViewById(R.id.event_transport);
         btnChange= (Button) findViewById(R.id.btn_change);
         btnAdd= (Button) findViewById(R.id.btn_add_event);
 
@@ -56,10 +60,14 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 Random r = new Random();
                 Calendar c = Calendar.getInstance();
                 etTitle.setText("test"+r.nextInt(1000));
-                c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),r.nextInt(30),r.nextInt(24),r.nextInt(60));
+                c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.HOUR_OF_DAY)+1,r.nextInt(60));
                 etStart.setText(format.format(c.getTime()));
-                c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.HOUR)+1,r.nextInt(60));
+                c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.HOUR_OF_DAY)+1,r.nextInt(60));
                 etEnd.setText(format.format(c.getTime()));
+                String[] position=new String[]{"西丽劳力市场","会展中心","罗湖汽车站","深圳北站","维也纳酒店"};
+                etLocation.setText(position[r.nextInt(5)]);
+                etTransport.setSelection(r.nextInt(5));
+
                 btnAdd.setVisibility(View.VISIBLE);
                 break;
             //通过ListView Item进入的
@@ -85,6 +93,8 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 value.put("title",etTitle.getText().toString());
                 value.put("starttime",ts.valueOf(etStart.getText().toString()+":00").getTime());
                 value.put("endtime",ts.valueOf(etEnd.getText().toString()+":00").getTime());
+                value.put("location",etLocation.getText().toString());
+                value.put("transport",etTransport.getSelectedItem().toString());
                 Event newEvent=new Event(value);
                 handler.addEvent(newEvent);
                 finish();

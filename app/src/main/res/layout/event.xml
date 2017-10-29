@@ -103,15 +103,12 @@
             android:text="Transport"
             android:textSize="20sp" />
 
-        <EditText
+        <Spinner
             android:id="@+id/event_transport"
-            android:layout_width="234dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginRight="@+id/title"
-            android:inputType="text"
-            android:textColor="#5ABC4F"
-            android:textSize="20sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:spinnerMode="dropdown"
+            android:entries="@array/transport"/>
     </TableRow>
 
     <Button
