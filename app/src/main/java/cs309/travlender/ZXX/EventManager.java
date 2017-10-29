@@ -97,7 +97,43 @@ public class EventManager implements EventManagerContract.Manager {
         List<Event> list = new ArrayList<>();
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         String[] selection = {"*"};
-        Cursor cursor = db.query(table_name,selection,null,null,null,null,null);
+        String order = DatabaseContract.DBevent.KEY_STARTTIME;
+        Cursor cursor = db.query(table_name,selection,null,null,null,null,order);
+        if(cursor.moveToFirst()){
+            do{
+                list.add(new Event(cursor));
+            }while(cursor.moveToNext());
+        }
+        return list;
+    }
+
+    public List<Event> searchEvents(Long starttime,Long endtime) // timestamps
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        List<Event> list = new ArrayList<>();
+        String table_name = DatabaseContract.DBevent.TABLE_NAME;
+        String[] selection = {"*"};
+        String where = "(starttime>? and starttime<?) or (endtime>? and endtime<?)";
+        String[] whereArgs ={starttime.toString(),endtime.toString(),starttime.toString(),endtime.toString()};
+        String order = DatabaseContract.DBevent.KEY_STARTTIME;
+        Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,order);
+        if(cursor.moveToFirst()){
+            do{
+                list.add(new Event(cursor));
+            }while(cursor.moveToNext());
+        }
+        return list;
+    }
+    public List<Event> searchEvents(String starttime,String endtime) // format like yyyy-mm-dd HH:MM:SS
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        List<Event> list = new ArrayList<>();
+        String table_name = DatabaseContract.DBevent.TABLE_NAME;
+        String[] selection = {"*"};
+        String where = "(starttime>? and starttime<?) or (endtime>? and endtime<?)";
+        String[] whereArgs ={starttime.toString(),endtime.toString(),starttime.toString(),endtime.toString()};
+        String order = DatabaseContract.DBevent.KEY_STARTTIME;
+        Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,order);
         if(cursor.moveToFirst()){
             do{
                 list.add(new Event(cursor));
