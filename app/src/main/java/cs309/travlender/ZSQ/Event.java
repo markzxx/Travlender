@@ -22,16 +22,6 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     public Event(Cursor cursor){
         value = new ContentValues();
         DatabaseUtils.cursorRowToContentValues(cursor,value);
-        String[] names = cursor.getColumnNames();
-        for(int i = 0;i<names.length;i++){
-            switch (cursor.getType(i)){
-                case Cursor.FIELD_TYPE_INTEGER:
-                    value.put(names[i],cursor.getInt(i));
-                    break;
-                case Cursor.FIELD_TYPE_FLOAT:
-                    value.put(names[i],cursor.getFloat(i));
-            }
-        }
     }
 
     public ContentValues getValue(){
