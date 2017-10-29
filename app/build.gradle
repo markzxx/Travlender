@@ -35,4 +35,12 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+
+    //定位功能
+    compile 'com.amap.api:location:latest.integration'
+    //搜索功能
+    compile 'com.amap.api:search:latest.integration'
+    //2D地图so及jar
+    compile 'com.amap.api:map2d:latest.integration'
+    compile 'com.amap.api:map3d:latest.integration'
 }
