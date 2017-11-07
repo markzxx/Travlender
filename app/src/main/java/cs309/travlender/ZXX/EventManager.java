@@ -8,11 +8,10 @@ import android.support.annotation.NonNull;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cs309.travlender.ZSQ.Event;
-
-import static android.R.attr.id;
 
 /**
  * Created by markz on 2017-10-24.
@@ -61,6 +60,7 @@ public class EventManager implements EventManagerContract.Manager {
         String[] whereArgs = {String.valueOf(id)};
         Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,null);
         this.event = new Event(cursor);
+        db.close();
         return event;
     }
 
@@ -81,14 +81,13 @@ public class EventManager implements EventManagerContract.Manager {
             }while(cursor.moveToNext());
         }
         SearchList = list;
+        db.close();
         return list;
     }
 
     public void deleteAllEvent() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
-        String where = DatabaseContract.DBevent._ID + " = ? ";
-        String[] whereArgs = {String.valueOf(id)};
         db.delete(table_name,null,null);
         db.close();
     }
@@ -105,10 +104,33 @@ public class EventManager implements EventManagerContract.Manager {
                 list.add(new Event(cursor));
             }while(cursor.moveToNext());
         }
+        db.close();
         return list;
     }
 
-    public List<Event> searchEvents(long starttime,long endtime) // timestamps
+    public List<Event> getEvents_aDay(){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        long starttime = new Date().getTime();
+        long endtime = starttime + 86400000;
+        List<Event> list = new ArrayList<>();
+        String table_name = DatabaseContract.DBevent.TABLE_NAME;
+        String[] selection = {"*"};
+        String where = "(starttime>? and starttime<?)";
+        String[] whereArgs ={starttime+"",endtime+""};
+
+        String order = DatabaseContract.DBevent.KEY_STARTTIME;
+        Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,order);
+        if(cursor.moveToFirst()){
+            do{
+                list.add(new Event(cursor));
+            }while(cursor.moveToNext());
+        }
+        SearchList = list;
+        db.close();
+        return list;
+    }
+
+    public List<Event> getEvents(long starttime,long endtime) // timestamps
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<Event> list = new ArrayList<>();
@@ -124,10 +146,11 @@ public class EventManager implements EventManagerContract.Manager {
             }while(cursor.moveToNext());
         }
         SearchList = list;
+        db.close();
         return list;
     }
 
-    public List<Event> searchEvents(String starttime,String endtime) // format like yyyy-mm-dd HH:MM:SS
+    public List<Event> getEvents(String starttime,String endtime) // format like yyyy-mm-dd HH:MM:SS
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List<Event> list = new ArrayList<>();
@@ -144,6 +167,7 @@ public class EventManager implements EventManagerContract.Manager {
             }while(cursor.moveToNext());
         }
         SearchList = list;
+        db.close();
         return list;
     }
 }

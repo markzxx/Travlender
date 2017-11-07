@@ -25,8 +25,10 @@ public interface EventManagerContract {
 
         List<Event> searchEvent(String name);
 
-        List<Event> searchEvents(long starttime,long endtime); // timestamps
+        List<Event> getEvents_aDay(); // get events from now to next day the same time
 
-        List<Event> searchEvents(String starttime,String endtime); // format like yyyy-mm-dd HH:MM:SS
+        List<Event> getEvents(long starttime,long endtime); // timestamps
+
+        List<Event> getEvents(String starttime,String endtime); // format like yyyy-mm-dd HH:MM:SS
     }
 }

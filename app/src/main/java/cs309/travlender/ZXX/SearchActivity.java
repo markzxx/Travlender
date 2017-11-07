@@ -42,7 +42,7 @@ public class SearchActivity extends Activity implements View.OnClickListener{
                 Intent i = new Intent(this,SearchResultActivity.class);
                 String start=starttime.getText().toString()+" 00:00:00";
                 String end=endtime.getText().toString()+" 00:00:00";
-                EM.searchEvents(start,end);
+                EM.getEvents_aDay();
                 finish();
                 startActivity(i);
                 break;
