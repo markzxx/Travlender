@@ -44,8 +44,8 @@ public class AlarmEvent extends Event {
 
     //每次查询都要调用
     public void updateBestTransport(Date current){
-        onwayTime =map.getOnWayTime(fatherE.getLocation(), fatherE.getStarttime());
-        bestTransport = map.getBestTrans(fatherE.getTransport(),fatherE.getLocation(), fatherE.getStarttime());//优化交通方式, 交通方式的比较
+//        onwayTime =map.getOnWayTime(fatherE.getLocation(), fatherE.getStarttime());
+//        bestTransport = map.getBestTrans(fatherE.getTransport(),fatherE.getLocation(), fatherE.getStarttime());//优化交通方式, 交通方式的比较
 
     }
 
