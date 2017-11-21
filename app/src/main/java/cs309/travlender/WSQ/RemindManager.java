@@ -11,7 +11,7 @@ public class RemindManager {
 
     public RemindManager(EventManager e){
         eventManager = e;
-        e.setRemindManager(this);
+        e.setRemindManager();
     }
 
 
