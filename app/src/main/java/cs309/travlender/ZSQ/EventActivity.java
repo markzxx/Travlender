@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,7 +28,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
     private Spinner etTransport,etRemindtime;
     private Button btnChange,btnAdd;
     private int id;
-    private EventManager handler;
+    private EventManager EM;
     private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +46,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
         btnAdd= (Button) findViewById(R.id.btn_add_event);
 
 
-        handler=new EventManager(this);
+        EM=new EventManager(this);
         //获取传递过来的intent
         intent=getIntent();
 
@@ -74,7 +73,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
             //通过ListView Item进入的
             case "Look":
                 id=intent.getExtras().getInt("id");
-                etTitle.setText(format.format(new Date(Long.valueOf(intent.getStringExtra("title")))));
+                etTitle.setText(intent.getStringExtra("title"));
                 etStart.setText(intent.getStringExtra("starttime"));
                 etEnd.setText(intent.getStringExtra("endtime"));
                 break;
@@ -88,9 +87,8 @@ public class EventActivity extends Activity implements View.OnClickListener{
         switch (view.getId()){
             case R.id.btn_add_event:
                 Timestamp ts = new Timestamp(System.currentTimeMillis());
-                String addtime =String.valueOf(System.currentTimeMillis());
                 ContentValues value = new ContentValues();
-                value.put("addtime",addtime);
+                value.put("addtime",System.currentTimeMillis());
                 value.put("title",etTitle.getText().toString());
                 value.put("starttime",ts.valueOf(etStart.getText().toString()+":00").getTime());
                 value.put("endtime",ts.valueOf(etEnd.getText().toString()+":00").getTime());
@@ -98,14 +96,12 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 value.put("transport",etTransport.getSelectedItem().toString());
                 value.put("remindtime",getResources().getStringArray(R.array.remindvalue)[etRemindtime.getSelectedItemPosition()]);
                 Event newEvent=new Event(value);
-                handler.addEvent(newEvent);
+                EM.addEvent(newEvent);
                 finish();
                 break;
             case R.id.btn_change:
-                addtime =String.valueOf(System.currentTimeMillis());
-
                 ContentValues values = new ContentValues();
-                values.put("addtime",addtime);
+                values.put("addtime",System.currentTimeMillis());
                 values.put("title",etTitle.getText().toString());
                 values.put("starttime",etStart.getText().toString());
                 values.put("endtime",etEnd.getText().toString());
@@ -113,7 +109,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 Event event=new Event(values);
                 intent=getIntent();
                 event.setEventId(intent.getIntExtra("id",0));
-                handler.editEvent(event);
+                EM.editEvent(event);
                 //这里设置resultCode是为了区分是修改后返回主界面的还是删除后返回主界面的。
                 finish();
                 break;
