@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.2"
@@ -25,7 +24,7 @@ android {
 
 dependencies {
     //provided fileTree(dir: '../gaode_libs', include: ['*.jar'])
-
+    debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

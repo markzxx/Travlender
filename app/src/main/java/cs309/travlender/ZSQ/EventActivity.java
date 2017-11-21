@@ -26,7 +26,7 @@ import cs309.travlender.ZXX.EventManager;
 public class EventActivity extends Activity implements View.OnClickListener{
 
     private EditText etTitle,etStart,etEnd,etLocation;
-    private Spinner etTransport;
+    private Spinner etTransport,etRemindtime;
     private Button btnChange,btnAdd;
     private int id;
     private EventManager handler;
@@ -42,6 +42,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
         etEnd= (EditText) findViewById(R.id.event_end);
         etLocation= (EditText) findViewById(R.id.event_location);
         etTransport= (Spinner) findViewById(R.id.event_transport);
+        etRemindtime=(Spinner) findViewById(R.id.event_remindtime);
         btnChange= (Button) findViewById(R.id.btn_change);
         btnAdd= (Button) findViewById(R.id.btn_add_event);
 
@@ -67,7 +68,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 String[] position=new String[]{"西丽劳力市场","会展中心","罗湖汽车站","深圳北站","维也纳酒店"};
                 etLocation.setText(position[r.nextInt(5)]);
                 etTransport.setSelection(r.nextInt(5));
-
+                etRemindtime.setSelection(r.nextInt(5));
                 btnAdd.setVisibility(View.VISIBLE);
                 break;
             //通过ListView Item进入的
@@ -95,6 +96,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
                 value.put("endtime",ts.valueOf(etEnd.getText().toString()+":00").getTime());
                 value.put("location",etLocation.getText().toString());
                 value.put("transport",etTransport.getSelectedItem().toString());
+                value.put("remindtime",getResources().getStringArray(R.array.remindvalue)[etRemindtime.getSelectedItemPosition()]);
                 Event newEvent=new Event(value);
                 handler.addEvent(newEvent);
                 finish();

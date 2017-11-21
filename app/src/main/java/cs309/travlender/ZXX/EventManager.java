@@ -24,6 +24,7 @@ public class EventManager implements EventManagerContract.Manager {
     public EventManager(@NonNull Context context){
         dbHelper = new DatabaseHandler(context);
     }
+
     public int addEvent(Event event) {
         this.event = event;
         SQLiteDatabase db = dbHelper.getWritableDatabase();

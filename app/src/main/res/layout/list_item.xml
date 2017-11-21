@@ -22,9 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView
-        android:id="@+id/addtime"
+        android:id="@+id/remindtime"
         android:layout_below="@+id/title"
-        android:text="Add Time"
+        android:text="Remind Time"
         android:textSize="15sp"
         android:textColor="#5ABC4F"
         android:layout_marginTop="8dp"
@@ -72,6 +72,25 @@
         android:layout_marginLeft="180dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
+    <TextView
+        android:id="@+id/addtime"
+        android:layout_below="@+id/location"
+        android:text="Add Time"
+        android:textSize="15sp"
+        android:textColor="#5ABC4F"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/edittime"
+        android:layout_below="@+id/location"
+        android:text="Edit Time"
+        android:textSize="15sp"
+        android:textColor="#5ABC4F"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="180dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

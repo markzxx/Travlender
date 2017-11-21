@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="remindtime">
+        <item>发生时</item>
+        <item>提前10分钟</item>
+        <item>提前30分钟</item>
+        <item>提前1小时</item>
+        <item>提前2小时</item>
+    </string-array>
+    <string-array name="remindvalue">
+        <item>0</item>
+        <item>10</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+    </string-array>
+</resources>

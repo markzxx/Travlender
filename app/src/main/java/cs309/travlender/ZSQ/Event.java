@@ -33,7 +33,7 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
 
     public int getEventId() {
-        return Integer.parseInt((String)value.get("event_id"));
+        return value.getAsInteger("event_id");
     }
 
     public void setEventId(int id) {
@@ -41,7 +41,7 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
 
     public String getTitle() {
-        return (String) value.get("title");
+        return value.getAsString("title");
     }
 
     public void setTitle(String title) {
@@ -49,7 +49,7 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
 
     public long getStarttime() {
-        return Long.valueOf((String) value.get("starttime"));
+        return value.getAsLong("starttime");
     }
 
     public void setStarttime(long starttime) {
@@ -57,7 +57,7 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
 
     public long getEndtime() {
-        return Long.valueOf((String) value.get("endtime"));
+        return value.getAsLong("endtime");
     }
 
     public void setEndtime(long endtime) {
@@ -66,29 +66,36 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
 
     public long getAddtime() {
-        return Long.valueOf((String)value.get("addtime"));
+        return value.getAsLong("addtime");
     }
 
     public void setAddtime(long addtime) {
         value.put("addtime",addtime);
     }
     public long getEdittime(){
-        return Long.valueOf((String) value.get("edittime"));
+        return value.getAsLong("edittime");
     }
     public void setEdittime(long edittime){
         value.put("edittime",edittime);
     }
     public String getLocation(){
-        return (String) value.get("location");
+        return value.getAsString("location");
     }
     public void setLocation(String location){
         value.put("location",location);
     }
     public String getTransport(){
-        return (String) value.get("transport");
+        return value.getAsString("transport");
     }
     public void setTransport(String transport){
         value.put("transport",transport);
+    }
+    public int getRemindtime(){ return value.getAsInteger("remindtime");}
+    public double getLongitude(){
+        return value.getAsDouble("longitude");
+    }
+    public double getLatitude(){
+        return value.getAsDouble("latitude");
     }
 //    @Override
 //    public int describeContents() {
