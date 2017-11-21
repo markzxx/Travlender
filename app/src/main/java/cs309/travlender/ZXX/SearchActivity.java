@@ -44,7 +44,7 @@ public class SearchActivity extends Activity implements View.OnClickListener{
                 String end=endtime.getText().toString()+" 00:00:00";
                 EM.getEvents_aDay();
                 finish();
-                startActivity(i);
+//                startActivity(i);
                 break;
         }
     }

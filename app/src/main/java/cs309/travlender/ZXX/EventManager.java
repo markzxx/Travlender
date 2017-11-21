@@ -21,8 +21,21 @@ public class EventManager implements EventManagerContract.Manager {
     public DatabaseHandler dbHelper;
     static Event event;
     static List<Event> SearchList;
+    private static RemindManager RM;
     public EventManager(@NonNull Context context){
         dbHelper = new DatabaseHandler(context);
+    }
+
+    public void update(){
+        RM.update();
+    }
+
+    public void setRemindManager(RemindManager rm){
+        RM = rm;
+    }
+
+    public RemindManager getRemindManager(){
+        return RM;
     }
 
     public int addEvent(Event event) {
