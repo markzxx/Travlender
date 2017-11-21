@@ -32,10 +32,7 @@ import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
-import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
-import com.amap.api.services.geocoder.RegeocodeQuery;
-import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener;
@@ -43,10 +40,11 @@ import com.amap.api.services.poisearch.PoiSearch.Query;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import cs309.travelender.R;
 
-public class Search_Location extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity{
 
     private List<Point_of_Interest> poi_List = new ArrayList<Point_of_Interest>();
     private Button search_button;
@@ -69,15 +67,34 @@ public class Search_Location extends AppCompatActivity{
     private double myLat;
     private double myLongt;
 
+    private String current_city="深圳";
+    private String transportation="drive";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_location);
+        setContentView(R.layout.activity_search_location_whl);
         initView();//初始化三个UI组件：search按钮、EditText和ListView
         if(ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
         setUpLocation(savedInstanceState);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
     }
 
     //初始化三个UI组件：search按钮、EditText和ListView
@@ -87,13 +104,26 @@ public class Search_Location extends AppCompatActivity{
         search_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View v){
-                Intent intent = new Intent(Search_Location.this, OpenMap.class);
-                EditText input = (EditText)findViewById(R.id.input_destination);
-                String inputText = input.getText().toString();
-                intent.putExtra("destination",inputText);
-                search(inputText);
-                //使用startActivityForResult，在活动销毁的时候能返回一个结果给上一个活动
-                startActivityForResult(intent, 1);//1是请求码，用来唯一标识从下级活动返回回来的内容
+                if (!poi_List.isEmpty()){
+                    Bundle bundle=new Bundle();
+                    Intent intent = new Intent(MainActivity.this, Path_planning.class);
+                    //传入目的地纬度
+                    bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
+                    //传入目的地经度
+                    bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
+                    //传入出发地纬度
+                    bundle.putDouble("from_Latitude", myLat);
+                    //传入出发地经度
+                    bundle.putDouble("from_Longitude", myLongt);
+                    //传入选择的交通方式
+                    bundle.putString("transportation", transportation);
+                    //intent传递bundle
+                    intent.putExtras(bundle);
+                    Log.d("MainActivity", "click listener");
+                    //开启跳转
+                    startActivity(intent);
+                }
+
             }
         });
         //初始化EditText，加监听器
@@ -104,6 +134,7 @@ public class Search_Location extends AppCompatActivity{
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("MainActivity", "Text change");
                 search(s.toString());
             }
         };
@@ -116,22 +147,40 @@ public class Search_Location extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Point_of_Interest poi = poi_List.get(position);
-                Toast.makeText(Search_Location.this, poi.getName(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, poi.getName(), Toast.LENGTH_SHORT).show();
+                Bundle bundle=new Bundle();
+                Intent intent = new Intent(MainActivity.this, Path_planning.class);
+                //传入目的地纬度
+                bundle.putDouble("to_Latitude", poi.getLatitude());
+                //传入目的地经度
+                bundle.putDouble("to_Longitude", poi.getLongitude());
+                //传入出发地纬度
+                bundle.putDouble("from_Latitude", myLat);
+                //传入出发地经度
+                bundle.putDouble("from_Longitude", myLongt);
+                //传入选择的交通方式
+                bundle.putString("transportation", transportation);
+                //intent传递bundle
+                intent.putExtras(bundle);
+                //开启跳转
+                startActivity(intent);
             }
         });
     }
 
     //初始化POI的列表
-    private void addPOI(String name, String subname, int distance){
+    private void addPOI(String name, String subname, int distance, PoiItem item){
+        Random random = new Random();
         Point_of_Interest poi;
-        poi = new Point_of_Interest(name, R.drawable.red_point, subname, distance);
+        if (random.nextBoolean()==true) poi = new Point_of_Interest(name, R.drawable.red_point, subname, distance, item);
+        else poi = new Point_of_Interest(name, R.drawable.blue_point, subname, distance, item);
         poi_List.add(poi);
     }
 
     //搜索POI，传入搜索关键字即可
     private void search(String keyword) {
         // 初始化查询条件
-        query = new Query(keyword, null, "深圳");
+        query = new Query(keyword, null, current_city);
         query.setPageSize(10);
         query.setPageNum(1);
         query.setLocation(new LatLonPoint(myLat, myLongt));
@@ -140,6 +189,8 @@ public class Search_Location extends AppCompatActivity{
 
         // 查询兴趣点
         search = new PoiSearch(this, query);
+        //设置查询范围和中心点
+        search.setBound(new PoiSearch.SearchBound(new LatLonPoint(myLat, myLongt), 199999));
         // 设置回调监听
         search.setOnPoiSearchListener(new OnPoiSearchListener(){
             @Override
@@ -151,17 +202,17 @@ public class Search_Location extends AppCompatActivity{
                 addresses.clear();
                 if (items != null && items.size() > 0) {
                     for (PoiItem item : items) {
-                        addPOI(item.getTitle(), item.getSnippet(), item.getDistance());
-                        Toast.makeText(getApplicationContext(), String.valueOf(item.getDistance()), Toast.LENGTH_SHORT).show();
+                        addPOI(item.getTitle(), item.getSnippet(), item.getDistance(), item);
                     }
                     // 给ListView赋值，显示结果
-                    Point_of_Interest_Adapter poia = new Point_of_Interest_Adapter(Search_Location.this, R.layout.point_of_interest, poi_List);
+                    Point_of_Interest_Adapter poia = new Point_of_Interest_Adapter(MainActivity.this, R.layout.point_of_interest_layout, poi_List);
                     listView.setAdapter(poia);
                 }
             }
         });
         // 异步搜索
         search.searchPOIAsyn();
+        Log.d("MainActivity", "search");
     }
 
     @Override
@@ -185,25 +236,6 @@ public class Search_Location extends AppCompatActivity{
         mMapView = (MapView) findViewById(R.id.locating);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
         init();
-        aMap.setOnMapLoadedListener(new AMap.OnMapLoadedListener() {
-            @Override
-            public void onMapLoaded() {
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.setGps(true);
-                markerOptions.anchor(0.5f, 0.5f);
-                markerOptions.position(new LatLng(0, 0));
-                markerOptions.snippet("最快1分钟到达").draggable(true).setGps(true);
-                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.small_location)));
-                Marker mPositionMark = aMap.addMarker(markerOptions);
-                mPositionMark.showInfoWindow();//主动显示indowindow
-                mPositionMark.setPositionByPixels(mMapView.getWidth() / 2,mMapView.getHeight() / 2);
-                AMapLocationClientOption option=new AMapLocationClientOption();
-                option.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-                option.setOnceLocation(true);
-                mlocationClient.setLocationOption(option);
-                mlocationClient.startLocation();
-            }
-        });
         aMap.setLocationSource(new LocationSource(){
             /**
              * 激活定位
@@ -226,6 +258,8 @@ public class Search_Location extends AppCompatActivity{
                                     //定位成功回调信息，设置相关消息
                                     myLat = amapLocation.getLatitude();//获取纬度
                                     myLongt = amapLocation.getLongitude();//获取经度
+                                    current_city = amapLocation.getCity();
+                                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLongt), 14));
                                     mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
                                 } else {
                                     String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
@@ -258,6 +292,7 @@ public class Search_Location extends AppCompatActivity{
                 mlocationClient = null;
             }
         });
+
         // 设置定位监听
         aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
@@ -279,29 +314,4 @@ public class Search_Location extends AppCompatActivity{
         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLongt), 14));
     }
 
-    //（ 经纬度 --> 地址 ）
-    private void convertPOIAddress(LatLonPoint latLonPoint){
-        if (latLonPoint == null) {
-            address = "";
-            Toast.makeText(Search_Location.this, "latLonPoint == null", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        //地理编码搜索类
-        geocoderSearch = new GeocodeSearch(this);
-        //设置异步回调监听
-        geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener(){
-            //（ 地址 --> 经纬度 ）根据给定的地理名称和查询城市，返回地理编码的结果列表
-            @Override
-            public void onGeocodeSearched(GeocodeResult geocodeResult, int resultID){}
-            //（ 经纬度 --> 地址 ）根据给定的经纬度和最大结果数返回逆地理编码的结果列表
-            @Override
-            public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int resultID){
-                address = regeocodeResult.getRegeocodeAddress().getFormatAddress();
-                addresses.add(address);
-            }
-        });
-        // 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
-        RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,GeocodeSearch.AMAP);
-        geocoderSearch.getFromLocationAsyn(query);
-    }
 }

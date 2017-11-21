@@ -16,7 +16,7 @@ import cs309.travelender.R;
  * Created by Dell on 2017/10/28.
  */
 
-class Point_of_Interest_Adapter extends ArrayAdapter<Point_of_Interest>{
+public class Point_of_Interest_Adapter extends ArrayAdapter<Point_of_Interest>{
 
     private int resourceId;
 
@@ -46,6 +46,7 @@ class Point_of_Interest_Adapter extends ArrayAdapter<Point_of_Interest>{
         viewHolder.logo.setImageResource(poi.getImageId());
         viewHolder.name.setText(poi.getName());
         viewHolder.subname.setText(poi.getSubname());
+        viewHolder.distance.setText(poi.getDistance());
         return view;
     }
 }
