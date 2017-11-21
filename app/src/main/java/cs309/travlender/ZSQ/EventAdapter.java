@@ -67,7 +67,7 @@ public class EventAdapter extends BaseAdapter {
         tvLocation.setText("Location  "+events.get(i).getLocation());
         tvTransport.setText("Transport  "+events.get(i).getTransport());
         tvEditTime.setText("Edit Time "+df.format(new Timestamp(events.get(i).getEdittime())));
-        tvRemindTime.setText("Remind Time "+events.get(i).getRemindtime());
+        tvRemindTime.setText("Remind Time "+events.get(i).getRemindtime()+"分钟");
 
         return view;
     }
