@@ -27,8 +27,9 @@ public class EventManager implements EventManagerContract.Manager {
         dbHelper = new DatabaseHandler(context);
     }
 
-    public void update(){
-        RM.update();
+    public void update(int id){
+        if (RM!=null)
+            RM.update(id);
     }
 
     public void setRemindManager(RemindManager rm){
