@@ -96,7 +96,13 @@
             </intent-filter>
         </activity>
 
-        <!-- 开机自启-->
+
+        <service android:name="cs309.travlender.WSQ.Alarm" />
+
+
+        <receiver android:name="cs309.travlender.WSQ.AlarmReceiver">
+        </receiver>
+
 
     </application>
 
