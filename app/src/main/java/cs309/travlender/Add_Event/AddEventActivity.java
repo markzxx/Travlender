@@ -138,8 +138,8 @@ public class AddEventActivity extends AppCompatActivity{
         else
             event.setTitle(event_title.getText().toString());
 
-        String start = start_date.getText().toString().substring(0,11); //截取 "YYYY-MM-DD"
-        String end = end_date.getText().toString().substring(0,11);
+        String start = start_date.getText().toString().substring(0,10); //截取 "YYYY-MM-DD"
+        String end = end_date.getText().toString().substring(0,10);
         if(isAllDay){
             start += " 00:00:00";
             end += " 23:59:59";
@@ -176,7 +176,7 @@ public class AddEventActivity extends AppCompatActivity{
             event.setEdittime(System.currentTimeMillis());
             eventManager.editEvent(event);
         }
-
+        finish();
     }
 
     @Override
