@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.view.WindowManager;
 
 import java.io.IOException;
@@ -29,17 +31,22 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (!Settings.canDrawOverlays(context)) {
+                Intent intent1 = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                context.startActivity(intent1);
+            }
+        }
 
         String location = intent.getStringExtra("location");
-        long onwayTime = intent.getLongExtra("onwayTime",0);
+        long onwayTime = intent.getLongExtra("onwayTime", 0);
         String bestTransport = intent.getStringExtra("bestTransport");
-        long remindtime = intent.getLongExtra("remindtime",0);
+        long remindtime = intent.getLongExtra("remindtime", 0);
         String title = intent.getStringExtra("title");
         remindType = intent.getDataString();
-        showAlarmDialog(context, location,onwayTime,bestTransport,remindtime,title);
+        showAlarmDialog(context, location, onwayTime, bestTransport, remindtime, title);
 
     }
-
 
 
     //UI接口
@@ -48,7 +55,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         playMusicAndVibrate(context);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        switch (remindType){
+        switch (remindType) {
             case "StartTime":
                 setDialog(builder, title, "Go doing it now!");
                 break;
@@ -62,11 +69,12 @@ public class AlarmReceiver extends BroadcastReceiver {
                 break;
         }
 
-//        AlertDialog dialog = builder.create();
-//        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-//        dialog.show();
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog.show();
     }
-    private void setDialog(AlertDialog.Builder builder,  String title, String message){
+
+    private void setDialog(AlertDialog.Builder builder, String title, String message) {
         builder.setTitle(title)
                 .setMessage(message)
                 .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
