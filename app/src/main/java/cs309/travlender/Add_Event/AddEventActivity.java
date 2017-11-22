@@ -38,6 +38,7 @@ public class AddEventActivity extends AppCompatActivity{
     private ContentValues values = new ContentValues();
     private int id;
     private Intent intent;
+    String request;
 
     @Bind(R.id.event_title)
     EditText event_title;
@@ -132,8 +133,6 @@ public class AddEventActivity extends AppCompatActivity{
 
     @OnClick(R.id.event_save)
     void save(){
-        event.setAddtime(System.currentTimeMillis());
-
         if(event_title.getText().toString().equals(""))
             event.setTitle("无标题");
         else
@@ -145,8 +144,8 @@ public class AddEventActivity extends AppCompatActivity{
             start += " 00:00:00";
             end += " 23:59:59";
         }else{
-            start += " "+start_time.getText().toString();
-            end += " "+end_time.getText().toString();
+            start += " "+start_time.getText().toString()+":00";
+            end += " "+end_time.getText().toString()+":00";
         }
         event.setStarttime(Timestamp.valueOf(start).getTime());
         event.setEndtime(Timestamp.valueOf(end).getTime());
@@ -158,6 +157,25 @@ public class AddEventActivity extends AppCompatActivity{
         else
             event.setLocation(event_location.getText().toString());
 
+        event.setTransport(event_transport.getSelectedItem().toString());
+
+        if(event_content.getText().toString().equals(""))
+            event.setContent("无");
+        else
+            event.setContent(event_content.getText().toString());
+
+        if(isSmartRemind)
+            event.setSmartRemind(1);
+        else
+            event.setSmartRemind(0);
+
+        if(request.equals("ADD")){
+            event.setAddtime(System.currentTimeMillis());
+            eventManager.addEvent(event);
+        }else if(request.equals("EDIT")){
+            event.setEdittime(System.currentTimeMillis());
+            eventManager.editEvent(event);
+        }
 
     }
 
@@ -170,7 +188,7 @@ public class AddEventActivity extends AppCompatActivity{
         //获取传递过来的intent
         intent=getIntent();
         //通过request判断,当前是新建还是修改事件
-        String request=intent.getStringExtra("request");
+        request=intent.getStringExtra("request");
     //    String request = "ADD";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  EE");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
@@ -216,7 +234,7 @@ public class AddEventActivity extends AppCompatActivity{
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, monthOfYear, dayOfMonth);
-                SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日 EE");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd  EE");
                 date.setText(df.format(calendar.getTime()));
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
