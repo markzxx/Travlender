@@ -167,5 +167,7 @@
                 android:text="出行方式"
                 android:textColor="#000" />
         </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>

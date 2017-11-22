@@ -25,6 +25,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cs309.travelender.R;
+import cs309.travlender.WHL.LocationActivity;
 import cs309.travlender.ZSQ.Event;
 import cs309.travlender.ZXX.EventManager;
 
@@ -95,7 +96,7 @@ public class AddEventActivity extends AppCompatActivity{
 
     @OnClick(R.id.layout_location)
     void openSetLocalActivity() {
-        startActivityForResult(new Intent(AddEventActivity.this, SetLocalActivity.class), 2);
+        startActivityForResult(new Intent(AddEventActivity.this, LocationActivity.class), 2);
     }
 
     @Bind(R.id.layout_smart_transport)
@@ -225,9 +226,10 @@ public class AddEventActivity extends AppCompatActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==2 && resultCode==2){
-            event_location.setText(data.getStringExtra("Location"));
-            event.setLongitude(data.getDoubleExtra("to_Longitude",0));
-            event.setLatitude(data.getDoubleExtra("to_Latitude",0));
+            Bundle bundle = data.getExtras();
+            event_location.setText(bundle.getString("location_name","无"));
+            event.setLongitude(bundle.getDouble("to_Longitude",0));
+            event.setLatitude(bundle.getDouble("to_Latitude",0));
         }
     }
 
