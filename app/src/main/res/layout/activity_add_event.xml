@@ -317,6 +317,14 @@
                         android:layout_marginLeft="40dp"
                         android:text="添加地点"
                         />
+
+                    <Switch
+                        android:id="@+id/sw_smart_remind"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"/>
                 </RelativeLayout>
 
                 <View
@@ -327,7 +335,7 @@
 
 
                 <RelativeLayout
-                    android:id="@+id/layout_alarm_color"
+                    android:id="@+id/layout_smart_transport"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
 
@@ -350,13 +358,7 @@
                         android:spinnerMode="dialog"
                         android:textColor="#000" />
 
-                    <Switch
-                        android:id="@+id/sw_smart_remind"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
-                        android:layout_centerVertical="true"/>
+
                 </RelativeLayout>
 
                 <View

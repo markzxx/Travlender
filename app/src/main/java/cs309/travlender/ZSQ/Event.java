@@ -95,6 +95,7 @@ public class Event implements ZHANGSHQIContract.EventInterface {
         value.put("transport",transport);
     }
     public int getRemindtime(){ return value.getAsInteger("remindtime");}
+    public void setRemindtime(String remindtime){ value.put(DB.KEY_REMINDTIME,remindtime);}
     public double getLongitude(){
         return value.getAsDouble("longitude");
     }

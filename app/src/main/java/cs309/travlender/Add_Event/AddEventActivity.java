@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -96,14 +97,22 @@ public class AddEventActivity extends AppCompatActivity{
         startActivityForResult(new Intent(AddEventActivity.this, SetLocalActivity.class), 2);
     }
 
+    @Bind(R.id.layout_smart_transport)
+    RelativeLayout smart_tarnsport;
     @Bind(R.id.sw_smart_remind)
     Switch sw_smaart_remind;
     @OnClick(R.id.sw_smart_remind)
     void smart_remind(){
         if(!isSmartRemind)
+        {
             isSmartRemind = true;
+            smart_tarnsport.setVisibility(View.VISIBLE);
+        }
         else
+        {
             isSmartRemind = false;
+            smart_tarnsport.setVisibility(View.GONE);
+        }
     }
 
     @Bind(R.id.sw_all_day)
@@ -141,6 +150,14 @@ public class AddEventActivity extends AppCompatActivity{
         }
         event.setStarttime(Timestamp.valueOf(start).getTime());
         event.setEndtime(Timestamp.valueOf(end).getTime());
+
+        event.setRemindtime(getResources().getStringArray(R.array.remindvalue)[event_remindtime.getSelectedItemPosition()]);
+
+        if(event_location.getText().toString().equals(""))
+            event.setLocation("无");
+        else
+            event.setLocation(event_location.getText().toString());
+
 
     }
 
