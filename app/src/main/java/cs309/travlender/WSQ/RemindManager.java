@@ -41,7 +41,7 @@ public class RemindManager {
 
         event = eventManager.getEvent(eventID);
         if (!event.getLocation().equals("无") && event.getSmartRemind() == 1)
-            startServiceTravelTime(context, event.getLatitude(), event.getLongitude(), event.getTransport(), eventID);
+            startServiceTravelTime(context, event.getLatitude(), event.getLongitude(), "drive", eventID);
 
         else {
             // 启动服务，移到地图广播接收器里启动服务。
