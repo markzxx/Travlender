@@ -47,22 +47,22 @@ public class Alarm extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("Alarm", "onStartCommand executed");
         //传递eventID过来，创建remindEvent
-        remindEvent = new AlarmEvent(this, new EventManager(this).openEvent(Integer.parseInt(intent.getDataString())));
+        remindEvent = new AlarmEvent(this, new EventManager(this).getEvent(Integer.parseInt(intent.getDataString())));
         updateOne(remindEvent);
         return START_NOT_STICKY;
     }
 
-
+//type: StartTime; DepartTime; SetRemindTime
     //传递一个事件过来，设置闹钟
     public void updateOne(AlarmEvent a) {
         //开始时间的闹钟
-        a.schedule(this, a.getStarttime());
+        a.schedule(this, a.getStarttime(), "StartTime");
         //有地点的行程闹钟
         if (a.isQuery == true)
-            a.schedule(this, a.getDepartT());
+            a.schedule(this, a.getDepartT(), "DepartTime");
         //用户设置的提前提醒闹钟
         if (a.getRemindEarlyT() != 0)
-            a.schedule(this, a.getRemindEarlyT());
+            a.schedule(this, a.getRemindEarlyT(), "SetRemindTime");
 
     }
 }

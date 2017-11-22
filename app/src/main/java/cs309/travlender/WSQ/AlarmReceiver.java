@@ -22,7 +22,7 @@ import java.io.IOException;
 public class AlarmReceiver extends BroadcastReceiver {
 
     private Vibrator vibrator;
-
+    private String remindType;//type: StartTime; DepartTime; SetRemindTime
     private MediaPlayer mediaPlayer;
 
     @Override
@@ -30,7 +30,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Bundle bundle = intent.getExtras();
         AlarmEvent alarm = (AlarmEvent) bundle.getSerializable("alarm");
-
+        remindType = intent.getDataString();
         showAlarmDialog(context, alarm);
 
     }
@@ -41,8 +41,27 @@ public class AlarmReceiver extends BroadcastReceiver {
         playMusicAndVibrate(context, alarmEvent);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        switch (remindType){
+            case "StartTime":
+                setDialog(builder, alarmEvent, "Go doing it now!");
+                break;
+            case "DepartTime":
+                setDialog(builder, alarmEvent, String.format("Now you should leave for %s which take %d minutes by %s",
+                        alarmEvent.getFatherE().getLocation(), alarmEvent.getOnWayTime(), alarmEvent.getBestTransport()));
+                break;
+            case "SetRemindTime":
+                setDialog(builder, alarmEvent, String.format("After %d minutes",
+                        alarmEvent.getFatherE().getRemindtime()));
+                break;
+        }
+
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        dialog.show();
+    }
+    private void setDialog(AlertDialog.Builder builder, AlarmEvent alarmEvent, String message){
         builder.setTitle(alarmEvent.getFatherE().getTitle())
-                .setMessage(alarmEvent.getFatherE().getTitle())
+                .setMessage(message)
                 .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -56,10 +75,8 @@ public class AlarmReceiver extends BroadcastReceiver {
                     }
                 });
 
-        AlertDialog dialog = builder.create();
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
     }
+
 
     /**
      * 播放音乐

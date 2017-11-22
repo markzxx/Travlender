@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -28,7 +29,7 @@ public class AlarmEvent extends Event implements Serializable{
     private long startTime;
     //查询队列的优先级是min（deparTime,remindBefore）,由小到大
     //when happen，it must remind.
-    String bestTransport;
+    private String bestTransport;
 
     public AlarmEvent(Alarm value, Event father) {
         super((Cursor) value);
@@ -48,11 +49,11 @@ public class AlarmEvent extends Event implements Serializable{
         //else throw exception
     }
 
-    //设置闹钟,给定时间设置闹钟
-    public void schedule(Context context, long remindTime) {
+    //设置闹钟,给定时间设置闹钟, type: StartTime; DepartTime; SetRemindTime
+    public void schedule(Context context, long remindTime, String type) {
         Intent myIntent = new Intent(context, AlarmReceiver.class);//在闹钟设定时刻通知alarmAlert
         myIntent.putExtra("alarm", this);
-        myIntent.put
+        myIntent.setData(Uri.parse(type));
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -93,4 +94,6 @@ public class AlarmEvent extends Event implements Serializable{
     public long getStarttime() {
         return startTime;
     }
+
+    public String getBestTransport(){return bestTransport; }
 }
