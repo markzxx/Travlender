@@ -12,14 +12,14 @@ import cs309.travlender.ZSQ.Event;
  */
 
 public class AlarmEvent extends Event {
-    AlarmManager alarm;//对应闹钟的指针
-    Event fatherE;//指向原始闹钟的指针
+    private AlarmManager alarm;//对应闹钟的指针
+    private Event fatherE;//指向原始闹钟的指针
 
     boolean isQuery = true;//if location is null
-    long onwayTime = 0;//on way time, if location is not null
-    long departTime;//if location is not null
-    long remindEarly;//if set by user
-    long startTime;
+    private long onwayTime = 0;//on way time, if location is not null
+    private long departTime;//if location is not null
+    private long remindEarly;//if set by user
+    private long startTime;
     //查询队列的优先级是min（deparTime,remindBefore）,由小到大
     //when happen，it must remind.
     String bestTransport;
@@ -48,7 +48,7 @@ public class AlarmEvent extends Event {
 //        bestTransport = map.getBestTrans(fatherE.getTransport(),fatherE.getLocation(), fatherE.getStarttime());//优化交通方式, 交通方式的比较
 
     }
-
+    public Event getFatherE(){ return fatherE};
 
     public long getDepartT(){
         return departTime;

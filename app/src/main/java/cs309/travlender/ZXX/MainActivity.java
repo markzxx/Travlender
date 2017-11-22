@@ -12,6 +12,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import cs309.travelender.R;
+import cs309.travlender.Add_Event.ViewEventActivity;
 import cs309.travlender.ZSQ.Event;
 import cs309.travlender.ZSQ.EventActivity;
 import cs309.travlender.ZSQ.EventAdapter;
@@ -36,7 +37,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         Events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(MainActivity.this,EventActivity.class);
+                Intent intent=new Intent(MainActivity.this,ViewEventActivity.class);
                 //注意这里的request是为了区分是通过什么跳转到详细界面的
                 intent.putExtra("request","Look");
                 intent.putExtra("id",eventList.get(i).getEventId());

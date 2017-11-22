@@ -86,6 +86,17 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+
+        <!-- 开机自启-->
+        <receiver android:name="cs309.travlender.WSQ.AlarmServiceBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="cs309.travlender.WSQ.AlarmAlertBroadcastReceiver">
+        </receiver>
+
     </application>
 
 </manifest>

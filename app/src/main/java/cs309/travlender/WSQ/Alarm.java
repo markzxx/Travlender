@@ -2,9 +2,14 @@ package cs309.travlender.WSQ;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,20 +21,21 @@ import java.util.PriorityQueue;
 import cs309.travlender.ZSQ.Event;
 import cs309.travlender.ZXX.EventManager;
 
-
-public class Alarm extends AppCompatActivity {
+//被唤醒时
+public class Alarm extends Service {
+    RemindManager remindManager;//被观察的主题
 
     List<AlarmManager> alarms;//为remindEvents设置的
     Calendar calendar= Calendar.getInstance();
     PriorityQueue<AlarmEvent> remindEvents;//查询队列
-    private AlarmManager alarm2;
+
 
 
     //一旦modify结束（notify：则启动这个后台活动；可以是listen）就传递event给alarms list,  refresh queryQueue
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate() {
+        super.onCreate();
         //setContentView(R.layout.activity_alarm);//在后台不需要界面
         remindEvents = new PriorityQueue<>(10, eventComparator);
 
@@ -38,6 +44,16 @@ public class Alarm extends AppCompatActivity {
         setAlarm(remindEvents);//设定闹钟队列
 
 
+    }
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("Alarm", "onStartCommand executed");
+        return super.onStartCommand(intent, flags, startId);
     }
 
     //软件打开时添加所有事件进来
@@ -70,6 +86,7 @@ public class Alarm extends AppCompatActivity {
             return (int) (Math.min(a1.getDepartT(),a1.getRemindEarlyT()) - Math.min(a2.getDepartT(),a2.getRemindEarlyT()));
         }
     };
+
     //传递一个事件过来，设置闹钟，加上提醒内容，计算提醒时间（调用地图）
     public void updateOne(Event e){
 
@@ -94,7 +111,7 @@ public class Alarm extends AppCompatActivity {
             alarms.add(alarm1);
 
             //设定在用户选择提前提醒的闹钟
-            if(remindEvents.peek().fatherE.getRemindtime() == 0){
+            if(remindEvents.peek().getFatherE().getRemindtime() == 0){
                 calendar.setTimeInMillis(remindEvents.peek().getRemindEarlyT());//将时间设定为最优先的
                 AlarmManager alarm2= (AlarmManager)getSystemService(ALARM_SERVICE);
                 alarm2.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);//设定闹钟
@@ -111,6 +128,16 @@ public class Alarm extends AppCompatActivity {
 
         }
     }
+
+    //删除闹钟
+    public static void cancelAlarm(Context context, String action, int id) {
+        Intent intent = new Intent(action);
+        PendingIntent pi = PendingIntent.getBroadcast(context, id, intent, PendingIntent
+                .FLAG_CANCEL_CURRENT);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        am.cancel(pi);
+    }
+
 
     //get time
     public String transferLongToDate(String dateFormat, Long millSec) {
