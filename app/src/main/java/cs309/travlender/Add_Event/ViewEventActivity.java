@@ -54,7 +54,7 @@ public class ViewEventActivity extends Activity implements View.OnClickListener{
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 
         id=intent.getExtras().getInt("id");
-        currentEvent = EM.getAllEvent().get(0);
+        currentEvent = EM.openEvent(id);
         etTitle.setText(currentEvent.getTitle());
         etStart.setText(format.format(new Timestamp(currentEvent.getStarttime())));
         etEnd.setText(format.format(new Timestamp(currentEvent.getEndtime())));
