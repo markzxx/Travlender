@@ -66,17 +66,19 @@ public class TravelTimeService extends Service {
     public static final String EXTRA_PARAM_LATITUDE = "com.example.dell.map_3.extra.LATITUDE";
     public static final String EXTRA_PARAM_LONGITUDE = "com.example.dell.map_3.extra.LONGITUDE";
     public static final String EXTRA_PARAM_TRANSPORTATION = "com.example.dell.map_3.extra.TRANSPORTATION";
+    public static final String EXTRA_PARAM_QUERY_ID = "com.example.dell.map_3.extra.QUERY_ID";
 
     public TravelTimeService() {
     }
 
     // 开启服务用的函数
-    public static void startServiceTravelTime(Context context, double param1, double param2, String param3) {
+    public static void startServiceTravelTime(Context context, double param1, double param2, String param3, int id) {
 //        Toast.makeText(context,"startActionTravelTime", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(context, TravelTimeService.class);
         intent.setAction(ACTION_TRAVEL_TIME);
         intent.putExtra(EXTRA_PARAM_LATITUDE, String.valueOf(param1));
         intent.putExtra(EXTRA_PARAM_LONGITUDE, String.valueOf(param2));
+        intent.putExtra(EXTRA_PARAM_QUERY_ID, String.valueOf(id));
         intent.putExtra(EXTRA_PARAM_TRANSPORTATION, param3);
         context.startService(intent);
     }
@@ -99,30 +101,33 @@ public class TravelTimeService extends Service {
         final double latitude = Double.parseDouble(intent.getStringExtra(EXTRA_PARAM_LATITUDE));
         final double longitude = Double.parseDouble(intent.getStringExtra(EXTRA_PARAM_LONGITUDE));
         final String tp = intent.getStringExtra(EXTRA_PARAM_TRANSPORTATION);
+        final int id = Integer.parseInt(intent.getStringExtra(EXTRA_PARAM_LONGITUDE));
         Toast.makeText(getApplicationContext(),tp, Toast.LENGTH_SHORT).show();
-        handleActionTravelTime(latitude, longitude, tp);
+        handleActionTravelTime(latitude, longitude, tp, id);
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void handleActionTravelTime(double to_Latitude, double to_Longitude, String transportation) {
+    private void handleActionTravelTime(double to_Latitude, double to_Longitude, String transportation, int id) {
         // TODO: Handle action
         // 具体执行一个任务
 //        Toast.makeText(getApplicationContext(),"开始服务", Toast.LENGTH_SHORT).show();
         travel_mode = transportation;
         dst_Lat = to_Latitude;
         dst_Longt = to_Longitude;
-        location();
+        location(id);
     }
 
-    private void sendBroadcast(double time){
+    private void sendBroadcast(int time, int id){
         Intent intent = new Intent("com.example.dell.map.LocationReceiver");
         intent.putExtra("time", String.valueOf(time));
+        intent.putExtra("id", String.valueOf(id));
         sendBroadcast(intent);
     }
 
-    private void sendAsynQuery(LatLonPoint from, LatLonPoint to, String tp, String city){
+    private void sendAsynQuery(LatLonPoint from, LatLonPoint to, String tp, String city, int id){
 //        Toast.makeText(getApplicationContext(),"发送查询", Toast.LENGTH_SHORT).show();
         routeSearch = new RouteSearch(getApplicationContext());
+        final int _id = id;
         routeSearch.setRouteSearchListener(new RouteSearch.OnRouteSearchListener(){
             @Override
             public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
@@ -151,7 +156,7 @@ public class TravelTimeService extends Service {
                         bus_time_avg += bus_path_time;
                     }
                     bus_time_avg /= busPaths.size();
-                    sendBroadcast(bus_time_avg);
+                    sendBroadcast((int)bus_time_avg, _id);
                 }
             }
 
@@ -167,7 +172,7 @@ public class TravelTimeService extends Service {
                         drive_time += ds.getDuration();
                     }
 //                    Toast.makeText(getApplicationContext(),"发广播", Toast.LENGTH_SHORT).show();
-                    sendBroadcast(drive_time);
+                    sendBroadcast((int)drive_time, _id);
                 }
             }
 
@@ -182,7 +187,7 @@ public class TravelTimeService extends Service {
                             walk_time += ds.getDuration();
                         }
                     }
-                    sendBroadcast(walk_time);
+                    sendBroadcast((int)walk_time, _id);
                 }
             }
 
@@ -197,7 +202,7 @@ public class TravelTimeService extends Service {
                             ride_time += ds.getDuration();
                         }
                     }
-                    sendBroadcast(ride_time);
+                    sendBroadcast((int)ride_time, _id);
                 }
             }
         });
@@ -226,7 +231,8 @@ public class TravelTimeService extends Service {
     }
 
     // 开启定位功能
-    private void location(){
+    private void location(int id){
+        final int _id = id;
         //声明定位回调监听器
         mLocationListener = new AMapLocationListener(){
             /**
@@ -242,7 +248,7 @@ public class TravelTimeService extends Service {
                         myLongt = amapLocation.getLongitude();//获取经度
                         current_city = amapLocation.getCity();//获取当前城市
                         //定位成功，发起查询请求
-                        sendAsynQuery(new LatLonPoint(myLat, myLongt), new LatLonPoint(dst_Lat, dst_Longt), travel_mode, current_city);
+                        sendAsynQuery(new LatLonPoint(myLat, myLongt), new LatLonPoint(dst_Lat, dst_Longt), travel_mode, current_city, _id);
 //                        amapLocation.getAddress();//地址
                     }else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
