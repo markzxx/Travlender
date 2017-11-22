@@ -112,6 +112,8 @@ public class LocationActivity extends AppCompatActivity{
                     bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
                     //传入目的地经度
                     bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
+                    //传入目的地经度
+                    bundle.putString("location_name", poi_List.get(0).getName());
                     //intent传递bundle
                     intent.putExtras(bundle);
 
@@ -149,6 +151,8 @@ public class LocationActivity extends AppCompatActivity{
                 bundle.putDouble("to_Latitude", poi.getLatitude());
                 //传入目的地经度
                 bundle.putDouble("to_Longitude", poi.getLongitude());
+                //传入目的地经度
+                bundle.putString("location_name", poi_List.get(0).getName());
                 //intent传递bundle
                 intent.putExtras(bundle);
 
