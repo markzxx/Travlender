@@ -208,7 +208,7 @@ public class AddEventActivity extends AppCompatActivity{
             case "EDIT":
                 insert_update_title.setText("编辑活动");
                 id=intent.getExtras().getInt("id");
-                event = eventManager.getAllEvent().get(0);
+                event = eventManager.getEvent(id);
                 event_title.setText(event.getTitle());
                 start_date.setText(dateFormat.format(event.getStarttime()));
                 end_date.setText(dateFormat.format(event.getEndtime()));

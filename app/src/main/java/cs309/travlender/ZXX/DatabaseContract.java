@@ -13,7 +13,7 @@ public class DatabaseContract {
 
     public static class DBevent implements BaseColumns {
         public static final String TABLE_NAME = "event";
-        public static final String _ID = "event_id";
+        public static final String _ID = "_id";
         public static final String KEY_TITLE = "title";
         public static final String KEY_ADDTIME = "addtime";
         public static final String KEY_STARTTIME="starttime";
@@ -30,7 +30,7 @@ public class DatabaseContract {
 
     public static class DBpreference implements BaseColumns {
         public static final String TABLE_NAME = "preference";
-        public static final String _ID = "preference_id";
+        public static final String _ID = "preferenceid";
         public static final String KEY_TRANSPORT = "transport";
         public static final String KEY_REMINDTYPE = "remindtype";
     }

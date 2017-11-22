@@ -62,7 +62,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             case R.id.btn_search:
                 Intent s = new Intent(this,AddEventActivity.class);
                 s.putExtra("request", "EDIT");
-                s.putExtra("id", "2");
+                s.putExtra("id", 1);
                 startActivityForResult(s,1);
                 break;
             case R.id.btn_clear:

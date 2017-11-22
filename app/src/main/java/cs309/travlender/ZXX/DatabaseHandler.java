@@ -31,7 +31,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     +DBevent.KEY_LATITUDE + REAL_TYPE+ DEFAULT+ COMMA
                     +DBevent.KEY_TRANSPORT + TEXT_TYPE+ COMMA
                     +DBevent.KEY_CONTENT + TEXT_TYPE+ COMMA
-                    +DBevent.KEY_SMARTREMIND + INT_TYPE+ COMMA
+                    +DBevent.KEY_SMARTREMIND + INT_TYPE+ DEFAULT+ COMMA
                     +DBevent.KEY_EDITTIME + INT_TYPE+ DEFAULT
                     +")";
 
