@@ -17,7 +17,9 @@ public class Event implements ZHANGSHQIContract.EventInterface {
 
     private static DatabaseContract.DBevent DB = new DatabaseContract.DBevent();
 
-    public Event(){}
+    public Event(){
+        value = new ContentValues();
+    }
 
     public Event(ContentValues value) {
         this.value = value;

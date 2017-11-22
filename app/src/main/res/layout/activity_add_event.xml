@@ -315,7 +315,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@id/iv_local"
                         android:layout_marginLeft="40dp"
-                        android:text="添加地点"
+                        android:hint="添加地点"
                         />
 
                     <Switch

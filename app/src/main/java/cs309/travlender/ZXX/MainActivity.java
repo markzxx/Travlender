@@ -54,15 +54,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View view){
         switch (view.getId()) {
-            case R.id.btn_add:
+            case R.id.btn_search:
                 Intent a = new Intent(this,EventActivity.class);
                 a.putExtra("request", "Add");
                 startActivityForResult(a,1);
                 break;
-            case R.id.btn_search:
+            case R.id.btn_add:
                 Intent s = new Intent(this,AddEventActivity.class);
-                s.putExtra("request", "EDIT");
-                s.putExtra("id", 1);
+                s.putExtra("request", "ADD");
                 startActivityForResult(s,1);
                 break;
             case R.id.btn_clear:
