@@ -1,6 +1,7 @@
 package cs309.travlender.WHL;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity{
             public  void onClick(View v){
                 if (!poi_List.isEmpty()){
                     Bundle bundle=new Bundle();
-                    Intent intent = new Intent(MainActivity.this, Path_planning.class);
+                    Intent intent = new Intent();
                     //传入目的地纬度
                     bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
                     //传入目的地经度
@@ -120,9 +121,12 @@ public class MainActivity extends AppCompatActivity{
                     //intent传递bundle
                     intent.putExtras(bundle);
                     Log.d("MainActivity", "click listener");
-                    //开启跳转
-                    startActivity(intent);
+
+                    setResult(666, intent);
+                    finish();
+//                    TravelTimeService.startServiceTravelTime(getApplicationContext(), poi_List.get(0).getLatitude(), poi_List.get(0).getLongitude(), transportation);
                 }
+
 
             }
         });
@@ -147,7 +151,6 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Point_of_Interest poi = poi_List.get(position);
-                //Toast.makeText(MainActivity.this, poi.getName(), Toast.LENGTH_SHORT).show();
                 Bundle bundle=new Bundle();
                 Intent intent = new Intent(MainActivity.this, Path_planning.class);
                 //传入目的地纬度
@@ -162,8 +165,10 @@ public class MainActivity extends AppCompatActivity{
                 bundle.putString("transportation", transportation);
                 //intent传递bundle
                 intent.putExtras(bundle);
-                //开启跳转
-                startActivity(intent);
+
+                setResult(666, intent);
+                finish();
+//                TravelTimeService.startServiceTravelTime(getApplicationContext(), poi.getLatitude(), poi.getLongitude(), transportation);
             }
         });
     }
