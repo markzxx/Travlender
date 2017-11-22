@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 
+import cs309.travlender.ZXX.DatabaseContract;
+
 
 /**
  * Created by Administrator on 2017/10/16.
@@ -13,7 +15,11 @@ public class Event implements ZHANGSHQIContract.EventInterface {
 
     private ContentValues value;
 
-    public Event(){}
+    private static DatabaseContract.DBevent DB = new DatabaseContract.DBevent();
+
+    public Event(){
+        value = new ContentValues();
+    }
 
     public Event(ContentValues value) {
         this.value = value;
@@ -33,19 +39,19 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
 
     public int getEventId() {
-        return value.getAsInteger("event_id");
+        return value.getAsInteger(DB._ID);
     }
 
     public void setEventId(int id) {
-        value.put("event_id",id);
+        value.put(DB._ID,id);
     }
 
     public String getTitle() {
-        return value.getAsString("title");
+        return value.getAsString(DB.KEY_TITLE);
     }
 
     public void setTitle(String title) {
-        value.put("title",title);
+        value.put(DB.KEY_TITLE,title);
     }
 
     public long getStarttime() {
@@ -91,11 +97,24 @@ public class Event implements ZHANGSHQIContract.EventInterface {
         value.put("transport",transport);
     }
     public int getRemindtime(){ return value.getAsInteger("remindtime");}
+    public void setRemindtime(String remindtime){ value.put(DB.KEY_REMINDTIME,remindtime);}
     public double getLongitude(){
         return value.getAsDouble("longitude");
     }
     public double getLatitude(){
         return value.getAsDouble("latitude");
+    }
+    public String  getContent(){
+        return value.getAsString("content");
+    }
+    public void setContent(String content){
+        value.put(DB.KEY_CONTENT,content);
+    }
+    public int getSmartRemind(){
+        return value.getAsInteger(DB.KEY_SMARTREMIND);
+    }
+    public void setSmartRemind(int smartRemind){
+        value.put(DB.KEY_SMARTREMIND,smartRemind);
     }
 //    @Override
 //    public int describeContents() {

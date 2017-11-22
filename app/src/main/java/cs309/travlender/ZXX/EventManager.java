@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import cs309.travlender.WSQ.RemindManager;
 import cs309.travlender.ZSQ.Event;
 
 /**
@@ -21,8 +22,22 @@ public class EventManager implements EventManagerContract.Manager {
     public DatabaseHandler dbHelper;
     static Event event;
     static List<Event> SearchList;
+    private static RemindManager RM;
     public EventManager(@NonNull Context context){
         dbHelper = new DatabaseHandler(context);
+    }
+
+    public void update(int id){
+        if (RM!=null)
+            RM.update(id);
+    }
+
+    public void setRemindManager(RemindManager rm){
+        RM = rm;
+    }
+
+    public RemindManager getRemindManager(){
+        return RM;
     }
 
     public int addEvent(Event event) {
@@ -53,13 +68,14 @@ public class EventManager implements EventManagerContract.Manager {
         db.close();
     }
 
-    public Event openEvent(int id) {
+    public Event getEvent(int id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         String[] selection = {"*"};
-        String where = DatabaseContract.DBevent._ID + " = ? ";
+        String where =DatabaseContract.DBevent._ID + " = ? ";
         String[] whereArgs = {String.valueOf(id)};
         Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,null);
+        cursor.moveToFirst();
         this.event = new Event(cursor);
         db.close();
         return event;

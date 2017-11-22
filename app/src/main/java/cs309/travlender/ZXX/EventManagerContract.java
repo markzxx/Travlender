@@ -17,7 +17,7 @@ public interface EventManagerContract {
 
         void editEvent(Event event);
 
-        Event openEvent(int id);
+        Event getEvent(int id);
 
         List<Event> getAllEvent();
 

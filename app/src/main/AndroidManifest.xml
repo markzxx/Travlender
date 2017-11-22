@@ -49,7 +49,20 @@
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService" />
 
-        <activity android:name="cs309.travlender.ZXX.MainActivity" />
+        <activity android:name="cs309.travlender.ZXX.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity android:name="cs309.travlender.Add_Event.ViewEventActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="cs309.travlender.ZSQ.Main" />
         <activity
             android:name="cs309.travlender.ZSQ.EventActivity"
@@ -58,17 +71,15 @@
             android:name="cs309.travlender.ZXX.SearchActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name="cs309.travlender.ZXX.SearchResultActivity" />
-        <activity android:name="cs309.travlender.WHL.Path_planning" />
+
         <activity android:name="cs309.travlender.WHL.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <receiver
-            android:name="cs309.travlender.WHL.TravelTimeServiceReceiver"
+            android:name="cs309.travlender.WHL.LocationSearchReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -78,10 +89,14 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name="cs309.travlender.WHL.TravelTimeService"
-            android:enabled="true"
-            android:exported="true" />
+        <activity android:name="cs309.travlender.Add_Event.AddEventActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <!-- 开机自启-->
+
     </application>
 
 </manifest>

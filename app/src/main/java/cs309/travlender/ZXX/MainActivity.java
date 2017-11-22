@@ -1,7 +1,6 @@
 package cs309.travlender.ZXX;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +11,8 @@ import android.widget.ListView;
 import java.util.List;
 
 import cs309.travelender.R;
+import cs309.travlender.Add_Event.AddEventActivity;
+import cs309.travlender.Add_Event.ViewEventActivity;
 import cs309.travlender.ZSQ.Event;
 import cs309.travlender.ZSQ.EventActivity;
 import cs309.travlender.ZSQ.EventAdapter;
@@ -36,14 +37,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
         Events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(MainActivity.this,EventActivity.class);
+                Intent intent=new Intent(MainActivity.this,ViewEventActivity.class);
                 //注意这里的request是为了区分是通过什么跳转到详细界面的
-                intent.putExtra("request","Look");
                 intent.putExtra("id",eventList.get(i).getEventId());
-                ContentValues values = eventList.get(i).getValue();
-                for(String key:values.keySet()){
-                    intent.putExtra(key,(String)values.get(key));
-                }
                 startActivityForResult(intent, 0);
             }
         });
@@ -58,13 +54,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View view){
         switch (view.getId()) {
-            case R.id.btn_add:
+            case R.id.btn_search:
                 Intent a = new Intent(this,EventActivity.class);
                 a.putExtra("request", "Add");
                 startActivityForResult(a,1);
                 break;
-            case R.id.btn_search:
-                Intent s = new Intent(this,SearchActivity.class);
+            case R.id.btn_add:
+                Intent s = new Intent(this,AddEventActivity.class);
+                s.putExtra("request", "ADD");
                 startActivityForResult(s,1);
                 break;
             case R.id.btn_clear:
