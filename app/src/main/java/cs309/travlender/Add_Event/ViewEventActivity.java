@@ -55,7 +55,7 @@ public class ViewEventActivity extends Activity{
         Intent intent=new Intent(ViewEventActivity.this,AddEventActivity.class);
         intent.putExtra("request","EDIT");
         intent.putExtra("id",currentEvent.getEventId());
-        startActivityForResult(intent, 0);
+        startActivityForResult(intent,0);
     }
 
     @OnClick(R.id.tv_delete)
@@ -81,8 +81,8 @@ public class ViewEventActivity extends Activity{
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 
         id=intent.getExtras().getInt("id");
-//        currentEvent = EM.openEvent(id);
-        currentEvent= EM.getAllEvent().get(0);
+        currentEvent = EM.getEvent(id);
+        //currentEvent= EM.getAllEvent().get(0);
         etTitle.setText(currentEvent.getTitle());
         etStart.setText(format.format(new Timestamp(currentEvent.getStarttime())));
         etEnd.setText(format.format(new Timestamp(currentEvent.getEndtime())));
@@ -90,6 +90,11 @@ public class ViewEventActivity extends Activity{
         etLocation.setText(currentEvent.getLocation());
         etTransport.setText(currentEvent.getTransport());
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        onCreate(null);
     }
 
 }

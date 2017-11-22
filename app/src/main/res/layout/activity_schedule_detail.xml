@@ -43,7 +43,7 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/update_fab"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="left"
         android:layout_marginLeft="18sp"
         android:layout_marginTop="-18dp"
@@ -59,7 +59,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
@@ -73,7 +73,7 @@
             <TextView
                 android:id="@+id/detail_start_time"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="40dp"
                 android:text="6:00"
@@ -82,7 +82,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -90,12 +90,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="26dp"
-                android:background="@drawable/ic_alarm_grey_600_24dp" />
+                android:background="@drawable/ic_access_time_grey_600_24dp" />
 
             <TextView
                 android:id="@+id/detail_end_time"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="40dp"
                 android:text="12:00"
@@ -104,7 +104,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -117,7 +117,7 @@
             <TextView
                 android:id="@+id/detail_alarm_remind"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="40dp"
                 android:text="选择提醒时间"
@@ -126,7 +126,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -139,7 +139,7 @@
             <TextView
                 android:id="@+id/detail_alarm_local"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="40dp"
                 android:text="北京"
@@ -148,20 +148,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="26dp"
-                android:background="@drawable/ic_menu_grey_600_24dp" />
+                android:background="@drawable/ic_extension_grey_600_24dp" />
 
             <TextView
                 android:id="@+id/detail_alarm_transport"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="40dp"
                 android:text="出行方式"
