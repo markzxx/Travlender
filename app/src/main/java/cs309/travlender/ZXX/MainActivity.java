@@ -39,12 +39,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(MainActivity.this,ViewEventActivity.class);
                 //注意这里的request是为了区分是通过什么跳转到详细界面的
-                intent.putExtra("request","Look");
                 intent.putExtra("id",eventList.get(i).getEventId());
-                ContentValues values = eventList.get(i).getValue();
-                for(String key:values.keySet()){
-                    intent.putExtra(key,(String)values.get(key));
-                }
                 startActivityForResult(intent, 0);
             }
         });

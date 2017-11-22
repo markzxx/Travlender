@@ -72,9 +72,9 @@ public class EventManager implements EventManagerContract.Manager {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         String[] selection = {"*"};
-        String where = DatabaseContract.DBevent._ID + " = ? ";
+        String where = DatabaseContract.DBevent._ID + " = 1 ";
         String[] whereArgs = {String.valueOf(id)};
-        Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,null);
+        Cursor cursor = db.query(table_name,selection,where,null,null,null,null);
         this.event = new Event(cursor);
         db.close();
         return event;

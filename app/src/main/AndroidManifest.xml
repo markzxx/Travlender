@@ -52,10 +52,17 @@
         <activity android:name="cs309.travlender.ZXX.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <activity android:name="cs309.travlender.Add_Event.ViewEventActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="cs309.travlender.ZSQ.Main" />
         <activity
             android:name="cs309.travlender.ZSQ.EventActivity"
@@ -64,6 +71,7 @@
             android:name="cs309.travlender.ZXX.SearchActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name="cs309.travlender.ZXX.SearchResultActivity" />
+
         <activity android:name="cs309.travlender.WHL.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -88,11 +96,6 @@
         </activity>
 
         <!-- 开机自启-->
-        <receiver android:name="cs309.travlender.WSQ.AlarmServiceBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
 
     </application>
 
