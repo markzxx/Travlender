@@ -12,6 +12,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import cs309.travelender.R;
+import cs309.travlender.Add_Event.AddEventActivity;
 import cs309.travlender.Add_Event.ViewEventActivity;
 import cs309.travlender.ZSQ.Event;
 import cs309.travlender.ZSQ.EventActivity;
@@ -60,7 +61,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 startActivityForResult(a,1);
                 break;
             case R.id.btn_search:
-                Intent s = new Intent(this,SearchActivity.class);
+                Intent s = new Intent(this,AddEventActivity.class);
+                s.putExtra("request", "EDIT");
+                s.putExtra("id", "1");
                 startActivityForResult(s,1);
                 break;
             case R.id.btn_clear:
