@@ -91,57 +91,94 @@
                         android:layout_centerVertical="true"/>
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/alarm_date"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="75dp"
-                    android:textColor="#000"
-                    android:text="选择活动日期"/>
+                    android:layout_height="50dp">
 
+                <ImageView
+                    android:id="@+id/iv_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:visibility="invisible"
+                    android:background="@drawable/ic_access_time_grey_600_24dp"/>
                 <TextView
-                    android:id="@+id/alarm_start_time"
-                    android:layout_width="match_parent"
+                    android:id="@+id/start_date"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:gravity="center_vertical"
-                    android:paddingLeft="75dp"
+                    android:layout_toRightOf="@id/iv_start"
+                    android:layout_marginLeft="40dp"
                     android:textColor="#000"
-                    android:text="选择开始时间"/>
-
+                    android:text="YYYY年MM月DD日周W"/>
                 <TextView
-                    android:id="@+id/alarm_end_time"
-                    android:layout_width="match_parent"
+                    android:id="@+id/start_time"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:gravity="center_vertical"
-                    android:paddingLeft="75dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
                     android:textColor="#000"
-                    android:text="选择结束时间"/>
+                    android:text="HH:MM"/>
+                </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/layout_alarm_replay"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
 
                     <ImageView
-                        android:id="@+id/iv_replay"
+                        android:id="@+id/iv_end"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/ic_replay_grey_600_24dp"/>
-
+                        android:visibility="invisible"
+                        android:background="@drawable/ic_access_time_grey_600_24dp"/>
                     <TextView
-                        android:id="@+id/alarm_replay"
+                        android:id="@+id/end_date"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/iv_replay"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:layout_toRightOf="@id/iv_end"
                         android:layout_marginLeft="40dp"
                         android:textColor="#000"
-                        android:text="不重复"/>
-
+                        android:text="YYYY年MM月DD日周W"/>
+                    <TextView
+                        android:id="@+id/end_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="30dp"
+                        android:textColor="#000"
+                        android:text="HH:MM"/>
                 </RelativeLayout>
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/layout_alarm_replay"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="50dp">-->
+
+                    <!--<ImageView-->
+                        <!--android:id="@+id/iv_replay"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:background="@drawable/ic_replay_grey_600_24dp"/>-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/alarm_replay"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_toRightOf="@id/iv_replay"-->
+                        <!--android:layout_marginLeft="40dp"-->
+                        <!--android:textColor="#000"-->
+                        <!--android:text="不重复"/>-->
+
+                <!--</RelativeLayout>-->
 
                 <View
                     android:layout_width="match_parent"
@@ -162,85 +199,95 @@
                         android:layout_centerVertical="true"
                         android:background="@drawable/ic_notifications_grey_600_24dp"/>
 
-                    <TextView
-                        android:id="@+id/alarm_remind"
+                    <!--<TextView-->
+                        <!--android:id="@+id/alarm_remind"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_toRightOf="@id/iv_remind"-->
+                        <!--android:layout_marginLeft="40dp"-->
+                        <!--android:textColor="#000"-->
+                        <!--android:text="选择提醒时间"/>-->
+                    <Spinner
+                        android:id="@+id/event_remindtime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="40dp"
                         android:layout_toRightOf="@id/iv_remind"
-                        android:layout_marginLeft="40dp"
-                        android:textColor="#000"
-                        android:text="选择提醒时间"/>
+                        android:entries="@array/remindtime"
+                        android:spinnerMode="dialog"
+                        android:textColor="#000" />
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#4fa3a3a3"
-                    />
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="#4fa3a3a3"-->
+                    <!--/>-->
 
-                <RelativeLayout
-                    android:id="@+id/layout_alarm_vibrate"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/layout_alarm_vibrate"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="50dp">-->
 
-                    <ImageView
-                        android:id="@+id/iv_vibrate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/ic_vibration_grey_600_24dp"/>
+                    <!--<ImageView-->
+                        <!--android:id="@+id/iv_vibrate"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:background="@drawable/ic_vibration_grey_600_24dp"/>-->
 
-                    <TextView
-                        android:id="@+id/alarm_vibrate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/iv_vibrate"
-                        android:layout_marginLeft="40dp"
-                        android:textColor="#000"
-                        android:text="震动"/>
+                    <!--<TextView-->
+                        <!--android:id="@+id/alarm_vibrate"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_toRightOf="@id/iv_vibrate"-->
+                        <!--android:layout_marginLeft="40dp"-->
+                        <!--android:textColor="#000"-->
+                        <!--android:text="震动"/>-->
 
-                    <Switch
-                        android:id="@+id/sw_vibrate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
-                        android:layout_centerVertical="true"/>
-                </RelativeLayout>
+                    <!--<Switch-->
+                        <!--android:id="@+id/sw_vibrate"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_marginRight="10dp"-->
+                        <!--android:layout_centerVertical="true"/>-->
+                <!--</RelativeLayout>-->
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#4fa3a3a3"
-                    />
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="#4fa3a3a3"-->
+                    <!--/>-->
 
-                <RelativeLayout
-                    android:id="@+id/layout_alarm_tone_Path"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/layout_alarm_tone_Path"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="50dp">-->
 
-                    <ImageView
-                        android:id="@+id/iv_alarm_tone_Path"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/ic_queue_music_grey_600_24dp"/>
+                    <!--<ImageView-->
+                        <!--android:id="@+id/iv_alarm_tone_Path"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:background="@drawable/ic_queue_music_grey_600_24dp"/>-->
 
-                    <TextView
-                        android:id="@+id/alarm_tone_Path"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/iv_alarm_tone_Path"
-                        android:layout_marginLeft="40dp"
-                        android:textColor="#000"
-                        android:text="选择铃声"/>
+                    <!--<TextView-->
+                        <!--android:id="@+id/alarm_tone_Path"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_toRightOf="@id/iv_alarm_tone_Path"-->
+                        <!--android:layout_marginLeft="40dp"-->
+                        <!--android:textColor="#000"-->
+                        <!--android:text="选择铃声"/>-->
 
-                </RelativeLayout>
+                <!--</RelativeLayout>-->
 
                 <View
                     android:layout_width="match_parent"
@@ -285,23 +332,23 @@
                     android:layout_height="50dp">
 
                     <ImageView
-                        android:id="@+id/iv_color"
+                        android:id="@+id/iv_transport"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_centerVertical="true"
                         android:background="@drawable/ic_extension_grey_600_24dp"/>
 
-                    <TextView
-                        android:id="@+id/alarm_color"
+                    <Spinner
+                        android:id="@+id/event_transport"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/iv_color"
                         android:layout_marginLeft="40dp"
-                        android:textColor="#000"
-                        android:text="默认颜色"
-                        />
+                        android:layout_toRightOf="@id/iv_transport"
+                        android:entries="@array/transport"
+                        android:spinnerMode="dialog"
+                        android:textColor="#000" />
                 </RelativeLayout>
 
                 <View
