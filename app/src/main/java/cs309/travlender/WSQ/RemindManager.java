@@ -24,14 +24,18 @@ public class RemindManager extends Activity {
 
 
     }
+    //not good design
     public void update(int eventID){//notify one event with ID,
         event = eventManager.getEvent(eventID);
-        startServiceTravelTime(this, event.getLatitude(),event.getLongitude(),event.getTransport());
+        if(event.getLocation() != null)
+            startServiceTravelTime(this, event.getLatitude(),event.getLongitude(),event.getTransport(),eventID);
 
+        else{
         // 启动服务，移到地图广播接收器里启动服务。
         Intent updateIntent = new Intent(this, Alarm.class);
         updateIntent.setData(Uri.parse(String.valueOf(eventID)));
-        startService(updateIntent);
+            updateIntent.putExtra("onwayTime", 0);
+        startService(updateIntent);}
 
     }
     public void updateAll(){

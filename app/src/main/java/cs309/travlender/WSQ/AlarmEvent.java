@@ -23,16 +23,19 @@ public class AlarmEvent extends Event implements Serializable{
     private Event fatherE;//指向原始闹钟的指针
 
     boolean isQuery = true;//if location is null
-    private long onwayTime = 0;//on way time, if location is not null
-    private long departTime;//if location is not null
-    private long remindEarly = 0;//if set by user
-    private long startTime;
+    private long onwayTime = 0;//on way time, if location is not null(s)
+    private long departTime;//if location is not null(ms) 行程开始的出发时间，算上路程，格林尼治时间
+    private long remindEarly = 0;//if set by user(1 minutes = 60s) 提前多少ms提醒，由用户设置
+    private long remindEarlyTime; //用于提前提醒的格林尼治时间
+    private long startTime;//(1000ms = 1s) 必须提醒的开始时间，格林尼治时间
     //查询队列的优先级是min（deparTime,remindBefore）,由小到大
     //when happen，it must remind.
     private String bestTransport;
 
-    public AlarmEvent(Alarm value, Event father) {
+    public AlarmEvent(Alarm value, Event father, long onwayTime) {
         super((Cursor) value);
+        this.onwayTime = onwayTime;
+        bestTransport = father.getTransport();
         if (father != null) {
             fatherE = father;
             startTime = fatherE.getStarttime();
@@ -43,8 +46,8 @@ public class AlarmEvent extends Event implements Serializable{
                 updateBestTransport(new Date());
                 isQuery = true;
             }
-            departTime = fatherE.getStarttime() - onwayTime;
-            remindEarly = fatherE.getStarttime() - fatherE.getRemindtime();
+            departTime = fatherE.getStarttime() - onwayTime *1000;// in ms(格林尼治时间）
+            remindEarlyTime = fatherE.getStarttime()/60000 - fatherE.getRemindtime();//in
         }
         //else throw exception
     }
@@ -82,7 +85,7 @@ public class AlarmEvent extends Event implements Serializable{
         return departTime;
     }
 
-    public long getRemindEarlyT() {
+    public long getRemindEarly() {
         return remindEarly;
     }
 
@@ -96,4 +99,7 @@ public class AlarmEvent extends Event implements Serializable{
     }
 
     public String getBestTransport(){return bestTransport; }
+
+    public long getRemindEarlyTime(){ return remindEarlyTime; }
+
 }

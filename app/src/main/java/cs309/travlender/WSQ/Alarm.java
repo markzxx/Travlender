@@ -46,8 +46,9 @@ public class Alarm extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("Alarm", "onStartCommand executed");
+        Event event = new EventManager(this).getEvent(Integer.parseInt(intent.getDataString()));
         //传递eventID过来，创建remindEvent
-        remindEvent = new AlarmEvent(this, new EventManager(this).getEvent(Integer.parseInt(intent.getDataString())));
+        remindEvent = new AlarmEvent(this, event, Long.parseLong(intent.getStringExtra("onwayTime")));
         updateOne(remindEvent);
         return START_NOT_STICKY;
     }
@@ -61,8 +62,8 @@ public class Alarm extends Service {
         if (a.isQuery == true)
             a.schedule(this, a.getDepartT(), "DepartTime");
         //用户设置的提前提醒闹钟
-        if (a.getRemindEarlyT() != 0)
-            a.schedule(this, a.getRemindEarlyT(), "SetRemindTime");
+        if (a.getRemindEarlyTime() != 0)
+            a.schedule(this, a.getRemindEarlyTime(), "SetRemindTime");
 
     }
 }
