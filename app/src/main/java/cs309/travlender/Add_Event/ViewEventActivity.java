@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import android.support.design.widget.FloatingActionButton;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,6 +43,8 @@ public class ViewEventActivity extends Activity{
     @Bind(R.id.detail_alarm_transport)
     TextView etTransport;
 
+    @Bind(R.id.update_fab)
+    FloatingActionButton update_fab;
     @Bind(R.id.tv_delete)
     ImageButton btnDele;
     @Bind(R.id.left_alarm_back)
