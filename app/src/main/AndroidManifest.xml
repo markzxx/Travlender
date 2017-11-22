@@ -56,7 +56,12 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
 
+        <activity android:name="cs309.travlender.ZXX.testMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
 
         <activity android:name="cs309.travlender.Add_Event.ViewEventActivity">
