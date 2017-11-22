@@ -112,7 +112,7 @@
                     android:layout_toRightOf="@id/iv_start"
                     android:layout_marginLeft="40dp"
                     android:textColor="#000"
-                    android:text="YYYY年MM月DD日周W"/>
+                    android:text="YYYY-MM-DD 周W"/>
                 <TextView
                     android:id="@+id/start_time"
                     android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
                         android:layout_toRightOf="@id/iv_end"
                         android:layout_marginLeft="40dp"
                         android:textColor="#000"
-                        android:text="YYYY年MM月DD日周W"/>
+                        android:text="YYYY-MM-DD 周W"/>
                     <TextView
                         android:id="@+id/end_time"
                         android:layout_width="wrap_content"
