@@ -61,7 +61,7 @@ public class EventAdapter extends BaseAdapter {
 
         tvName.setText(""+events.get(i).getTitle());
         tvStart.setText("开始："+df.format(new Timestamp(events.get(i).getStarttime())));
-        tvEnd.setText("结束： "+df.format(new Timestamp(events.get(i).getEndtime())));
+        tvEnd.setText("结束："+df.format(new Timestamp(events.get(i).getEndtime())));
         tvId.setText("Id  "+events.get(i).getEventId());
 //        tvAddTime.setText("Add Time  "+df.format(new Timestamp(events.get(i).getAddtime())));
         tvLocation.setText("位置:  "+events.get(i).getLocation());

@@ -65,7 +65,7 @@
                 android:id="@+id/end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="20dp"
                 android:gravity="center"
                 android:text="12:10"
                 android:textColor="@color/calendar_text_default"
