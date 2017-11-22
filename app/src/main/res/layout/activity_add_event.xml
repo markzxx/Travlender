@@ -26,7 +26,7 @@
                 android:text="新建活动"/>
 
             <TextView
-                android:id="@+id/tv_save"
+                android:id="@+id/event_save"
                 style="@style/leftTextViewStyle"
                 android:text="保存"/>
         </LinearLayout>
@@ -42,13 +42,13 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/alarm_title"
+                android:id="@+id/event_title"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:paddingLeft="20dp"
                 android:layout_marginTop="5dp"
                 android:background="@null"
-                android:hint="输入标题、时间、邀请对象和地点"/>
+                android:hint="输入标题"/>
 
             <View
                 android:layout_width="match_parent"
@@ -213,7 +213,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="40dp"
+                        android:layout_marginLeft="30dp"
                         android:layout_toRightOf="@id/iv_remind"
                         android:entries="@array/remindtime"
                         android:spinnerMode="dialog"
@@ -296,7 +296,7 @@
                     />
 
                 <RelativeLayout
-                    android:id="@+id/layout_alarm_local"
+                    android:id="@+id/layout_location"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
 
@@ -309,7 +309,7 @@
                         android:background="@drawable/ic_location_on_grey_600_24dp"/>
 
                     <TextView
-                        android:id="@+id/alarm_local"
+                        android:id="@+id/event_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -344,11 +344,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="40dp"
+                        android:layout_marginLeft="30dp"
                         android:layout_toRightOf="@id/iv_transport"
                         android:entries="@array/transport"
                         android:spinnerMode="dialog"
                         android:textColor="#000" />
+
+                    <Switch
+                        android:id="@+id/sw_smart_remind"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"/>
                 </RelativeLayout>
 
                 <View
@@ -371,7 +379,7 @@
                         android:background="@drawable/ic_menu_grey_600_24dp"/>
 
                     <EditText
-                        android:id="@+id/alarm_description"
+                        android:id="@+id/event_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="75dp"

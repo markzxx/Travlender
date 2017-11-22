@@ -24,6 +24,8 @@ public class DatabaseContract {
         public static final String KEY_TRANSPORT="transport";
         public static final String KEY_EDITTIME = "edittime";
         public static final String KEY_REMINDTIME = "remindtime";
+        public static final String KEY_CONTENT = "content";
+        public static final String KEY_SMARTREMIND = "smartremind";
     }
 
     public static class DBpreference implements BaseColumns {
