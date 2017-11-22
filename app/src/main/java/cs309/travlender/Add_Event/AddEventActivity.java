@@ -186,10 +186,13 @@ public class AddEventActivity extends AppCompatActivity{
         //获取传递过来的intent
         intent=getIntent();
         //通过request判断,当前是新建还是修改事件
-        request=intent.getStringExtra("request");
-    //    String request = "ADD";
+        if(intent != null)
+            request=intent.getStringExtra("request");
+        else
+            request = "ADD";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  EE");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
+        event_title.clearFocus();
         switch (request){
             case "ADD":
                 insert_update_title.setText("新建活动");
