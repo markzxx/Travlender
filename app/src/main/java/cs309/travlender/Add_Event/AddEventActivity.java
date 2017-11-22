@@ -30,7 +30,7 @@ import cs309.travlender.ZXX.EventManager;
 
 public class AddEventActivity extends AppCompatActivity{
     private DatePickerDialog mDataPicker;
-    private TimePickerDialog mStartTimePicker, mEndTimePicker;
+    private TimePickerDialog mTimePicker;
     private boolean isAllDay = false;
     private boolean isSmartRemind = true;
     private EventManager eventManager = new EventManager(this);
@@ -77,7 +77,7 @@ public class AddEventActivity extends AppCompatActivity{
     @OnClick(R.id.start_time)
     void openStartTimePicker() {
         getTimePickerDialog(start_time);
-        mStartTimePicker.show();
+        mTimePicker.show();
     }
 
     @Bind(R.id.end_time)
@@ -85,7 +85,7 @@ public class AddEventActivity extends AppCompatActivity{
     @OnClick(R.id.end_time)
     void openEndTimePicker() {
         getTimePickerDialog(end_time);
-        mEndTimePicker.show();
+        mTimePicker.show();
     }
 
     @OnClick(R.id.left_clear)
@@ -116,8 +116,6 @@ public class AddEventActivity extends AppCompatActivity{
         }
     }
 
-    @Bind(R.id.sw_all_day)
-    Switch sw_all_day;
     @OnClick(R.id.sw_all_day)
     void allday() {
         if (!isAllDay) {
@@ -246,7 +244,7 @@ public class AddEventActivity extends AppCompatActivity{
     private void getTimePickerDialog(final TextView time) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        mStartTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+        mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
