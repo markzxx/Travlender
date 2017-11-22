@@ -57,14 +57,14 @@ public class AlarmReceiver extends BroadcastReceiver {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         switch (remindType) {
             case "StartTime":
-                setDialog(builder, title, "Go doing it now!");
+                setDialog(builder, title, "时间到了");
                 break;
             case "DepartTime":
-                setDialog(builder, title, String.format("Now you should leave for %s which take %d minutes by %s",
-                        location, onwayTime, bestTransport));
+                setDialog(builder, title, String.format("现在就要出发去%s，%s要花%d分钟",
+                        location, bestTransport, onwayTime));
                 break;
             case "SetRemindTime":
-                setDialog(builder, title, String.format("After %d minutes",
+                setDialog(builder, title, String.format("%d分钟后开始",
                         remindtime));
                 break;
         }
