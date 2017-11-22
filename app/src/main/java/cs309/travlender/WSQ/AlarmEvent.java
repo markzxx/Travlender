@@ -1,6 +1,7 @@
 package cs309.travlender.WSQ;
 
 import android.app.AlarmManager;
+import android.content.ContentValues;
 
 import java.util.Date;
 
@@ -47,7 +48,7 @@ public class AlarmEvent extends Event {
 //        bestTransport = map.getBestTrans(fatherE.getTransport(),fatherE.getLocation(), fatherE.getStarttime());//优化交通方式, 交通方式的比较
 
     }
-    public Event getFatherE(){ return fatherE;};
+    public Event getFatherE(){ return fatherE};
 
     public long getDepartT(){
         return departTime;
