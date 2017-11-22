@@ -73,7 +73,7 @@
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name="cs309.travlender.ZXX.SearchResultActivity" />
 
-        <activity android:name="cs309.travlender.WHL.MainActivity">
+        <activity android:name="cs309.travlender.WHL.LocationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
