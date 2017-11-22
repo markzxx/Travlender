@@ -41,7 +41,7 @@
                         android:layout_height="24dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="2015年4月"
+                        android:text="今天"
                         android:textColor="#fff" />
 
                     <ImageView
