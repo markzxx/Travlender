@@ -48,9 +48,7 @@
         android:layout_marginLeft="18sp"
         android:layout_marginTop="-18dp"
         android:src="@drawable/ic_create_white_24dp"
-        app:elevation="10dp"
-        app:fabSize="mini"
-        app:pressedTranslationZ="12dp" />
+        app:elevation="10dp" />
 
 
     <LinearLayout

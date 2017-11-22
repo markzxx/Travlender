@@ -94,9 +94,6 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name="cs309.travlender.WSQ.AlarmAlertBroadcastReceiver">
-        </receiver>
-
     </application>
 
 </manifest>
