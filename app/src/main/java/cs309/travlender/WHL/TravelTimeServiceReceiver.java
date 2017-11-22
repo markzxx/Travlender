@@ -15,7 +15,7 @@ public class TravelTimeServiceReceiver extends BroadcastReceiver {
         // 可以在收到广播后通过intent获取查询结果，例如下面
         long seconds = Long.parseLong(intent.getStringExtra("time"));
         int id = Integer.parseInt(intent.getStringExtra("id"));
-//        Toast.makeText(context,"收到广播 "+time, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"收到地图广播", Toast.LENGTH_SHORT).show();
 
         //启动服务，传onwayTime和eventID
         Intent updateIntent = new Intent(context, Alarm.class);

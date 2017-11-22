@@ -25,42 +25,49 @@ public class AlarmReceiver extends BroadcastReceiver {
     private String remindType;//type: StartTime; DepartTime; SetRemindTime
     private MediaPlayer mediaPlayer;
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Bundle bundle = intent.getExtras();
-        AlarmEvent alarm = (AlarmEvent) bundle.getSerializable("alarm");
+
+        String location = intent.getStringExtra("location");
+        long onwayTime = intent.getLongExtra("onwayTime",0);
+        String bestTransport = intent.getStringExtra("bestTransport");
+        long remindtime = intent.getLongExtra("remindtime",0);
+        String title = intent.getStringExtra("title");
         remindType = intent.getDataString();
-        showAlarmDialog(context, alarm);
+        showAlarmDialog(context, location,onwayTime,bestTransport,remindtime,title);
 
     }
 
+
+
     //UI接口
-    private void showAlarmDialog(Context context, AlarmEvent alarmEvent) {
+    private void showAlarmDialog(Context context, String location, long onwayTime, String bestTransport, long remindtime, String title) {
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        playMusicAndVibrate(context, alarmEvent);
+        playMusicAndVibrate(context);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         switch (remindType){
             case "StartTime":
-                setDialog(builder, alarmEvent, "Go doing it now!");
+                setDialog(builder, title, "Go doing it now!");
                 break;
             case "DepartTime":
-                setDialog(builder, alarmEvent, String.format("Now you should leave for %s which take %d minutes by %s",
-                        alarmEvent.getFatherE().getLocation(), alarmEvent.getOnWayTime(), alarmEvent.getBestTransport()));
+                setDialog(builder, title, String.format("Now you should leave for %s which take %d minutes by %s",
+                        location, onwayTime, bestTransport));
                 break;
             case "SetRemindTime":
-                setDialog(builder, alarmEvent, String.format("After %d minutes",
-                        alarmEvent.getFatherE().getRemindtime()));
+                setDialog(builder, title, String.format("After %d minutes",
+                        remindtime));
                 break;
         }
 
-        AlertDialog dialog = builder.create();
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
+//        AlertDialog dialog = builder.create();
+//        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+//        dialog.show();
     }
-    private void setDialog(AlertDialog.Builder builder, AlarmEvent alarmEvent, String message){
-        builder.setTitle(alarmEvent.getFatherE().getTitle())
+    private void setDialog(AlertDialog.Builder builder,  String title, String message){
+        builder.setTitle(title)
                 .setMessage(message)
                 .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
                     @Override
@@ -83,7 +90,7 @@ public class AlarmReceiver extends BroadcastReceiver {
      *
      * @param context
      */
-    private void playMusicAndVibrate(Context context, AlarmEvent alarmEvent) {
+    private void playMusicAndVibrate(Context context) {
         if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();
         } else {
