@@ -27,7 +27,7 @@ public class RemindManager extends Activity {
     //not good design
     public void update(int eventID){//notify one event with ID,
         event = eventManager.getEvent(eventID);
-        if(event.getLocation() != null)
+        if(event.getLocation() != "无" && event.getSmartRemind()==1)
             startServiceTravelTime(this, event.getLatitude(),event.getLongitude(),event.getTransport(),eventID);
 
         else{
