@@ -1,7 +1,6 @@
 package cs309.travlender.ZXX;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -63,7 +62,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             case R.id.btn_search:
                 Intent s = new Intent(this,AddEventActivity.class);
                 s.putExtra("request", "EDIT");
-                s.putExtra("id", "1");
+                s.putExtra("id", "2");
                 startActivityForResult(s,1);
                 break;
             case R.id.btn_clear:
