@@ -86,6 +86,17 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name="cs309.travlender.WHL.TravelTimeService"
+            android:label="SmartCamService"
+            android:enabled="true"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE"  />
+
+            </intent-filter>
+        </service>
 
         <service android:name="cs309.travlender.WSQ.Alarm" />
 
@@ -93,6 +104,16 @@
         <receiver android:name="cs309.travlender.WSQ.AlarmReceiver">
         </receiver>
 
+        <receiver
+            android:name="cs309.travlender.WHL.TravelTimeServiceReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <!-- 设置广播接收器的优先级，优先级高的接收器会先接到有序广播，甚至可以决定是否继续传递广播给下一个程序 -->
+            <intent-filter>
+                <!-- 设置广播接收器的接收内容，这样它才知道自己要接收哪个广播 -->
+                <action android:name="com.example.dell.map.LocationReceiver" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
