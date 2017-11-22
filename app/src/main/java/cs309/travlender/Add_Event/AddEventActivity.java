@@ -4,13 +4,13 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.os.Vibrator;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -18,65 +18,58 @@ import android.widget.TimePicker;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import butterknife.Bind;
+import butterknife.OnClick;
 import cs309.travelender.R;
 import cs309.travlender.ZSQ.Event;
 import cs309.travlender.ZXX.EventManager;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cs309.travlender.ZXX.MainActivity;
 
 public class AddEventActivity extends AppCompatActivity {
     private DatePickerDialog mDataPicker;
     private TimePickerDialog mStartTimePicker, mEndTimePicker;
     private boolean isAllDay = false;
-    private boolean isVibrate = false;
     private EventManager EM = new EventManager(this);
     private Event event;
     private ContentValues values = new ContentValues();
     private int id;
 
-    @BindView(R.id.alarm_title)
+    @Bind(R.id.alarm_title)
     EditText alarm_title;
-    @BindView(R.id.alarm_description)
+    @Bind(R.id.alarm_description)
     EditText alarm_description;
-    @BindView(R.id.alarm_replay)
-    TextView alarm_replay;
-    @BindView((R.id.alarm_remind))
-    TextView alarm_remind;
-    @BindView(R.id.alarm_local)
+    @Bind(R.id.alarm_local)
     TextView alarm_local;
-    @BindView(R.id.alarm_color)
-    TextView alarm_color;
-    @BindView(R.id.alarm_tone_Path)
-    TextView alarm_tone_Path;
-    @BindView(R.id.alarm_date)
-    TextView alarm_date;
-    @BindView(R.id.insert_update_title)
+    @Bind(R.id.start_date)
+    TextView start_date;
+    @Bind(R.id.end_date)
+    TextView end_date;
+    @Bind(R.id.insert_update_title)
     TextView insert_update_title;
-    @BindView(R.id.action_bar)
+    @Bind(R.id.action_bar)
     LinearLayout action_bar;
+    @Bind(R.id.event_transport)
+    Spinner event_transport;
 
-    @OnClick(R.id.alarm_date)
+    @OnClick(R.id.start_date)
     void openDatePicker() {
         getDatePickerDialog();
         mDataPicker.show();
     }
 
-    @BindView(R.id.alarm_start_time)
+    @Bind(R.id.start_time)
     TextView alarm_start_time;
 
-    @OnClick(R.id.alarm_start_time)
+    @OnClick(R.id.start_time)
     void openStartTimePicker() {
         getStartTimePickerDialog();
         mStartTimePicker.show();
     }
 
-    @BindView(R.id.alarm_end_time)
+    @Bind(R.id.end_time)
     TextView alarm_end_time;
 
-    @OnClick(R.id.alarm_end_time)
+    @OnClick(R.id.end_time)
     void openEndTimePicker() {
         getEndTimePickerDialog();
         mEndTimePicker.show();
@@ -88,32 +81,13 @@ public class AddEventActivity extends AppCompatActivity {
         finish();
     }
 
-//    @OnClick(R.id.layout_alarm_replay)
-//    void openSetReplayActivity() {
-//        startActivityForResult(new Intent(AddScheduleActivity.this, SetRePlayActivity.class), 0);
-//    }
-
-    @OnClick(R.id.layout_alarm_remind)
-    void openSetAlarmTimeActivity() {
-        startActivityForResult(new Intent(AddScheduleActivity.this, SetAlarmTimeActivity.class), 1);
-    }
-
     @OnClick(R.id.layout_alarm_local)
     void openSetLocalActivity() {
-        startActivityForResult(new Intent(AddScheduleActivity.this, SetLocalActivity.class), 2);
+        startActivityForResult(new Intent(AddEventActivity.this, SetLocalActivity.class), 2);
     }
 
-    @OnClick(R.id.layout_alarm_color)
-    void openSetColorActivity() {
-        startActivityForResult(new Intent(AddScheduleActivity.this, SetColorActivity.class), 3);
-    }
 
-    @OnClick(R.id.layout_alarm_tone_Path)
-    void openSetAlarmToneActivity() {
-        startActivityForResult(new Intent(AddScheduleActivity.this, SetAlarmToneActivity.class), 4);
-    }
-
-    @BindView(R.id.sw_all_day)
+    @Bind(R.id.sw_all_day)
     Switch sw_all_day;
 
     @OnClick(R.id.sw_all_day)
@@ -129,23 +103,6 @@ public class AddEventActivity extends AppCompatActivity {
         }
     }
 
-    @BindView(R.id.sw_vibrate)
-    Switch sw_vibrate;
-
-    @OnClick(R.id.sw_vibrate)
-    void is_Vibrate() {
-        Vibrator vibrator;
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        if (!isVibrate) {
-            alarmBean.setIsVibrate(1);
-            vibrator.vibrate(500);
-            isVibrate = true;
-        } else {
-            alarmBean.setIsVibrate(0);
-            vibrator.cancel();
-            isVibrate = false;
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,12 +122,12 @@ public class AddEventActivity extends AppCompatActivity {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日  EE");
-                alarm_date.setText(df.format(calendar.getTime()));
+                start_date.setText(df.format(calendar.getTime()));
 
                 //设置选择的年、月、日
-                alarmBean.setYear(year);
-                alarmBean.setMonth(monthOfYear);
-                alarmBean.setDay(dayOfMonth);
+//                alarmBean.setYear(year);
+//                alarmBean.setMonth(monthOfYear);
+//                alarmBean.setDay(dayOfMonth);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     }
@@ -193,8 +150,8 @@ public class AddEventActivity extends AppCompatActivity {
                 alarm_start_time.setText("开始时间:  " + df.format(calendar.getTime()));
 
                 //设置开始时间的小时、分钟
-                alarmBean.setStartTimeHour(hourOfDay);
-                alarmBean.setStartTimeMinute(minute);
+//                alarmBean.setStartTimeHour(hourOfDay);
+//                alarmBean.setStartTimeMinute(minute);
             }
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
     }
@@ -217,8 +174,8 @@ public class AddEventActivity extends AppCompatActivity {
 
 
                 //设置结束时间的小时、分钟
-                alarmBean.setEndTimeHour(hourOfDay);
-                alarmBean.setEndTimeMinute(minute);
+//                alarmBean.setEndTimeHour(hourOfDay);
+//                alarmBean.setEndTimeMinute(minute);
             }
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
     }

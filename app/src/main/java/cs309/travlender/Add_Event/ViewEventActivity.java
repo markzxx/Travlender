@@ -1,20 +1,15 @@
 package cs309.travlender.Add_Event;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Random;
 
-import cs309.travlender.ZSQ.Event;
+import cs309.travelender.R;
 import cs309.travlender.ZXX.EventManager;
 
 /**
