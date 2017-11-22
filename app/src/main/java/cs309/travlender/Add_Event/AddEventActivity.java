@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -227,7 +228,7 @@ public class AddEventActivity extends AppCompatActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==2 && resultCode==2){
             Bundle bundle = data.getExtras();
-            event_location.setText(bundle.getString("location_name","无"));
+            event_location.setText(bundle.getString("location_name"));
             event.setLongitude(bundle.getDouble("to_Longitude",0));
             event.setLatitude(bundle.getDouble("to_Latitude",0));
         }

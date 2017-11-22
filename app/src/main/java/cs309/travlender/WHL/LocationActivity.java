@@ -119,7 +119,7 @@ public class LocationActivity extends AppCompatActivity{
                     //intent传递bundle
                     intent.putExtras(bundle);
                 }
-                setResult(666, intent);
+                setResult(2, intent);
                 finish();
             }
         });
@@ -154,7 +154,7 @@ public class LocationActivity extends AppCompatActivity{
                         //intent传递bundle
                         intent.putExtras(bundle);
                     }
-                    setResult(666, intent);
+                    setResult(2, intent);
                     finish();
                 }
                 return false;
@@ -177,7 +177,7 @@ public class LocationActivity extends AppCompatActivity{
                 //intent传递bundle
                 intent.putExtras(bundle);
 
-                setResult(666, intent);
+                setResult(2, intent);
                 finish();
             }
         });
@@ -185,10 +185,8 @@ public class LocationActivity extends AppCompatActivity{
 
     //初始化POI的列表
     private void addPOI(String name, String subname, int distance, PoiItem item){
-        Random random = new Random();
         Point_of_Interest poi;
-        if (random.nextBoolean()==true) poi = new Point_of_Interest(name, R.drawable.red_point, subname, distance, item);
-        else poi = new Point_of_Interest(name, R.drawable.blue_point, subname, distance, item);
+        poi = new Point_of_Interest(name, R.drawable.search_result, subname, distance, item);
         poi_List.add(poi);
     }
 
