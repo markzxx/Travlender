@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -105,9 +106,10 @@ public class LocationActivity extends AppCompatActivity{
         search_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View v){
+                Intent intent = new Intent();
                 if (!poi_List.isEmpty()){
                     Bundle bundle=new Bundle();
-                    Intent intent = new Intent();
+
                     //传入目的地纬度
                     bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
                     //传入目的地经度
@@ -116,13 +118,9 @@ public class LocationActivity extends AppCompatActivity{
                     bundle.putString("location_name", poi_List.get(0).getName());
                     //intent传递bundle
                     intent.putExtras(bundle);
-
-                    setResult(666, intent);
-                    finish();
-//                    TravelTimeService.startServiceTravelTime(getApplicationContext(), poi_List.get(0).getLatitude(), poi_List.get(0).getLongitude(), transportation);
                 }
-
-
+                setResult(666, intent);
+                finish();
             }
         });
         //初始化EditText，加监听器
@@ -138,7 +136,30 @@ public class LocationActivity extends AppCompatActivity{
         };
         input = (EditText)findViewById(R.id.input_destination);
         input.addTextChangedListener(textChange);//给edittext加监听器
+        input.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == event.KEYCODE_ENTER) {
+                    // do some your things
+                    Intent intent = new Intent();
+                    if (!poi_List.isEmpty()){
+                        Bundle bundle=new Bundle();
 
+                        //传入目的地纬度
+                        bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
+                        //传入目的地经度
+                        bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
+                        //传入目的地经度
+                        bundle.putString("location_name", poi_List.get(0).getName());
+                        //intent传递bundle
+                        intent.putExtras(bundle);
+                    }
+                    setResult(666, intent);
+                    finish();
+                }
+                return false;
+            }
+        });
         ////ListView，加监听器
         listView = (ListView) findViewById(R.id.list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -158,7 +179,6 @@ public class LocationActivity extends AppCompatActivity{
 
                 setResult(666, intent);
                 finish();
-//                TravelTimeService.startServiceTravelTime(getApplicationContext(), poi.getLatitude(), poi.getLongitude(), transportation);
             }
         });
     }
