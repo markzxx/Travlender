@@ -186,8 +186,10 @@ public class AddEventActivity extends AppCompatActivity{
         //获取传递过来的intent
         intent=getIntent();
         //通过request判断,当前是新建还是修改事件
-        request=intent.getStringExtra("request");
-    //    String request = "ADD";
+        if(intent != null)
+            request=intent.getStringExtra("request");
+        else
+            request = "ADD";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  EE");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
         switch (request){
@@ -205,7 +207,7 @@ public class AddEventActivity extends AppCompatActivity{
                 break;
             case "EDIT":
                 insert_update_title.setText("编辑活动");
-                id=intent.getExtras().getInt("id");
+                id=intent.getIntExtra("id",1);
                 event = eventManager.getEvent(id);
                 event_title.setText(event.getTitle());
                 start_date.setText(dateFormat.format(event.getStarttime()));
@@ -219,6 +221,14 @@ public class AddEventActivity extends AppCompatActivity{
                 event_transport.setSelection(Arrays.asList(getResources().getStringArray(R.array.transport)).indexOf(event.getTransport()));
         }
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==2 && resultCode==2){
+            event_location.setText(data.getStringExtra("Location"));
+            event.setLongitude(data.getDoubleExtra("to_Longitude",0));
+            event.setLatitude(data.getDoubleExtra("to_Latitude",0));
+        }
     }
 
     /**

@@ -45,7 +45,7 @@ import java.util.Random;
 
 import cs309.travelender.R;
 
-public class MainActivity extends AppCompatActivity{
+public class LocationActivity extends AppCompatActivity{
 
     private List<Point_of_Interest> poi_List = new ArrayList<Point_of_Interest>();
     private Button search_button;
@@ -112,15 +112,10 @@ public class MainActivity extends AppCompatActivity{
                     bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
                     //传入目的地经度
                     bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
-                    //传入出发地纬度
-                    bundle.putDouble("from_Latitude", myLat);
-                    //传入出发地经度
-                    bundle.putDouble("from_Longitude", myLongt);
-                    //传入选择的交通方式
-                    bundle.putString("transportation", transportation);
+                    //传入目的地经度
+                    bundle.putString("location_name", poi_List.get(0).getName());
                     //intent传递bundle
                     intent.putExtras(bundle);
-                    Log.d("MainActivity", "click listener");
 
                     setResult(666, intent);
                     finish();
@@ -138,7 +133,6 @@ public class MainActivity extends AppCompatActivity{
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d("MainActivity", "Text change");
                 search(s.toString());
             }
         };
@@ -152,17 +146,13 @@ public class MainActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Point_of_Interest poi = poi_List.get(position);
                 Bundle bundle=new Bundle();
-                Intent intent = new Intent(MainActivity.this, Path_planning.class);
+                Intent intent = new Intent(LocationActivity.this, Path_planning.class);
                 //传入目的地纬度
                 bundle.putDouble("to_Latitude", poi.getLatitude());
                 //传入目的地经度
                 bundle.putDouble("to_Longitude", poi.getLongitude());
-                //传入出发地纬度
-                bundle.putDouble("from_Latitude", myLat);
-                //传入出发地经度
-                bundle.putDouble("from_Longitude", myLongt);
-                //传入选择的交通方式
-                bundle.putString("transportation", transportation);
+                //传入目的地经度
+                bundle.putString("location_name", poi_List.get(0).getName());
                 //intent传递bundle
                 intent.putExtras(bundle);
 
@@ -210,7 +200,7 @@ public class MainActivity extends AppCompatActivity{
                         addPOI(item.getTitle(), item.getSnippet(), item.getDistance(), item);
                     }
                     // 给ListView赋值，显示结果
-                    Point_of_Interest_Adapter poia = new Point_of_Interest_Adapter(MainActivity.this, R.layout.point_of_interest_layout, poi_List);
+                    Point_of_Interest_Adapter poia = new Point_of_Interest_Adapter(LocationActivity.this, R.layout.point_of_interest_layout, poi_List);
                     listView.setAdapter(poia);
                 }
             }

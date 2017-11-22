@@ -101,8 +101,14 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     public double getLongitude(){
         return value.getAsDouble("longitude");
     }
+    public void setLongitude(double longitude){
+        value.put(DB.KEY_LONGITUDE,longitude);
+    }
     public double getLatitude(){
         return value.getAsDouble("latitude");
+    }
+    public void setLatitude(double latitude){
+        value.put(DB.KEY_LATITUDE,latitude);
     }
     public String  getContent(){
         return value.getAsString("content");
