@@ -70,6 +70,7 @@ public class TravelTimeService extends Service {
     public TravelTimeService() {
     }
 
+    // 开启服务用的函数
     public static void startServiceTravelTime(Context context, double param1, double param2, String param3) {
 //        Toast.makeText(context,"startActionTravelTime", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(context, TravelTimeService.class);
