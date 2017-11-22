@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-public class LocationSearchReceiver extends BroadcastReceiver {
+public class TravelTimeServiceReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
