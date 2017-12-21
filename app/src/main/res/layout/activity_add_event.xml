@@ -7,8 +7,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
         <LinearLayout
             android:id="@+id/action_bar"
             android:layout_width="match_parent"
@@ -45,10 +46,10 @@
                 android:id="@+id/event_title"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:paddingLeft="20dp"
                 android:layout_marginTop="5dp"
                 android:background="@null"
-                android:hint="输入标题"/>
+                android:hint="输入标题"
+                android:paddingLeft="20dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -111,7 +112,7 @@
                     android:layout_toRightOf="@id/iv_start"
                     android:layout_marginLeft="40dp"
                     android:textColor="#000"
-                    android:text="YYYY年MM月DD日周W"/>
+                    android:text="YYYY-MM-DD 周W"/>
                 <TextView
                     android:id="@+id/start_time"
                     android:layout_width="wrap_content"
@@ -143,7 +144,7 @@
                         android:layout_toRightOf="@id/iv_end"
                         android:layout_marginLeft="40dp"
                         android:textColor="#000"
-                        android:text="YYYY年MM月DD日周W"/>
+                        android:text="YYYY-MM-DD 周W"/>
                     <TextView
                         android:id="@+id/end_time"
                         android:layout_width="wrap_content"

@@ -1,6 +1,7 @@
 package cs309.travlender.WHL;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -44,7 +46,7 @@ import java.util.Random;
 
 import cs309.travelender.R;
 
-public class MainActivity extends AppCompatActivity{
+public class LocationActivity extends AppCompatActivity{
 
     private List<Point_of_Interest> poi_List = new ArrayList<Point_of_Interest>();
     private Button search_button;
@@ -104,26 +106,21 @@ public class MainActivity extends AppCompatActivity{
         search_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View v){
+                Intent intent = new Intent();
                 if (!poi_List.isEmpty()){
                     Bundle bundle=new Bundle();
-                    Intent intent = new Intent(MainActivity.this, Path_planning.class);
+
                     //传入目的地纬度
                     bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
                     //传入目的地经度
                     bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
-                    //传入出发地纬度
-                    bundle.putDouble("from_Latitude", myLat);
-                    //传入出发地经度
-                    bundle.putDouble("from_Longitude", myLongt);
-                    //传入选择的交通方式
-                    bundle.putString("transportation", transportation);
+                    //传入目的地经度
+                    bundle.putString("location_name", poi_List.get(0).getName());
                     //intent传递bundle
                     intent.putExtras(bundle);
-                    Log.d("MainActivity", "click listener");
-                    //开启跳转
-                    startActivity(intent);
                 }
-
+                setResult(2, intent);
+                finish();
             }
         });
         //初始化EditText，加监听器
@@ -134,46 +131,62 @@ public class MainActivity extends AppCompatActivity{
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d("MainActivity", "Text change");
                 search(s.toString());
             }
         };
         input = (EditText)findViewById(R.id.input_destination);
         input.addTextChangedListener(textChange);//给edittext加监听器
+        input.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == event.KEYCODE_ENTER) {
+                    // do some your things
+                    Intent intent = new Intent();
+                    if (!poi_List.isEmpty()){
+                        Bundle bundle=new Bundle();
 
+                        //传入目的地纬度
+                        bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
+                        //传入目的地经度
+                        bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
+                        //传入目的地经度
+                        bundle.putString("location_name", poi_List.get(0).getName());
+                        //intent传递bundle
+                        intent.putExtras(bundle);
+                    }
+                    setResult(2, intent);
+                    finish();
+                }
+                return false;
+            }
+        });
         ////ListView，加监听器
         listView = (ListView) findViewById(R.id.list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Point_of_Interest poi = poi_List.get(position);
-                //Toast.makeText(MainActivity.this, poi.getName(), Toast.LENGTH_SHORT).show();
                 Bundle bundle=new Bundle();
-                Intent intent = new Intent(MainActivity.this, Path_planning.class);
+                Intent intent = new Intent(LocationActivity.this, Path_planning.class);
                 //传入目的地纬度
                 bundle.putDouble("to_Latitude", poi.getLatitude());
                 //传入目的地经度
                 bundle.putDouble("to_Longitude", poi.getLongitude());
-                //传入出发地纬度
-                bundle.putDouble("from_Latitude", myLat);
-                //传入出发地经度
-                bundle.putDouble("from_Longitude", myLongt);
-                //传入选择的交通方式
-                bundle.putString("transportation", transportation);
+                //传入目的地经度
+                bundle.putString("location_name", poi_List.get(0).getName());
                 //intent传递bundle
                 intent.putExtras(bundle);
-                //开启跳转
-                startActivity(intent);
+
+                setResult(2, intent);
+                finish();
             }
         });
     }
 
     //初始化POI的列表
     private void addPOI(String name, String subname, int distance, PoiItem item){
-        Random random = new Random();
         Point_of_Interest poi;
-        if (random.nextBoolean()==true) poi = new Point_of_Interest(name, R.drawable.red_point, subname, distance, item);
-        else poi = new Point_of_Interest(name, R.drawable.blue_point, subname, distance, item);
+        poi = new Point_of_Interest(name, R.drawable.search_result, subname, distance, item);
         poi_List.add(poi);
     }
 
@@ -205,7 +218,7 @@ public class MainActivity extends AppCompatActivity{
                         addPOI(item.getTitle(), item.getSnippet(), item.getDistance(), item);
                     }
                     // 给ListView赋值，显示结果
-                    Point_of_Interest_Adapter poia = new Point_of_Interest_Adapter(MainActivity.this, R.layout.point_of_interest_layout, poi_List);
+                    Point_of_Interest_Adapter poia = new Point_of_Interest_Adapter(LocationActivity.this, R.layout.point_of_interest_layout, poi_List);
                     listView.setAdapter(poia);
                 }
             }

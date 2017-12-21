@@ -3,13 +3,12 @@ package cs309.travlender.Add_Event;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import android.support.design.widget.FloatingActionButton;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,7 +43,7 @@ public class ViewEventActivity extends Activity{
     TextView etTransport;
 
     @Bind(R.id.update_fab)
-    FloatingActionButton btnChange;
+    FloatingActionButton update_fab;
     @Bind(R.id.tv_delete)
     ImageButton btnDele;
     @Bind(R.id.left_alarm_back)
@@ -55,7 +54,7 @@ public class ViewEventActivity extends Activity{
         Intent intent=new Intent(ViewEventActivity.this,AddEventActivity.class);
         intent.putExtra("request","EDIT");
         intent.putExtra("id",currentEvent.getEventId());
-        startActivityForResult(intent, 0);
+        startActivityForResult(intent,0);
     }
 
     @OnClick(R.id.tv_delete)
@@ -81,8 +80,8 @@ public class ViewEventActivity extends Activity{
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 
         id=intent.getExtras().getInt("id");
-//        currentEvent = EM.openEvent(id);
-        currentEvent= EM.getAllEvent().get(0);
+        currentEvent = EM.getEvent(id);
+        //currentEvent= EM.getAllEvent().get(0);
         etTitle.setText(currentEvent.getTitle());
         etStart.setText(format.format(new Timestamp(currentEvent.getStarttime())));
         etEnd.setText(format.format(new Timestamp(currentEvent.getEndtime())));
@@ -90,6 +89,11 @@ public class ViewEventActivity extends Activity{
         etLocation.setText(currentEvent.getLocation());
         etTransport.setText(currentEvent.getTransport());
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        onCreate(null);
     }
 
 }

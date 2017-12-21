@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -25,12 +26,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cs309.travelender.R;
+import cs309.travlender.WHL.LocationActivity;
 import cs309.travlender.ZSQ.Event;
 import cs309.travlender.ZXX.EventManager;
 
 public class AddEventActivity extends AppCompatActivity{
     private DatePickerDialog mDataPicker;
-    private TimePickerDialog mStartTimePicker, mEndTimePicker;
+    private TimePickerDialog mTimePicker;
     private boolean isAllDay = false;
     private boolean isSmartRemind = true;
     private EventManager eventManager = new EventManager(this);
@@ -77,7 +79,7 @@ public class AddEventActivity extends AppCompatActivity{
     @OnClick(R.id.start_time)
     void openStartTimePicker() {
         getTimePickerDialog(start_time);
-        mStartTimePicker.show();
+        mTimePicker.show();
     }
 
     @Bind(R.id.end_time)
@@ -85,7 +87,7 @@ public class AddEventActivity extends AppCompatActivity{
     @OnClick(R.id.end_time)
     void openEndTimePicker() {
         getTimePickerDialog(end_time);
-        mEndTimePicker.show();
+        mTimePicker.show();
     }
 
     @OnClick(R.id.left_clear)
@@ -95,7 +97,7 @@ public class AddEventActivity extends AppCompatActivity{
 
     @OnClick(R.id.layout_location)
     void openSetLocalActivity() {
-        startActivityForResult(new Intent(AddEventActivity.this, SetLocalActivity.class), 2);
+        startActivityForResult(new Intent(AddEventActivity.this, LocationActivity.class), 2);
     }
 
     @Bind(R.id.layout_smart_transport)
@@ -116,8 +118,6 @@ public class AddEventActivity extends AppCompatActivity{
         }
     }
 
-    @Bind(R.id.sw_all_day)
-    Switch sw_all_day;
     @OnClick(R.id.sw_all_day)
     void allday() {
         if (!isAllDay) {
@@ -188,8 +188,10 @@ public class AddEventActivity extends AppCompatActivity{
         //获取传递过来的intent
         intent=getIntent();
         //通过request判断,当前是新建还是修改事件
-        request=intent.getStringExtra("request");
-    //    String request = "ADD";
+        if(intent != null)
+            request=intent.getStringExtra("request");
+        else
+            request = "ADD";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  EE");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
         switch (request){
@@ -207,7 +209,7 @@ public class AddEventActivity extends AppCompatActivity{
                 break;
             case "EDIT":
                 insert_update_title.setText("编辑活动");
-                id=intent.getExtras().getInt("id");
+                id=intent.getIntExtra("id",1);
                 event = eventManager.getEvent(id);
                 event_title.setText(event.getTitle());
                 start_date.setText(dateFormat.format(event.getStarttime()));
@@ -221,6 +223,15 @@ public class AddEventActivity extends AppCompatActivity{
                 event_transport.setSelection(Arrays.asList(getResources().getStringArray(R.array.transport)).indexOf(event.getTransport()));
         }
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==2 && resultCode==2){
+            Bundle bundle = data.getExtras();
+            event_location.setText(bundle.getString("location_name"));
+            event.setLongitude(bundle.getDouble("to_Longitude",0));
+            event.setLatitude(bundle.getDouble("to_Latitude",0));
+        }
     }
 
     /**
@@ -246,7 +257,7 @@ public class AddEventActivity extends AppCompatActivity{
     private void getTimePickerDialog(final TextView time) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        mStartTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+        mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
