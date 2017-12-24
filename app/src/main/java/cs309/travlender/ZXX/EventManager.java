@@ -23,11 +23,14 @@ public class EventManager implements EventManagerContract.Manager {
     static Event event;
     static List<Event> SearchList;
     private static RemindManager RM;
+    Context context;
     public EventManager(@NonNull Context context){
+        this.context = context;
         dbHelper = new DatabaseHandler(context);
     }
 
     public void update(int id){
+        RM = new RemindManager(this,context);
         if (RM!=null)
             RM.update(id);
     }
@@ -46,6 +49,7 @@ public class EventManager implements EventManagerContract.Manager {
         ContentValues values=event.getValue();
         long id = db.insert(DatabaseContract.DBevent.TABLE_NAME, null, values);
         db.close();
+        update((int)id);
         return (int)id;
     }
 
@@ -68,13 +72,14 @@ public class EventManager implements EventManagerContract.Manager {
         db.close();
     }
 
-    public Event openEvent(int id) {
+    public Event getEvent(int id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         String[] selection = {"*"};
-        String where = DatabaseContract.DBevent._ID + " = ? ";
+        String where =DatabaseContract.DBevent._ID + " = ? ";
         String[] whereArgs = {String.valueOf(id)};
         Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,null);
+        cursor.moveToFirst();
         this.event = new Event(cursor);
         db.close();
         return event;

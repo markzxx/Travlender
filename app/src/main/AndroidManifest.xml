@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cs309.travelender">
-
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 允许程序设置内置sd卡的写权限 -->
@@ -52,10 +54,22 @@
         <activity android:name="cs309.travlender.ZXX.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="cs309.travlender.ZXX.testMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="cs309.travlender.Add_Event.ViewEventActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="cs309.travlender.ZSQ.Main" />
         <activity
             android:name="cs309.travlender.ZSQ.EventActivity"
@@ -64,22 +78,13 @@
             android:name="cs309.travlender.ZXX.SearchActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name="cs309.travlender.ZXX.SearchResultActivity" />
-        <activity android:name="cs309.travlender.WHL.MainActivity">
+
+
+        <activity android:name="cs309.travlender.WHL.LocationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-
-        <receiver
-            android:name="cs309.travlender.WHL.LocationSearchReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-
-                <!-- 设置广播接收器的接收内容，这样它才知道自己要接收哪个广播 -->
-                <action android:name="com.example.dell.map.LocationReceiver" />
-            </intent-filter>
-        </receiver>
 
         <activity android:name="cs309.travlender.Add_Event.AddEventActivity">
             <intent-filter>
@@ -87,14 +92,33 @@
             </intent-filter>
         </activity>
 
-        <!-- 开机自启-->
-        <receiver android:name="cs309.travlender.WSQ.AlarmServiceBroadcastReceiver">
+        <service
+            android:name="cs309.travlender.WHL.TravelTimeService"
+            android:label="SmartCamService"
+            android:enabled="true"
+            android:exported="true"
+            >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE"  />
+
             </intent-filter>
+        </service>
+
+        <service android:name="cs309.travlender.WSQ.Alarm" />
+
+
+        <receiver android:name="cs309.travlender.WSQ.AlarmReceiver">
         </receiver>
 
-        <receiver android:name="cs309.travlender.WSQ.AlarmAlertBroadcastReceiver">
+        <receiver
+            android:name="cs309.travlender.WHL.TravelTimeServiceReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <!-- 设置广播接收器的优先级，优先级高的接收器会先接到有序广播，甚至可以决定是否继续传递广播给下一个程序 -->
+            <intent-filter>
+                <!-- 设置广播接收器的接收内容，这样它才知道自己要接收哪个广播 -->
+                <action android:name="com.example.dell.map.LocationReceiver" />
+            </intent-filter>
         </receiver>
 
     </application>
