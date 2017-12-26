@@ -171,24 +171,38 @@ public class EventManager implements EventManagerContract.Manager {
         return list;
     }
 
-    public List<Event> getEvents(String starttime,String endtime) // format like yyyy-mm-dd HH:MM:SS
-    {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        List<Event> list = new ArrayList<>();
-        String table_name = DatabaseContract.DBevent.TABLE_NAME;
-        String[] selection = {"*"};
+//    public List<Event> getEvents(String starttime,String endtime) // format like yyyy-mm-dd HH:MM:SS
+//    {
+//        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//        List<Event> list = new ArrayList<>();
+//        String table_name = DatabaseContract.DBevent.TABLE_NAME;
+//        String[] selection = {"*"};
+//        Timestamp ts = new Timestamp(System.currentTimeMillis());
+//        String where = "(starttime>? and starttime<?) or (endtime>? and endtime<?)";
+//        String[] whereArgs ={ts.valueOf(starttime).getTime()+"",ts.valueOf(endtime.toString()).getTime()+"",ts.valueOf(starttime).getTime()+"",ts.valueOf(endtime.toString()).getTime()+""};
+//        String order = DatabaseContract.DBevent.KEY_STARTTIME;
+//        Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,order);
+//        if(cursor.moveToFirst()){
+//            do{
+//                list.add(new Event(cursor));
+//            }while(cursor.moveToNext());
+//        }
+//        SearchList = list;
+//        db.close();
+//        return list;
+//    }
+
+    public List<Event> getEvents(String starttime,String endtime){
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        String where = "(starttime>? and starttime<?) or (endtime>? and endtime<?)";
-        String[] whereArgs ={ts.valueOf(starttime).getTime()+"",ts.valueOf(endtime.toString()).getTime()+"",ts.valueOf(starttime).getTime()+"",ts.valueOf(endtime.toString()).getTime()+""};
-        String order = DatabaseContract.DBevent.KEY_STARTTIME;
-        Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,order);
-        if(cursor.moveToFirst()){
-            do{
-                list.add(new Event(cursor));
-            }while(cursor.moveToNext());
-        }
-        SearchList = list;
-        db.close();
-        return list;
+        long start = ts.valueOf(starttime).getTime();
+        long end = ts.valueOf(endtime.toString()).getTime();
+        return getEvents(start,end);
+
+    }
+
+    public List<Event> getEvents(String date){
+        String start = date+" 00:00:00";
+        String end = date+" 23:59:59";
+        return getEvents(start,end);
     }
 }

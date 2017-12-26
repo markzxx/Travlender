@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout xmlns:rfal="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fab_layout"
     android:layout_width="match_parent"
@@ -42,14 +43,9 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="今天"
+                        android:textSize="20dp"
                         android:textColor="#fff" />
 
-                    <ImageView
-                        android:id="@+id/title_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@drawable/ic_arrow_drop_up_white_24dp" />
 
                 </LinearLayout>
 
@@ -59,12 +55,8 @@
                     android:src="@drawable/ic_today_white_24dp" />
             </LinearLayout>
 
-            <!-- CalendarView -->
-            <!--<com.werb.mycalendardemo.customview.calendar.CalendarView-->
-                <!--android:id="@+id/calendar_view"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:visibility="visible" />-->
+
+            <include layout="@layout/fab_view" />
 
         </LinearLayout>
 
@@ -87,9 +79,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="16dp"
             rfab:rfab_color_normal="#009688"
             rfab:rfab_color_pressed="#263238"
             rfab:rfab_drawable="@drawable/rfab__drawable_rfab_default"
