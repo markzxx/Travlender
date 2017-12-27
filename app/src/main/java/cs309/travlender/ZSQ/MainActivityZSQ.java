@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -67,11 +69,14 @@ public class MainActivityZSQ extends Activity implements CalendarViewFragment.On
         title = (TextView) findViewById(R.id.title_day);
         calendarViewFragment=new CalendarViewFragment();
         ButterKnife.bind(this);
-        initFab();
+        Date current;
         if (calendarViewFragment.getMcv()!=null)
-            viewList(calendarViewFragment.getMcv().getSelectedDate().getDate());
+            current = calendarViewFragment.getMcv().getSelectedDate().getDate();
         else
-                viewList(new Date());
+            current = new Date();
+        title.setText(sdf.format(current));
+        initFab();
+        viewList(current);
         viewEvent();
 
 
@@ -82,6 +87,7 @@ public class MainActivityZSQ extends Activity implements CalendarViewFragment.On
         //每次选择日期后,根据选择的日期从数据库寻找事件添加到listview中
         if(date!=null){
             viewList(date);
+            title.setText(sdf.format(date));
         }
     }
 
