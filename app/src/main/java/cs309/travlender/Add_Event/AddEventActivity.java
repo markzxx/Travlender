@@ -228,9 +228,11 @@ public class AddEventActivity extends AppCompatActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==2 && resultCode==2){
             Bundle bundle = data.getExtras();
-            event_location.setText(bundle.getString("location_name"));
-            event.setLongitude(bundle.getDouble("to_Longitude",0));
-            event.setLatitude(bundle.getDouble("to_Latitude",0));
+            if(bundle != null){
+                event_location.setText(bundle.getString("location_name"));
+                event.setLongitude(bundle.getDouble("to_Longitude",0));
+                event.setLatitude(bundle.getDouble("to_Latitude",0));
+            }
         }
     }
 

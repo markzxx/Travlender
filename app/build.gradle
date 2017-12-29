@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -67,13 +68,8 @@ dependencies {
     compile 'com.github.wangjiegulu:AndroidBucket:1.0.4'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:recyclerview-v7:23.2.1'
-    //网络框架 volley retrofit
-    compile 'com.mcxiaoke.volley:library:1.0.19'
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
-    //加载图片
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    // 日历
+    compile 'com.prolificinteractive:material-calendarview:1.4.0'
 
 
 
