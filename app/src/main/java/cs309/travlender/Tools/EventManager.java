@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cs309.travlender.WSQ.RemindManager;
-
 /**
  * Created by markz on 2017-10-24.
  */
@@ -20,7 +18,7 @@ public class EventManager implements EventManagerContract.Manager {
     public DatabaseHandler dbHelper;
     public static Event event;
     public static List<Event> SearchList;
-    private static RemindManager RM;
+//    private static RemindManager RM;
     private EventManager(){
         dbHelper = new DatabaseHandler(MyContext.getContext());
     }
@@ -38,13 +36,13 @@ public class EventManager implements EventManagerContract.Manager {
 //            RM.update(id);
     }
 
-    public void setRemindManager(RemindManager rm){
-        RM = rm;
-    }
-
-    public RemindManager getRemindManager(){
-        return RM;
-    }
+//    public void setRemindManager(RemindManager rm){
+//        RM = rm;
+//    }
+//
+//    public RemindManager getRemindManager(){
+//        return RM;
+//    }
 
     public int addEvent(Event event) {
         this.event = event;

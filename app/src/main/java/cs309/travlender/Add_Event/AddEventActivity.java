@@ -151,7 +151,7 @@ public class AddEventActivity extends AppCompatActivity{
         event.setStarttime(Timestamp.valueOf(start).getTime());
         event.setEndtime(Timestamp.valueOf(end).getTime());
 
-        event.setRemindtime(getResources().getStringArray(R.array.remindvalue)[event_remindtime.getSelectedItemPosition()]);
+        event.setEarlytime(getResources().getStringArray(R.array.remindvalue)[event_remindtime.getSelectedItemPosition()]);
 
         if(event_location.getText().toString().equals(""))
             event.setLocation("无");
@@ -221,7 +221,7 @@ public class AddEventActivity extends AppCompatActivity{
                 event_location.setText(event.getLocation());
                 sw_smaart_remind.setChecked(event.getSmartRemind()==1?true:false);
                 event_content.setText(event.getContent());
-                event_remindtime.setSelection(Arrays.asList(getResources().getStringArray(R.array.remindvalue)).indexOf(event.getRemindtime()));
+                event_remindtime.setSelection(Arrays.asList(getResources().getStringArray(R.array.remindvalue)).indexOf(event.getEarlytime()));
                 event_transport.setSelection(Arrays.asList(getResources().getStringArray(R.array.transport)).indexOf(event.getTransport()));
         }
 

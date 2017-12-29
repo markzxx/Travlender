@@ -84,7 +84,7 @@ public class ViewEventActivity extends Activity{
         etTitle.setText(currentEvent.getTitle());
         etStart.setText(format.format(new Timestamp(currentEvent.getStarttime())));
         etEnd.setText(format.format(new Timestamp(currentEvent.getEndtime())));
-        etRemindtime.setText(String.valueOf(currentEvent.getRemindtime())+"分钟");
+        etRemindtime.setText(String.valueOf(currentEvent.getEarlytime())+"分钟");
         etLocation.setText(currentEvent.getLocation());
         etTransport.setText(currentEvent.getTransport());
 

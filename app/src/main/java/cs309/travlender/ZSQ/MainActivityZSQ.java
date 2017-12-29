@@ -32,7 +32,6 @@ import cs309.travlender.Tools.EventManager;
 
 public class MainActivityZSQ extends Activity implements CalendarViewFragment.OnFrgDataListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
-
     private EventManager EM;
     private List<Event> eventList;
     private ListView Events;

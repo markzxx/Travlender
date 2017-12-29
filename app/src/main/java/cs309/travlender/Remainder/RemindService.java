@@ -8,9 +8,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.*;
+import java.util.List;
+
 import cs309.travelender.R;
+import cs309.travlender.Tools.Event;
+import cs309.travlender.Tools.EventManager;
+
 /**
  * Polling service
  * @Author Ryan
@@ -24,6 +31,8 @@ public class RemindService extends Service {
 	private Notification.Builder nbuilder;
 	private NotificationManager mManager;
 	private Queue<AlarmEvent> AlarmQueue;
+	private Map<Integer, AlarmEvent> AlarmMap;
+	private EventManager EM;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -33,13 +42,56 @@ public class RemindService extends Service {
 	@Override
 	public void onCreate() {
 		initNotifiManager();
+		initAlarmQueue();
 	}
 
     @Override
 	public int onStartCommand(Intent intent,int flags, int startId) {
-        new PollingThread().start();
-	    setAlarmManager(5);
+		String type = intent.getStringExtra("type");
+		switch (type){
+			case "broadcast":
+				int id = intent.getIntExtra("id",-1);
+				long traveltime = intent.getLongExtra("traveltime",-1);
+				UpdateTravelTime(id, traveltime);
+				break;
+			case "alarm":
+				break;
+
+		}
 		return super.onStartCommand(intent, flags, startId);
+	}
+
+	private void CheckingAlarm(){
+		AlarmEvent alarmEvent = AlarmQueue.poll();
+	}
+
+	private void SetingAlarm(){
+
+	}
+
+	private void UpdateTravelTime(int id, long traveltime){
+		if(id!=-1 && traveltime!=-1) {
+			TravelAlarmEvent alarmEvent = (TravelAlarmEvent) AlarmMap.remove(id);
+			alarmEvent.setTraveltime(traveltime);
+			AlarmQueue.add(alarmEvent);
+		}
+	}
+
+	private void initAlarmQueue(){
+		EM = EventManager.getInstence();
+		AlarmQueue = new PriorityQueue<>();
+		AlarmMap = new HashMap<>();
+		List<Event> EventList = EM.getEvents_aDay();
+		for(Event event: EventList){
+			AlarmQueue.add(new CommomAlarmEvent(event));
+			if(event.getSmartRemind()==1)
+				AlarmQueue.add(new EarlyAlarmEvent(event));
+			if(event.getSmartRemind()==1)
+			{
+//				TransportTime(event);
+				AlarmMap.put(event.getEventId(),new TravelAlarmEvent(event));
+			}
+		}
 	}
 
 	private void initNotifiManager() {
@@ -51,10 +103,6 @@ public class RemindService extends Service {
         nbuilder.setDefaults(Notification.DEFAULT_SOUND);
 		nbuilder.setAutoCancel(true);
 	}
-
-	private void initAlarmQueue(){
-	     AlarmQueue = new PriorityQueue<>();
-    }
 
 	private void showNotification(String content) {
 		nbuilder.setWhen(System.currentTimeMillis());
@@ -72,7 +120,7 @@ public class RemindService extends Service {
 	}
 
 	//设置AlarmManager
-    public void setAlarmManager(long waketime) {
+    public void setAlarmManager(long waketime, String type) {
         //获取AlarmManager系统服务
         AlarmManager manager = (AlarmManager) this
                 .getSystemService(Context.ALARM_SERVICE);
@@ -80,6 +128,7 @@ public class RemindService extends Service {
         //包装需要执行Service的Intent
         Intent intent = new Intent(this, RemindService.class);
         intent.setAction(ACTION);
+        intent.putExtra("type",type);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

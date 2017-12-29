@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
-import cs309.travlender.WSQ.Alarm;
+import cs309.travlender.Remainder.RemindService;
 
 public class TravelTimeServiceReceiver extends BroadcastReceiver {
 
@@ -18,7 +18,7 @@ public class TravelTimeServiceReceiver extends BroadcastReceiver {
         Toast.makeText(context,intent.getStringExtra("time")+"收到地图广播", Toast.LENGTH_SHORT).show();
 
         //启动服务，传onwayTime和eventID
-        Intent updateIntent = new Intent(context, Alarm.class);
+        Intent updateIntent = new Intent(context, RemindService.class);
         updateIntent.setData(Uri.parse(String.valueOf(id)));
         updateIntent.putExtra("onwayTime", seconds);
         context.startService(updateIntent);
