@@ -34,7 +34,6 @@ public class AlarmEvent implements Serializable{
 
     public AlarmEvent(Event father) {
         fatherE = father;
-
         startTime = fatherE.getStarttime();
         if (fatherE.getLocation().equals("无") || fatherE.getSmartRemind() == 0) {//无地点或不需要提醒
             isSmart = false;

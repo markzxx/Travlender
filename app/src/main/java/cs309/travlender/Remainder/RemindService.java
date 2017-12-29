@@ -8,8 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
-import java.util.Calendar;
-
+import java.util.Queue;
+import java.util.*;
 import cs309.travelender.R;
 /**
  * Polling service
@@ -23,6 +23,7 @@ public class RemindService extends Service {
 	private Notification mNotification;
 	private Notification.Builder nbuilder;
 	private NotificationManager mManager;
+	private Queue<AlarmEvent> AlarmQueue;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -51,6 +52,10 @@ public class RemindService extends Service {
 		nbuilder.setAutoCancel(true);
 	}
 
+	private void initAlarmQueue(){
+	     AlarmQueue = new PriorityQueue<>();
+    }
+
 	private void showNotification(String content) {
 		nbuilder.setWhen(System.currentTimeMillis());
 		//Navigator to the new activity when click the notification title
@@ -67,7 +72,7 @@ public class RemindService extends Service {
 	}
 
 	//设置AlarmManager
-    public void setAlarmManager(int seconds) {
+    public void setAlarmManager(long waketime) {
         //获取AlarmManager系统服务
         AlarmManager manager = (AlarmManager) this
                 .getSystemService(Context.ALARM_SERVICE);
@@ -78,13 +83,10 @@ public class RemindService extends Service {
         PendingIntent pendingIntent = PendingIntent.getService(this, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        //触发服务的起始时间
-        long triggerAtTime = System.currentTimeMillis();
-        Calendar calendar = Calendar.getInstance();
         //使用AlarmManger的setRepeating方法设置定期执行的时间间隔（seconds秒）和需要执行的Service
-        manager.setWindow(AlarmManager.RTC_WAKEUP, triggerAtTime+seconds*1000,
+        manager.setWindow(AlarmManager.RTC_WAKEUP, waketime,
                 100, pendingIntent);
-        System.out.println(triggerAtTime);
+        System.out.println(System.currentTimeMillis());
     }
 	/**
 	 * Polling thread

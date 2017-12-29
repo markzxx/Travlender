@@ -16,7 +16,6 @@ import cs309.travlender.Add_Event.ViewEventActivity;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
 import cs309.travlender.ZSQ.EventActivity;
-import cs309.travlender.ZSQ.EventAdapter;
 import cs309.travlender.ZSQ.testEventAdapter;
 
 public class testMainActivity extends Activity implements View.OnClickListener{
@@ -30,7 +29,7 @@ public class testMainActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_zxx);
 
-        EM = new EventManager(this);
+        EM = EventManager.getInstence();
         Events= (ListView) findViewById(R.id.event_list);
         eventList = EM.getAllEvent();
         adapter=new testEventAdapter(this,eventList);
