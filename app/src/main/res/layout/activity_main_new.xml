@@ -56,7 +56,7 @@
             </LinearLayout>
 
 
-            <include layout="@layout/fab_view" />
+            <!--<include layout="@layout/fab_view" />-->
 
         </LinearLayout>
 

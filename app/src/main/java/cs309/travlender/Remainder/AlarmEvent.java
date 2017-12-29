@@ -1,18 +1,17 @@
-package cs309.travlender.WSQ;
+package cs309.travlender.Remainder;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-import cs309.travlender.ZSQ.Event;
+import cs309.travlender.WSQ.AlarmReceiver;
+import cs309.travlender.Tools.Event;
 
 /**
  * Created by alicewu on 11/20/17.
@@ -22,34 +21,32 @@ public class AlarmEvent implements Serializable{
     private AlarmManager alarm;//对应闹钟的指针
     private Event fatherE;//指向原始闹钟的指针
 
-    boolean isQuery = true;//if location is null
-    private long onwayTime = 0;//on way time, if location is not null(s)
-    private long departTime;//if location is not null(ms) 行程开始的出发时间，算上路程，格林尼治时间
-    private long remindEarly = 0;//if set by user(1 minutes = 60s) 提前多少minute提醒，由用户设置
-    private long remindEarlyTime; //用于提前提醒的格林尼治时间
-    private long startTime;//(1000ms = 1s) 必须提醒的开始时间，格林尼治时间
+    boolean isSmart = true;//是否需要交通规划
+    boolean isEarly = true;//是否需要提前提醒
+    private long onwayTime = -1;//on way time, if location is not null(s)
+    private long departTime = -1;//if location is not null(ms) 行程开始的出发时间，算上路程，格林尼治时间
+    private long remindEarly = -1;//if set by user(1 minutes = 60s) 提前多少minute提醒，由用户设置
+    private long remindEarlyTime = -1; //用于提前提醒的格林尼治时间
+    private long startTime = -1;//(1000ms = 1s) 必须提醒的开始时间，格林尼治时间
     //查询队列的优先级是min（deparTime,remindBefore）,由小到大
     //when happen，it must remind.
-    private String bestTransport;
+    private String bestTransport = "none";
 
-    public AlarmEvent(Event father, long onwayTime) {
-        this.onwayTime = onwayTime;
-        bestTransport = father.getTransport();
-        if (father != null) {
-            fatherE = father;
-            startTime = fatherE.getStarttime();
-            if (fatherE.getLocation().equals("无")) {//无地点
-                onwayTime = 0;//路程时间为零
-                isQuery = false;//不需要查询
-            } else {
-                updateBestTransport(new Date());
-                isQuery = true;
-            }
-            departTime = fatherE.getStarttime() - onwayTime *1000;// in ms(格林尼治时间）
+    public AlarmEvent(Event father) {
+        fatherE = father;
+
+        startTime = fatherE.getStarttime();
+        if (fatherE.getLocation().equals("无") || fatherE.getSmartRemind() == 0) {//无地点或不需要提醒
+            isSmart = false;
+        }else {
+            bestTransport = father.getTransport();
+        }
+        if (fatherE.getRemindtime() == 0) {//不需要提前提醒
+            isEarly = false;
+        }else {
             remindEarly = fatherE.getRemindtime();
             remindEarlyTime = fatherE.getStarttime() - remindEarly*60000;//in ms(格林尼治时间）
         }
-        //else throw exception
     }
 
     //设置闹钟,给定时间设置闹钟, type: StartTime; DepartTime; SetRemindTime

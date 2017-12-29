@@ -39,6 +39,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
+        android:name="cs309.travlender.Tools.MyContext"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -58,12 +59,24 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="cs309.travlender.ZXX.testMainActivity">
+        <!-- remainder 相关的注册 -->
+        <activity android:name="cs309.travlender.Remainder.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
+        <!-- Message Activity -->
+        <activity android:name="cs309.travlender.Remainder.MessageActivity"/>
+
+        <!-- Polling Service -->
+        <service android:name="cs309.travlender.Remainder.RemindService">
+            <intent-filter>
+                <action android:name="com.ryantang.service.PollingService"/>
+            </intent-filter>
+        </service>
+
+        <!-- remainder 相关的注册 -->
         <activity android:name="cs309.travlender.Add_Event.ViewEventActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

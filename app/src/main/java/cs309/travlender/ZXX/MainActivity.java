@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
@@ -15,8 +14,8 @@ import java.util.List;
 import cs309.travelender.R;
 import cs309.travlender.Add_Event.AddEventActivity;
 import cs309.travlender.Add_Event.ViewEventActivity;
-import cs309.travlender.ZSQ.Event;
-import cs309.travlender.ZSQ.EventActivity;
+import cs309.travlender.Tools.EventManager;
+import cs309.travlender.Tools.Event;
 import cs309.travlender.ZSQ.EventAdapter;
 
 public class MainActivity extends Activity implements View.OnClickListener{
@@ -30,7 +29,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
 
-        EM = new EventManager(this);
+//        Intent i = new Intent(this, RemindService.class);
+//        startService(i);
+
+        EM = EventManager.getInstence();
         Events= (ListView) findViewById(R.id.event_list);
         eventList = EM.getAllEvent();
         adapter=new EventAdapter(this,eventList);

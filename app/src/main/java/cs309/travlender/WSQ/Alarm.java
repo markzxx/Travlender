@@ -1,24 +1,14 @@
 package cs309.travlender.WSQ;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.PriorityQueue;
-
-import cs309.travlender.ZSQ.Event;
-import cs309.travlender.ZXX.EventManager;
+import cs309.travlender.Remainder.AlarmEvent;
+import cs309.travlender.Tools.Event;
+import cs309.travlender.Tools.EventManager;
 
 //被唤醒时
 public class Alarm extends Service {
@@ -46,7 +36,7 @@ public class Alarm extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("Alarm", "onStartCommand executed");
-        Event event = new EventManager(this).getEvent(Integer.parseInt(intent.getDataString()));
+        Event event = EventManager.getInstence().getEvent(Integer.parseInt(intent.getDataString()));
         //传递eventID过来，创建remindEvent
         remindEvent = new AlarmEvent(event, intent.getLongExtra("onwayTime",0));
         updateOne(remindEvent);
@@ -59,8 +49,8 @@ public class Alarm extends Service {
         //开始时间的闹钟
         a.schedule(this, a.getStarttime(), "StartTime");
         //有地点的行程闹钟
-        if (a.isQuery == true)
-            a.schedule(this, a.getDepartT(), "DepartTime");
+//        if (a.isQuery == true)
+//            a.schedule(this, a.getDepartT(), "DepartTime");
         //用户设置的提前提醒闹钟
         if (a.getRemindEarlyTime() != 0)
             a.schedule(this, a.getRemindEarlyTime(), "SetRemindTime");

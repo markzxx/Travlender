@@ -1,10 +1,10 @@
-package cs309.travlender.ZSQ;
+package cs309.travlender.Tools;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 
-import cs309.travlender.ZXX.DatabaseContract;
+import cs309.travlender.ZSQ.ZHANGSHQIContract;
 
 
 /**

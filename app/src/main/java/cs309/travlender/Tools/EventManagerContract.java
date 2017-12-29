@@ -1,8 +1,6 @@
-package cs309.travlender.ZXX;
+package cs309.travlender.Tools;
 
 import java.util.List;
-
-import cs309.travlender.ZSQ.Event;
 
 /**
  * Created by markz on 2017-10-24.

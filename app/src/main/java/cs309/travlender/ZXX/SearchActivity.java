@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import cs309.travelender.R;
+import cs309.travlender.Tools.EventManager;
 
 public class SearchActivity extends Activity implements View.OnClickListener{
     private EditText text,starttime,endtime;
@@ -26,7 +27,7 @@ public class SearchActivity extends Activity implements View.OnClickListener{
         endtime= (EditText) findViewById(R.id.search_endtime);
         btnSearch= (Button) findViewById(R.id.btn_search_dialog);
         btnSearch.setOnClickListener(this);
-        EM = new EventManager(this);
+        EM =EventManager.getInstence();
         text.setText("test");
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd");

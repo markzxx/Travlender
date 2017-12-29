@@ -3,20 +3,19 @@ package cs309.travlender.Add_Event;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import android.support.design.widget.FloatingActionButton;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import cs309.travelender.R;
-import cs309.travlender.ZSQ.Event;
-import cs309.travlender.ZXX.EventManager;
+import cs309.travlender.Tools.Event;
+import cs309.travlender.Tools.EventManager;
 
 /**
  * Created by Jeremy Zhang PC on 2017/11/21.
@@ -73,7 +72,7 @@ public class ViewEventActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_detail);
         ButterKnife.bind(this);
-        EM=new EventManager(this);
+        EM=EventManager.getInstence();
         //获取传递过来的intent
         intent=getIntent();
 

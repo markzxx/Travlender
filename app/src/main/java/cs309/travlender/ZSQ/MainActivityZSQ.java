@@ -3,18 +3,12 @@ package cs309.travlender.ZSQ;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
@@ -25,13 +19,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cs309.travelender.R;
 import cs309.travlender.Add_Event.AddEventActivity;
 import cs309.travlender.Add_Event.ViewEventActivity;
-import cs309.travlender.ZXX.EventManager;
+import cs309.travlender.Tools.Event;
+import cs309.travlender.Tools.EventManager;
+
 
 public class MainActivityZSQ extends Activity implements CalendarViewFragment.OnFrgDataListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
@@ -64,7 +61,7 @@ public class MainActivityZSQ extends Activity implements CalendarViewFragment.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
-        EM = new EventManager(this);
+        EM = EventManager.getInstence();
         Events= (ListView) findViewById(R.id.event_list);
         title = (TextView) findViewById(R.id.title_day);
         calendarViewFragment=new CalendarViewFragment();

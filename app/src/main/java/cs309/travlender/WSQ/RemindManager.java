@@ -1,20 +1,13 @@
 package cs309.travlender.WSQ;
 
-import android.app.Activity;
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
 import android.net.Uri;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
-import cs309.travlender.ZSQ.Event;
-import cs309.travlender.ZXX.EventManager;
-import cs309.travlender.ZXX.MainActivity;
+import cs309.travlender.Tools.Event;
+import cs309.travlender.Tools.EventManager;
 
 import static cs309.travlender.WHL.TravelTimeService.startServiceTravelTime;
 

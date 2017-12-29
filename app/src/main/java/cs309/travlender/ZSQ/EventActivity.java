@@ -15,7 +15,8 @@ import java.util.Calendar;
 import java.util.Random;
 
 import cs309.travelender.R;
-import cs309.travlender.ZXX.EventManager;
+import cs309.travlender.Tools.Event;
+import cs309.travlender.Tools.EventManager;
 
 
 /**
@@ -46,7 +47,7 @@ public class EventActivity extends Activity implements View.OnClickListener{
         btnAdd= (Button) findViewById(R.id.btn_add_event);
 
 
-        EM=new EventManager(this);
+        EM=EventManager.getInstence();
         //获取传递过来的intent
         intent=getIntent();
 

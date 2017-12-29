@@ -1,10 +1,8 @@
-package cs309.travlender.ZXX;
+package cs309.travlender.Tools;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.NonNull;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -12,27 +10,32 @@ import java.util.Date;
 import java.util.List;
 
 import cs309.travlender.WSQ.RemindManager;
-import cs309.travlender.ZSQ.Event;
 
 /**
  * Created by markz on 2017-10-24.
  */
 
 public class EventManager implements EventManagerContract.Manager {
+    private static EventManager instence;
     public DatabaseHandler dbHelper;
-    static Event event;
-    static List<Event> SearchList;
+    public static Event event;
+    public static List<Event> SearchList;
     private static RemindManager RM;
-    Context context;
-    public EventManager(@NonNull Context context){
-        this.context = context;
-        dbHelper = new DatabaseHandler(context);
+    private EventManager(){
+        dbHelper = new DatabaseHandler(MyContext.getContext());
+    }
+
+    public static EventManager getInstence(){
+        if(instence == null){
+            instence = new EventManager();
+        }
+        return instence;
     }
 
     public void update(int id){
-        RM = new RemindManager(this,context);
-        if (RM!=null)
-            RM.update(id);
+//        RM = new RemindManager(this,context);
+//        if (RM!=null)
+//            RM.update(id);
     }
 
     public void setRemindManager(RemindManager rm){

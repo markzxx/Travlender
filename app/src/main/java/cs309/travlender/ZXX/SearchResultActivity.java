@@ -7,7 +7,8 @@ import android.widget.ListView;
 import java.util.List;
 
 import cs309.travelender.R;
-import cs309.travlender.ZSQ.Event;
+import cs309.travlender.Tools.EventManager;
+import cs309.travlender.Tools.Event;
 import cs309.travlender.ZSQ.EventAdapter;
 
 public class SearchResultActivity extends AppCompatActivity {
@@ -20,7 +21,7 @@ public class SearchResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result);
 
         Events= (ListView) findViewById(R.id.event_list);
-        searchResult = new EventManager(this).SearchList;
+        searchResult = EventManager.getInstence().SearchList;
         adapter=new EventAdapter(this,searchResult);
         Events.setAdapter(adapter);
     }
