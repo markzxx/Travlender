@@ -38,8 +38,8 @@ public class Alarm extends Service {
         Log.d("Alarm", "onStartCommand executed");
         Event event = EventManager.getInstence().getEvent(Integer.parseInt(intent.getDataString()));
         //传递eventID过来，创建remindEvent
-        remindEvent = new AlarmEvent(event, intent.getLongExtra("onwayTime",0));
-        updateOne(remindEvent);
+//        remindEvent = new AlarmEvent(event, intent.getLongExtra("onwayTime",0));
+//        updateOne(remindEvent);
         return START_NOT_STICKY;
     }
 
