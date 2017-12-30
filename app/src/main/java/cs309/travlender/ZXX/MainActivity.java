@@ -14,8 +14,9 @@ import java.util.List;
 import cs309.travelender.R;
 import cs309.travlender.Add_Event.AddEventActivity;
 import cs309.travlender.Add_Event.ViewEventActivity;
-import cs309.travlender.Tools.EventManager;
+import cs309.travlender.Remainder.RemindService;
 import cs309.travlender.Tools.Event;
+import cs309.travlender.Tools.EventManager;
 import cs309.travlender.ZSQ.EventAdapter;
 
 public class MainActivity extends Activity implements View.OnClickListener{
@@ -24,13 +25,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
     List<Event> eventList;
     private ListView Events;
     private EventAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
 
-//        Intent i = new Intent(this, RemindService.class);
-//        startService(i);
+        Intent i = new Intent(this, RemindService.class);
+        startService(i);
 
         EM = EventManager.getInstence();
         Events= (ListView) findViewById(R.id.event_list);
@@ -52,8 +54,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btnAdd.setOnClickListener(this);
 //        btnSearch = (Button) findViewById(R.id.btn_search);
 //        btnSearch.setOnClickListener(this);
-//        btnClear = (Button) findViewById(R.id.btn_clear);
-//        btnClear.setOnClickListener(this);
+        btnClear = (RapidFloatingActionButton) findViewById(R.id.fab_button_clear);
+        btnClear.setOnClickListener(this);
     }
     @Override
     public void onClick(View view){
@@ -68,9 +70,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 s.putExtra("request", "ADD");
                 startActivityForResult(s,1);
                 break;
-//            case R.id.btn_clear:
-//                EM.deleteAllEvent();
-//                onCreate(null);
+            case R.id.fab_button_clear:
+                EM.deleteAllEvent();
+                onCreate(null);
         }
     }
     @Override

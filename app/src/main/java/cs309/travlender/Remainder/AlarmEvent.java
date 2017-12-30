@@ -20,6 +20,7 @@ abstract class AlarmEvent implements Comparable{
         Starttime = father.getStarttime();
     }
 
+    public String getTitle(){ return fatherEvent.getTitle(); }
     public int getID(){ return fatherEvent.getEventId(); }
 
     public Event getFatherEvent() {

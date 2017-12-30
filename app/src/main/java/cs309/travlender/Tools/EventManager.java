@@ -1,6 +1,7 @@
 package cs309.travlender.Tools;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -8,6 +9,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import cs309.travlender.Remainder.RemindService;
 
 /**
  * Created by markz on 2017-10-24.
@@ -31,9 +34,9 @@ public class EventManager implements EventManagerContract.Manager {
     }
 
     public void update(int id){
-//        RM = new RemindManager(this,context);
-//        if (RM!=null)
-//            RM.update(id);
+        Intent i = new Intent(MyContext.getContext(), RemindService.class);
+        i.putExtra("type","init");
+        MyContext.getContext().startService(i);
     }
 
 //    public void setRemindManager(RemindManager rm){
