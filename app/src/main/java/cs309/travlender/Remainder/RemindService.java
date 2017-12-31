@@ -17,6 +17,10 @@ import java.util.Queue;
 
 import cs309.travelender.R;
 import cs309.travlender.Add_Event.ViewEventActivity;
+import cs309.travlender.Remainder.AlarmEvents.AlarmEvent;
+import cs309.travlender.Remainder.AlarmEvents.CommomAlarmEvent;
+import cs309.travlender.Remainder.AlarmEvents.EarlyAlarmEvent;
+import cs309.travlender.Remainder.AlarmEvents.TravelAlarmEvent;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
 import cs309.travlender.Tools.MyContext;
@@ -96,6 +100,7 @@ public class RemindService extends Service {
 				break;
 			}
 		}
+		System.out.println("Next Alarm time:"+df.format(NextAlarmTime));
 	}
 
 	private void SetNextAlarm(long alarmtime){

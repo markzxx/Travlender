@@ -12,7 +12,6 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main_remainder);
 		//Start polling service
 		System.out.println("Start polling service...");
-		PollingUtils.startPollingService(this, 1, RemindService.class, RemindService.ACTION);
 	}
 	
 	@Override
@@ -20,7 +19,6 @@ public class MainActivity extends Activity {
 		super.onDestroy();
 		//Stop polling service
 		System.out.println("Stop polling service...");
-		PollingUtils.stopPollingService(this, RemindService.class, RemindService.ACTION);
 	}
 
 }

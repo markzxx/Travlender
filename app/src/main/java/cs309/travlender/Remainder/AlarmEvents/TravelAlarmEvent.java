@@ -1,4 +1,4 @@
-package cs309.travlender.Remainder;
+package cs309.travlender.Remainder.AlarmEvents;
 
 import cs309.travlender.Tools.Event;
 
