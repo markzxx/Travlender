@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,7 +11,6 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps2d.MapView;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.BusPath;
 import com.amap.api.services.route.BusRouteResult;
@@ -31,9 +29,6 @@ import com.amap.api.services.route.WalkStep;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Exchanger;
-
-import cs309.travelender.R;
 
 import static com.amap.api.services.routepoisearch.RoutePOISearch.DrivingDefault;
 import static com.amap.api.services.share.ShareSearch.BusDefault;
@@ -72,14 +67,14 @@ public class TravelTimeService extends Service {
     }
 
     // 开启服务用的函数
-    public static void startServiceTravelTime(Context context, double param1, double param2, String param3, int id) {
+    public static void startServiceTravelTime(Context context, double latitude, double longitude, String transportatiton, int id) {
 //        Toast.makeText(context,"startActionTravelTime", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(context, TravelTimeService.class);
         intent.setAction(ACTION_TRAVEL_TIME);
-        intent.putExtra(EXTRA_PARAM_LATITUDE, String.valueOf(param1));
-        intent.putExtra(EXTRA_PARAM_LONGITUDE, String.valueOf(param2));
+        intent.putExtra(EXTRA_PARAM_LATITUDE, String.valueOf(latitude));
+        intent.putExtra(EXTRA_PARAM_LONGITUDE, String.valueOf(longitude));
         intent.putExtra(EXTRA_PARAM_QUERY_ID, String.valueOf(id));
-        intent.putExtra(EXTRA_PARAM_TRANSPORTATION, param3);
+        intent.putExtra(EXTRA_PARAM_TRANSPORTATION, transportatiton);
         context.startService(intent);
     }
 

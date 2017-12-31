@@ -23,7 +23,7 @@ import cs309.travlender.Remainder.AlarmEvents.EarlyAlarmEvent;
 import cs309.travlender.Remainder.AlarmEvents.TravelAlarmEvent;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
-import cs309.travlender.Tools.MyContext;
+import cs309.travlender.WHL.TravelTimeService;
 
 /**
  * Polling service
@@ -138,7 +138,7 @@ public class RemindService extends Service {
 				AlarmQueue.add(new EarlyAlarmEvent(event));
 			if(event.isTravelAlarm())
 			{
-				new TravelThread(event);
+				new TravelThread(event, this);
 				AlarmMap.put(event.getEventId(),new TravelAlarmEvent(event));
 			}
 		}
@@ -199,22 +199,20 @@ public class RemindService extends Service {
 	int count = 0;
 	class TravelThread extends Thread {
 		Event event;
-		public TravelThread(Event event){
+		Context context;
+		public TravelThread(Event event, Context context){
 			this.event = event;
+			this.context = context;
 			start();
 		}
 		@Override
 		public void run() {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			Intent intent = new Intent(MyContext.getContext(), RemindService.class);
-			intent.putExtra("type",RemindService.BROADCAST);
-			intent.putExtra("id",event.getEventId());
-			intent.putExtra("traveltime",(long)1*60*1000);
-			MyContext.getContext().startService(intent);
+			TravelTimeService.startServiceTravelTime(context, event.getLatitude(), event.getLongitude(), event.getTransport(), event.getEventId());
+//			Intent intent = new Intent(MyContext.getContext(), RemindService.class);
+//			intent.putExtra("type",RemindService.BROADCAST);
+//			intent.putExtra("id",event.getEventId());
+//			intent.putExtra("traveltime",(long)1*60*1000);
+//			MyContext.getContext().startService(intent);
 			System.out.println("Traveltime sent "+event.getTitle());
 		}
 	}
