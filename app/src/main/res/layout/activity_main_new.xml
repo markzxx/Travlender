@@ -21,13 +21,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorPrimary"
+                android:background="@color/icons"
                 android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/left_menu"
                     style="@style/imageButtonStyle"
-                    android:src="@drawable/ic_menu_white_24dp" />
+                    android:src="@drawable/ic_menu_grey_600_24dp" />
 
                 <LinearLayout
                     android:id="@+id/calendar_open_close"
@@ -44,7 +44,7 @@
                         android:gravity="center"
                         android:text="Date"
                         android:textSize="20dp"
-                        android:textColor="#fff" />
+                        android:textColor="@color/primary_text" />
 
 
                 </LinearLayout>
@@ -52,7 +52,7 @@
                 <ImageButton
                     android:id="@+id/go_today"
                     style="@style/imageButtonStyle"
-                    android:src="@drawable/ic_today_white_24dp" />
+                    android:src="@drawable/ic_today_grey_900_24dp" />
             </LinearLayout>
 
 
@@ -65,13 +65,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-            <ListView
+            <com.baoyz.swipemenulistview.SwipeMenuListView
                 android:id="@+id/event_list"
-                android:divider="#5ABC4F"
+                android:divider="@color/divider"
                 android:layout_marginTop="60dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            </ListView>
+            </com.baoyz.swipemenulistview.SwipeMenuListView>
+
         </LinearLayout>
 
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"
@@ -80,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginEnd="16dp"
             rfab:rfab_color_normal="#009688"
             rfab:rfab_color_pressed="#263238"
@@ -91,22 +92,22 @@
             rfab:rfab_shadow_radius="5dp"
             rfab:rfab_size="normal" />
 
-        <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/fab_button_clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginEnd="16dp"
-            rfab:rfab_color_normal="#263238"
-            rfab:rfab_color_pressed="#009688"
-            rfab:rfab_drawable="@drawable/ic_delete_white_24dp"
-            rfab:rfab_shadow_color="#999999"
-            rfab:rfab_shadow_dx="0dp"
-            rfab:rfab_shadow_dy="2dp"
-            rfab:rfab_shadow_radius="5dp"
-            rfab:rfab_size="normal" />
+        <!--<com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@+id/fab_button_clear"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_marginBottom="15dp"-->
+            <!--android:layout_marginEnd="16dp"-->
+            <!--rfab:rfab_color_normal="#263238"-->
+            <!--rfab:rfab_color_pressed="#009688"-->
+            <!--rfab:rfab_drawable="@drawable/ic_delete_white_24dp"-->
+            <!--rfab:rfab_shadow_color="#999999"-->
+            <!--rfab:rfab_shadow_dx="0dp"-->
+            <!--rfab:rfab_shadow_dy="2dp"-->
+            <!--rfab:rfab_shadow_radius="5dp"-->
+            <!--rfab:rfab_size="normal" />-->
 
 
     </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>

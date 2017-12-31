@@ -1,13 +1,20 @@
 package cs309.travlender.ZSQ;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
@@ -19,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,13 +34,13 @@ import cs309.travlender.Add_Event.AddEventActivity;
 import cs309.travlender.Add_Event.ViewEventActivity;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
-
+import cs309.travlender.Tools.DensityUtils;
 
 public class MainActivityZSQ extends Activity implements CalendarViewFragment.OnFrgDataListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
     private EventManager EM;
     private List<Event> eventList;
-    private ListView Events;
+    private SwipeMenuListView Events;
     private TextView title;
     private EventAdapter adapter;
     private CalendarViewFragment calendarViewFragment;
@@ -62,7 +68,7 @@ public class MainActivityZSQ extends Activity implements CalendarViewFragment.On
         setContentView(R.layout.activity_main_new);
         EM = EventManager.getInstence();
         EM.update();
-        Events= (ListView) findViewById(R.id.event_list);
+        Events= (SwipeMenuListView) findViewById(R.id.event_list);
         title = (TextView) findViewById(R.id.title_day);
         calendarViewFragment=new CalendarViewFragment();
         ButterKnife.bind(this);
@@ -76,7 +82,49 @@ public class MainActivityZSQ extends Activity implements CalendarViewFragment.On
         viewList(current);
         viewEvent();
 
+        init_swipe();
 
+
+    }
+
+    private void init_swipe() {
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+
+                // create "delete" item
+                SwipeMenuItem deleteItem = new SwipeMenuItem(
+                        getApplicationContext());
+                // set item background
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
+                        0x3F, 0x25)));
+                // set item width
+                deleteItem.setWidth(DensityUtils.dp2px(menu.getContext(),90));
+                // set a icon
+                deleteItem.setIcon(R.drawable.ic_delete_white_24dp);
+                // add to menu
+                menu.addMenuItem(deleteItem);
+            }
+        };
+        // set creator
+        Events.setMenuCreator(creator);
+        Events.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                Event event = eventList.get(position);
+                switch (index) {
+                    case 0:
+                        // delete
+                        EM.deleteEvent(event.getEventId());
+                        adapter.notifyDataSetChanged();
+                        recreate();
+                        break;
+                }
+                // false : close the menu; true : not close the menu
+                return false;
+            }
+        });
     }
 
     @Override
@@ -88,7 +136,7 @@ public class MainActivityZSQ extends Activity implements CalendarViewFragment.On
         }
     }
 
-        private void viewList(Date date) {
+    private void viewList(Date date) {
         String str=sdf.format(date);
         eventList = EM.getEvents(str);
         adapter=new EventAdapter(this,eventList);
@@ -117,8 +165,16 @@ public class MainActivityZSQ extends Activity implements CalendarViewFragment.On
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
         items.add(new RFACLabelItem<Integer>()
-                .setLabel("活动")
+                .setLabel("Add Event")
                 .setResId(R.drawable.ic_access_alarms_white_24dp)
+                .setIconNormalColor(0xffd84315)
+                .setIconPressedColor(0xffbf360c)
+                .setLabelSizeSp(14)
+                .setWrapper(0)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel("Delete")
+                .setResId(R.drawable.ic_delete_white_24dp)
                 .setIconNormalColor(0xffd84315)
                 .setIconPressedColor(0xffbf360c)
                 .setLabelSizeSp(14)
@@ -150,6 +206,10 @@ public class MainActivityZSQ extends Activity implements CalendarViewFragment.On
             Intent intent = new Intent(MainActivityZSQ.this, AddEventActivity.class);
             intent.putExtra("request", "ADD");
             startActivityForResult(intent,0);
+        }
+        if (i == 1) {
+            EM.deleteAllEvent();
+            onCreate(null);
         }
     }
 

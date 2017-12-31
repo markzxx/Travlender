@@ -51,8 +51,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btnAdd.setOnClickListener(this);
 //        btnSearch = (Button) findViewById(R.id.btn_search);
 //        btnSearch.setOnClickListener(this);
-        btnClear = (RapidFloatingActionButton) findViewById(R.id.fab_button_clear);
-        btnClear.setOnClickListener(this);
+//        btnClear = (RapidFloatingActionButton) findViewById(R.id.fab_button_clear);
+//        btnClear.setOnClickListener(this);
     }
     @Override
     public void onClick(View view){
@@ -67,9 +67,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 s.putExtra("request", "ADD");
                 startActivityForResult(s,1);
                 break;
-            case R.id.fab_button_clear:
-                EM.deleteAllEvent();
-                onCreate(null);
+//            case R.id.fab_button_clear:
+//                EM.deleteAllEvent();
+//                onCreate(null);
         }
     }
     @Override
