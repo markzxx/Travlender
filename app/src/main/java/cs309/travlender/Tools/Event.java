@@ -13,6 +13,10 @@ import cs309.travlender.ZSQ.ZHANGSHQIContract;
 
 public class Event implements ZHANGSHQIContract.EventInterface {
 
+    public static final int TRAVELCODE = 4; //binary 100
+    public static final int EARLYCODE = 2; //binary 010
+    public static final int COMMOMCODE = 1; //binary 001
+
     private ContentValues value;
 
     private static DatabaseContract.DBevent DB = new DatabaseContract.DBevent();
@@ -74,7 +78,6 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     public long getAddtime() {
         return value.getAsLong("addtime");
     }
-
     public void setAddtime(long addtime) {
         value.put("addtime",addtime);
     }
@@ -121,6 +124,22 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
     public void setSmartRemind(int smartRemind){
         value.put(DB.KEY_SMARTREMIND,smartRemind);
+    }
+    public int getAlarmStatus(){
+        return value.getAsInteger(DB.KEY_ALARMSTATUS);
+    }
+    public void setAlarmStatus(int alarmcode){
+        value.put(DB.KEY_ALARMSTATUS, getAlarmStatus()|alarmcode);
+        EventManager.getInstence().editEvent(this);
+    }
+    public boolean isTravelAlarm(){
+        return getSmartRemind()==1 && (getAlarmStatus()&TRAVELCODE)==0;
+    }
+    public boolean isEarlyAlarm(){
+        return getEarlytime()!=0 && (getAlarmStatus()&EARLYCODE)==0;
+    }
+    public boolean isCommomAlarm(){
+        return (getAlarmStatus()&COMMOMCODE)==0;
     }
 //    @Override
 //    public int describeContents() {

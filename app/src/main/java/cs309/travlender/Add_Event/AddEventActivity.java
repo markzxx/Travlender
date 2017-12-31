@@ -195,10 +195,12 @@ public class AddEventActivity extends AppCompatActivity{
         else
             request = "ADD";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  EE");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         switch (request){
             case "ADD":
+                String[] titlelist = {"音乐会","狼人杀","跨年","发呆"};
                 insert_update_title.setText("新建活动");
+                event_title.setText(titlelist[(int)(Math.random()*4)]);
                 Calendar today = getToDay();
                 start_date.setText(dateFormat.format(today.getTime()));
                 end_date.setText(dateFormat.format(today.getTime()));

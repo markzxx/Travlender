@@ -7,14 +7,35 @@ import cs309.travlender.Tools.Event;
  */
 
 public class EarlyAlarmEvent extends AlarmEvent {
-    private int Earlytime;
+
     public EarlyAlarmEvent(Event father) {
         super(father);
         setAlarmtype(EarlyAlarm);
-        Earlytime = father.getEarlytime(); //Starttime单位是毫秒，Remindtime是分钟
-        setAlarmtime(father.getStarttime()- Earlytime*60000);
+        setAlarmtime(father.getStarttime()- getEarlytime()*60000);  //Starttime单位是毫秒，Remindtime是分钟
     }
+
+    @Override
+    public String getContent() {
+        return getformatEarlytime();
+    }
+
+    @Override
+    public int getAlarmCode(){
+        return Event.EARLYCODE;
+    }
+
+    public String getformatEarlytime(){
+        String formattime = "提前";
+        int earlytime = getEarlytime();
+        if(earlytime/60!=0)
+            formattime += earlytime/60+"小时";
+        if(earlytime%60!=0)
+            formattime += earlytime%60+"分钟";
+        return formattime+"提醒";
+    }
+
     public int getEarlytime(){
-        return Earlytime;
+        return getFatherEvent().getEarlytime();
     }
+
 }

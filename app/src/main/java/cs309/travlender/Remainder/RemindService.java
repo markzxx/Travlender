@@ -10,14 +10,16 @@ import android.os.IBinder;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.List;
 
 import cs309.travelender.R;
+import cs309.travlender.Add_Event.ViewEventActivity;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
+import cs309.travlender.Tools.MyContext;
 
 /**
  * Polling service
@@ -33,6 +35,9 @@ public class RemindService extends Service {
 	private Notification mNotification;
 	private Notification.Builder nbuilder;
 	private NotificationManager mManager;
+	private AlarmManager alarmManager;
+	private Intent alarmIntent;
+	private PendingIntent alarmPendingIntent;
 	private Queue<AlarmEvent> AlarmQueue;
 	private Map<Integer, AlarmEvent> AlarmMap;
 	private EventManager EM;
@@ -48,6 +53,7 @@ public class RemindService extends Service {
 	public void onCreate() {
 		NextAlarmTime = Long.MAX_VALUE;
 		initNotifiManager();
+		initAlarmManager();
 		initAlarmQueue();
 	}
 
@@ -69,32 +75,49 @@ public class RemindService extends Service {
 				break;
 			default:
 		}
+		System.out.println("下一次唤醒时间："+alarmManager.getNextAlarmClock());
 		return super.onStartCommand(intent, flags, startId);
 	}
 
 	private void CheckingAlarm(){
 		System.out.println("Checking:"+df.format(System.currentTimeMillis()));
-		for(AlarmEvent alarmEvent : AlarmQueue){
-			if(alarmEvent.getAlarmtime()<System.currentTimeMillis())  //到时间，开始提醒
-				showNotification(alarmEvent.getTitle(), "id:"+alarmEvent.getID());
+		while (true){
+			AlarmEvent alarmEvent = AlarmQueue.poll();
+			if(alarmEvent == null)
+				break;
+			else if(Math.abs(alarmEvent.getAlarmtime()-System.currentTimeMillis()) < 200)
+			{
+				showNotification(alarmEvent.getID(), alarmEvent.getTitle(), alarmEvent.getContent());
+				alarmEvent.getFatherEvent().setAlarmStatus(alarmEvent.getAlarmCode());
+			}
+			else if(alarmEvent.getAlarmtime() > System.currentTimeMillis()) {
+				AlarmQueue.add(alarmEvent);
+				if (NextAlarmTime < System.currentTimeMillis() || alarmEvent.getAlarmtime() < NextAlarmTime)
+					SetNextAlarm(alarmEvent.getAlarmtime());
+				break;
+			}
 		}
-		if(AlarmQueue.peek()!=null && (NextAlarmTime < System.currentTimeMillis() || AlarmQueue.peek().getAlarmtime() < NextAlarmTime))
-			SetNextAlarm(AlarmQueue.peek().getAlarmtime());
 	}
 
 	private void SetNextAlarm(long alarmtime){
 		NextAlarmTime = alarmtime;
-		setAlarmManager(alarmtime,"alarm");
+		setAlarmManager(alarmtime,ALARM);
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		initAlarmQueue();
 	}
 
 	private void UpdateTravelTime(Intent intent){
 		int id = intent.getIntExtra("id",-1);
 		long traveltime = intent.getLongExtra("traveltime",-1);
-		if(id!=-1 && traveltime!=-1) {
+		if(id!=-1 && traveltime!=-1 && AlarmMap.containsKey(id)) {
 			TravelAlarmEvent alarmEvent = (TravelAlarmEvent) AlarmMap.remove(id);
 			alarmEvent.setTraveltime(traveltime);
 			AlarmQueue.add(alarmEvent);
+			System.out.println("Get broadcast");
 			CheckingAlarm();
 		}
 	}
@@ -105,17 +128,18 @@ public class RemindService extends Service {
 		AlarmMap = new HashMap<>();
 		List<Event> EventList = EM.getEvents_aDay();
 		for(Event event: EventList){
-			AlarmQueue.add(new CommomAlarmEvent(event));
-			if(event.getEarlytime()!=0)
+			if(event.isCommomAlarm())
+				AlarmQueue.add(new CommomAlarmEvent(event));
+			if(event.isEarlyAlarm())
 				AlarmQueue.add(new EarlyAlarmEvent(event));
-			if(event.getSmartRemind()==1)
+			if(event.isTravelAlarm())
 			{
-//				TransportTime(event);
+				new TravelThread(event);
 				AlarmMap.put(event.getEventId(),new TravelAlarmEvent(event));
 			}
 		}
-		CheckingAlarm();
 		System.out.println("Queue:"+AlarmQueue.size());
+		CheckingAlarm();
 	}
 
 	private void initNotifiManager() {
@@ -127,15 +151,15 @@ public class RemindService extends Service {
 		nbuilder.setAutoCancel(true);
 	}
 
-	private void showNotification(String title, String content) {
+	private void showNotification(int id, String title, String content) {
 		nbuilder.setContentTitle(title);
 		System.out.println("Show notification:"+df.format(System.currentTimeMillis()));
 		nbuilder.setWhen(System.currentTimeMillis());
 		//Navigator to the new activity when click the notification title
-		Intent i = new Intent(this, MessageActivity.class);
+		Intent i = new Intent(this, ViewEventActivity.class);
+		i.putExtra("id",id);
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i,
                 PendingIntent.FLAG_CANCEL_CURRENT);
-
         nbuilder.setContentText(content);
         nbuilder.setFullScreenIntent(pendingIntent,true);
         nbuilder.setContentIntent(pendingIntent);
@@ -145,21 +169,22 @@ public class RemindService extends Service {
 	}
 
 	//设置AlarmManager
-    public void setAlarmManager(long waketime, String type) {
-        //获取AlarmManager系统服务
-        AlarmManager manager = (AlarmManager) this
-                .getSystemService(Context.ALARM_SERVICE);
+	public void initAlarmManager(){
 
-        //包装需要执行Service的Intent
-        Intent intent = new Intent(this, RemindService.class);
-        intent.setAction(ACTION);
-        intent.putExtra("type",type);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+	}
+    public void setAlarmManager(long waketime, int type) {
+		//获取AlarmManager系统服务
+		alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 
-        //使用AlarmManger的setRepeating方法设置定期执行的时间间隔（seconds秒）和需要执行的Service
-        manager.setWindow(AlarmManager.RTC_WAKEUP, waketime,
-                100, pendingIntent);
+		//包装需要执行Service的Intent
+		alarmIntent = new Intent(this, RemindService.class);
+		alarmIntent.setAction(ACTION);
+		alarmIntent.putExtra("type", ALARM);
+		alarmPendingIntent = PendingIntent.getService(this, 0,
+				alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //设置唤醒时间
+		alarmManager.setExact(AlarmManager.RTC_WAKEUP, waketime,
+				alarmPendingIntent);
         System.out.println("唤醒时间："+df.format(waketime));
     }
 	/**
@@ -168,13 +193,25 @@ public class RemindService extends Service {
 	 * @Create 2013-7-13 上午10:18:34
 	 */
 	int count = 0;
-	class PollingThread extends Thread {
+	class TravelThread extends Thread {
+		Event event;
+		public TravelThread(Event event){
+			this.event = event;
+			start();
+		}
 		@Override
 		public void run() {
-		    count++;
-			System.out.println("Polling..."+count+".."+ System.currentTimeMillis());
-//            showNotification("Message "+count);
-            System.out.println("New message!");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			Intent intent = new Intent(MyContext.getContext(), RemindService.class);
+			intent.putExtra("type",RemindService.BROADCAST);
+			intent.putExtra("id",event.getEventId());
+			intent.putExtra("traveltime",(long)1*60*1000);
+			MyContext.getContext().startService(intent);
+			System.out.println("Traveltime sent "+event.getTitle());
 		}
 	}
 	

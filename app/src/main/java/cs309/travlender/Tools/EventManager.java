@@ -33,9 +33,9 @@ public class EventManager implements EventManagerContract.Manager {
         return instence;
     }
 
-    public void update(int id){
+    public void update(){
         Intent i = new Intent(MyContext.getContext(), RemindService.class);
-        i.putExtra("type","init");
+        i.putExtra("type", RemindService.INIT);
         MyContext.getContext().startService(i);
     }
 
@@ -53,7 +53,7 @@ public class EventManager implements EventManagerContract.Manager {
         ContentValues values=event.getValue();
         long id = db.insert(DatabaseContract.DBevent.TABLE_NAME, null, values);
         db.close();
-        update((int)id);
+        update();
         return (int)id;
     }
 
@@ -64,6 +64,7 @@ public class EventManager implements EventManagerContract.Manager {
         String[] whereArgs = {String.valueOf(id)};
         db.delete(table_name,where,whereArgs);
         db.close();
+        update();
     }
 
     public void editEvent(Event event) {
@@ -74,6 +75,7 @@ public class EventManager implements EventManagerContract.Manager {
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         db.update(table_name,values,where,null);
         db.close();
+        update();
     }
 
     public Event getEvent(int id) {
@@ -115,6 +117,7 @@ public class EventManager implements EventManagerContract.Manager {
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         db.delete(table_name,null,null);
         db.close();
+        update();
     }
 
     public List<Event> getAllEvent(){

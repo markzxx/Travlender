@@ -14,7 +14,6 @@ import java.util.List;
 import cs309.travelender.R;
 import cs309.travlender.Add_Event.AddEventActivity;
 import cs309.travlender.Add_Event.ViewEventActivity;
-import cs309.travlender.Remainder.RemindService;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
 import cs309.travlender.ZSQ.EventAdapter;
@@ -31,10 +30,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
 
-        Intent i = new Intent(this, RemindService.class);
-        startService(i);
-
         EM = EventManager.getInstence();
+        EM.update();
         Events= (ListView) findViewById(R.id.event_list);
         eventList = EM.getAllEvent();
         adapter=new EventAdapter(this,eventList);

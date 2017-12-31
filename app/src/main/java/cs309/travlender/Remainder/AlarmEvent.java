@@ -1,5 +1,7 @@
 package cs309.travlender.Remainder;
 
+import java.text.SimpleDateFormat;
+
 import cs309.travlender.Tools.Event;
 
 /**
@@ -14,13 +16,18 @@ abstract class AlarmEvent implements Comparable{
     private int Alarmtype;//闹铃类型
     private long Starttime;
     private long Alarmtime = -1; //初始化为-1 ， 等待更新
+    SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+
 
     public AlarmEvent(Event father) {
         fatherEvent = father;
         Starttime = father.getStarttime();
     }
 
+    abstract public String getContent();
+
     public String getTitle(){ return fatherEvent.getTitle(); }
+
     public int getID(){ return fatherEvent.getEventId(); }
 
     public Event getFatherEvent() {
@@ -50,6 +57,8 @@ abstract class AlarmEvent implements Comparable{
     public void setStarttime(long starttime) {
         Starttime = starttime;
     }
+
+    abstract public int getAlarmCode();
 
     public int compareTo(Object o){
         if (Alarmtime > ((AlarmEvent)o).getAlarmtime())
