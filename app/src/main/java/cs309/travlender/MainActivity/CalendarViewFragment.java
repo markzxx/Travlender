@@ -1,4 +1,4 @@
-package cs309.travlender.ZSQ;
+package cs309.travlender.MainActivity;
 
 import android.app.Activity;
 import android.app.DialogFragment;

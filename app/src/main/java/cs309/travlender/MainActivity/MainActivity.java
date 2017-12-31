@@ -1,4 +1,4 @@
-package cs309.travlender.ZSQ;
+package cs309.travlender.MainActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,13 +24,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cs309.travelender.R;
-import cs309.travlender.Add_Event.AddEventActivity;
-import cs309.travlender.Add_Event.ViewEventActivity;
+import cs309.travlender.EventActivity.AddEventActivity;
+import cs309.travlender.EventActivity.ViewEventActivity;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
 
 
-public class MainActivityZSQ extends Activity implements CalendarViewFragment.OnFrgDataListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+public class MainActivity extends Activity implements CalendarViewFragment.OnFrgDataListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
     private EventManager EM;
     private List<Event> eventList;
@@ -101,7 +101,7 @@ public class MainActivityZSQ extends Activity implements CalendarViewFragment.On
         Events.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(MainActivityZSQ.this,ViewEventActivity.class);
+                Intent intent=new Intent(MainActivity.this,ViewEventActivity.class);
                 //注意这里的request是为了区分是通过什么跳转到详细界面的
                 intent.putExtra("id",eventList.get(i).getEventId());
                 startActivityForResult(intent, 0);
@@ -147,7 +147,7 @@ public class MainActivityZSQ extends Activity implements CalendarViewFragment.On
     @Override
     public void onRFACItemIconClick(int i, RFACLabelItem rfacLabelItem) {
         if (i == 0) {
-            Intent intent = new Intent(MainActivityZSQ.this, AddEventActivity.class);
+            Intent intent = new Intent(MainActivity.this, AddEventActivity.class);
             intent.putExtra("request", "ADD");
             startActivityForResult(intent,0);
         }

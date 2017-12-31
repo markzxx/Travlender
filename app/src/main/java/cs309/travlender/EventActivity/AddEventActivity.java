@@ -1,4 +1,4 @@
-package cs309.travlender.Add_Event;
+package cs309.travlender.EventActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;

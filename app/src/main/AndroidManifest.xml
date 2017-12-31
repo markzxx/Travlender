@@ -55,7 +55,6 @@
         <activity android:name="cs309.travlender.ZXX.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -77,13 +76,13 @@
         </service>
 
         <!-- remainder 相关的注册 -->
-        <activity android:name="cs309.travlender.Add_Event.ViewEventActivity">
+        <activity android:name="cs309.travlender.EventActivity.ViewEventActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-        <activity android:name="cs309.travlender.ZSQ.MainActivityZSQ">
+        <activity android:name="cs309.travlender.MainActivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -91,7 +90,7 @@
         </activity>
 
         <activity
-            android:name="cs309.travlender.ZSQ.EventActivity"
+            android:name="cs309.travlender.MainActivity.EventActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name="cs309.travlender.ZXX.SearchActivity"
@@ -105,7 +104,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="cs309.travlender.Add_Event.AddEventActivity">
+        <activity android:name="cs309.travlender.EventActivity.AddEventActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

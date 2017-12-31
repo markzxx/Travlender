@@ -11,12 +11,12 @@ import android.widget.ListView;
 import java.util.List;
 
 import cs309.travelender.R;
-import cs309.travlender.Add_Event.AddEventActivity;
-import cs309.travlender.Add_Event.ViewEventActivity;
+import cs309.travlender.EventActivity.AddEventActivity;
+import cs309.travlender.EventActivity.ViewEventActivity;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
-import cs309.travlender.ZSQ.EventActivity;
-import cs309.travlender.ZSQ.testEventAdapter;
+import cs309.travlender.MainActivity.EventActivity;
+import cs309.travlender.MainActivity.testEventAdapter;
 
 public class testMainActivity extends Activity implements View.OnClickListener{
     private Button btnAdd,btnSearch,btnClear;

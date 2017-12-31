@@ -9,7 +9,7 @@ import java.util.List;
 import cs309.travelender.R;
 import cs309.travlender.Tools.EventManager;
 import cs309.travlender.Tools.Event;
-import cs309.travlender.ZSQ.EventAdapter;
+import cs309.travlender.MainActivity.EventAdapter;
 
 public class SearchResultActivity extends AppCompatActivity {
     List<Event> searchResult;

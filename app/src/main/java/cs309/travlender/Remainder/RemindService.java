@@ -16,7 +16,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 import cs309.travelender.R;
-import cs309.travlender.Add_Event.ViewEventActivity;
+import cs309.travlender.EventActivity.ViewEventActivity;
 import cs309.travlender.Remainder.AlarmEvents.AlarmEvent;
 import cs309.travlender.Remainder.AlarmEvents.CommomAlarmEvent;
 import cs309.travlender.Remainder.AlarmEvents.EarlyAlarmEvent;

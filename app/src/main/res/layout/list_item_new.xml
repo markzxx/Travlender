@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cs309.travlender.ZSQ.AgendaEventView xmlns:android="http://schemas.android.com/apk/res/android"
+<cs309.travlender.MainActivity.AgendaEventView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
@@ -98,4 +98,4 @@
 
     </LinearLayout>
 
-</cs309.travlender.ZSQ.AgendaEventView>
+</cs309.travlender.MainActivity.AgendaEventView>
