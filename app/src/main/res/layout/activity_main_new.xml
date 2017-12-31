@@ -27,7 +27,7 @@
                 <ImageButton
                     android:id="@+id/left_menu"
                     style="@style/imageButtonStyle"
-                    android:src="@drawable/ic_menu_grey_600_24dp" />
+                    android:src="@drawable/ic_list_grey600_24dp" />
 
                 <LinearLayout
                     android:id="@+id/calendar_open_close"
@@ -52,7 +52,7 @@
                 <ImageButton
                     android:id="@+id/go_today"
                     style="@style/imageButtonStyle"
-                    android:src="@drawable/ic_today_grey_900_24dp" />
+                    android:src="@drawable/ic_event_grey600_24dp" />
             </LinearLayout>
 
 
@@ -92,26 +92,19 @@
             rfab:rfab_shadow_radius="5dp"
             rfab:rfab_size="normal" />
 
-        <!--<com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"-->
-            <!--android:id="@+id/fab_button_clear"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_marginBottom="15dp"-->
-            <!--android:layout_marginEnd="16dp"-->
-            <!--rfab:rfab_color_normal="#263238"-->
-            <!--rfab:rfab_color_pressed="#009688"-->
-            <!--rfab:rfab_drawable="@drawable/ic_delete_white_24dp"-->
-            <!--rfab:rfab_shadow_color="#999999"-->
-            <!--rfab:rfab_shadow_dx="0dp"-->
-            <!--rfab:rfab_shadow_dy="2dp"-->
-            <!--rfab:rfab_shadow_radius="5dp"-->
-            <!--rfab:rfab_size="normal" />-->
-
 
     </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
 
+    <!-- 侧滑菜单布局-->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/left_draw"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#fff"
+        app:headerLayout="@layout/left_draw_header"
+        app:menu="@menu/left_draw_list">
 
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

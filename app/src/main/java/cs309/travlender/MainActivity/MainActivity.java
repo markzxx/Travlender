@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -42,10 +45,14 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
     private TextView title;
     private EventAdapter adapter;
     private CalendarViewFragment calendarViewFragment;
-    //向dialog传递数据
     private SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 
-
+    //侧边栏布局
+    @Bind(R.id.main_draw_layout)
+    DrawerLayout mDrawerLayout;
+    @Bind(R.id.left_draw)
+    NavigationView mNavigationView;
+    //悬浮按钮
     @Bind(R.id.fab_layout)
     RapidFloatingActionLayout fab_layout;
     @Bind(R.id.fab_button_group)
@@ -57,7 +64,11 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
     void open_calendar(){
         calendarViewFragment.show(getFragmentManager(),"calendar_layout");
     }
-
+    //left_menu点击打开关闭侧边栏
+    @OnClick(R.id.left_menu)
+    void openLeftDrawe() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
+    }
 
 
     @Override

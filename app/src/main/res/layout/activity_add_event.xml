@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/ic_access_time_grey_600_24dp"/>
+                        android:background="@drawable/ic_alarm_grey600_24dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -198,7 +198,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/ic_notifications_grey_600_24dp"/>
+                        android:background="@drawable/ic_notifications_grey600_24dp"/>
 
                     <!--<TextView-->
                         <!--android:id="@+id/alarm_remind"-->
@@ -307,7 +307,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/ic_location_on_grey_600_24dp"/>
+                        android:background="@drawable/ic_room_grey600_24dp"/>
 
                     <TextView
                         android:id="@+id/event_location"
@@ -346,7 +346,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/ic_extension_grey_600_24dp"/>
+                        android:background="@drawable/ic_directions_car_grey600_24dp"/>
 
                     <Spinner
                         android:id="@+id/event_transport"
@@ -379,7 +379,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/ic_menu_grey_600_24dp"/>
+                        android:background="@drawable/ic_note_add_grey600_24dp"/>
 
                     <EditText
                         android:id="@+id/event_content"
