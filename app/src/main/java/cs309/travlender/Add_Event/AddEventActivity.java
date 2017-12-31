@@ -25,11 +25,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cs309.travelender.R;
-import cs309.travlender.Remainder.RemindService;
-import cs309.travlender.Remainder.PollingUtils;
-import cs309.travlender.WHL.LocationActivity;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
+import cs309.travlender.WHL.LocationActivity;
 
 public class AddEventActivity extends AppCompatActivity{
     private DatePickerDialog mDataPicker;
@@ -185,7 +183,6 @@ public class AddEventActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
         ButterKnife.bind(this);
-        PollingUtils.startPollingService(this, 1, RemindService.class, RemindService.ACTION);
 
         //获取传递过来的intent
         intent=getIntent();

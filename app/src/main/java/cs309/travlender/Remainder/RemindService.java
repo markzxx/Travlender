@@ -75,7 +75,6 @@ public class RemindService extends Service {
 				break;
 			default:
 		}
-		System.out.println("下一次唤醒时间："+alarmManager.getNextAlarmClock());
 		return super.onStartCommand(intent, flags, startId);
 	}
 

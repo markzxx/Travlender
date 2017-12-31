@@ -61,6 +61,7 @@ public class MainActivityZSQ extends Activity implements CalendarViewFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
         EM = EventManager.getInstence();
+        EM.update();
         Events= (ListView) findViewById(R.id.event_list);
         title = (TextView) findViewById(R.id.title_day);
         calendarViewFragment=new CalendarViewFragment();
