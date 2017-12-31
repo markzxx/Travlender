@@ -133,7 +133,7 @@ public class Event implements ZHANGSHQIContract.EventInterface {
         EventManager.getInstence().editEvent(this);
     }
     public boolean isTravelAlarm(){
-        return getSmartRemind()==1 && (getAlarmStatus()&TRAVELCODE)==0;
+        return getSmartRemind()==1 && (getAlarmStatus()&TRAVELCODE)==0 && !getLocation().equals("无");
     }
     public boolean isEarlyAlarm(){
         return getEarlytime()!=0 && (getAlarmStatus()&EARLYCODE)==0;
