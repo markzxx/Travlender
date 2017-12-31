@@ -110,6 +110,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="cs309.travlender.WHL.DrawRoute"></activity>
+        <activity android:name="cs309.travlender.WHL.ShowLocation"></activity>
+
         <service
             android:name="cs309.travlender.WHL.TravelTimeService"
             android:label="SmartCamService"

@@ -1,7 +1,6 @@
 package cs309.travlender.WHL;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -42,7 +41,6 @@ import com.amap.api.services.poisearch.PoiSearch.Query;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import cs309.travelender.R;
 
@@ -106,7 +104,7 @@ public class LocationActivity extends AppCompatActivity{
         search_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View v){
-                Intent intent = new Intent();
+                Intent intent = new Intent(LocationActivity.this, ShowLocation.class);
                 if (!poi_List.isEmpty()){
                     Bundle bundle=new Bundle();
 
@@ -116,8 +114,12 @@ public class LocationActivity extends AppCompatActivity{
                     bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
                     //传入目的地经度
                     bundle.putString("location_name", poi_List.get(0).getName());
+                    //传入目的地经度
+                    bundle.putString("Snippet", poi_List.get(0).getPoiItem().getSnippet());
                     //intent传递bundle
                     intent.putExtras(bundle);
+
+                    startActivity(intent);
                 }
                 setResult(2, intent);
                 finish();
@@ -141,7 +143,7 @@ public class LocationActivity extends AppCompatActivity{
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == event.KEYCODE_ENTER) {
                     // do some your things
-                    Intent intent = new Intent();
+                    Intent intent = new Intent(LocationActivity.this, ShowLocation.class);
                     if (!poi_List.isEmpty()){
                         Bundle bundle=new Bundle();
 
@@ -151,8 +153,12 @@ public class LocationActivity extends AppCompatActivity{
                         bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
                         //传入目的地经度
                         bundle.putString("location_name", poi_List.get(0).getName());
+                        //传入目的地经度
+                        bundle.putString("Snippet", poi_List.get(0).getPoiItem().getSnippet());
                         //intent传递bundle
                         intent.putExtras(bundle);
+
+                        startActivity(intent);
                     }
                     setResult(2, intent);
                     finish();
@@ -167,16 +173,19 @@ public class LocationActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Point_of_Interest poi = poi_List.get(position);
                 Bundle bundle=new Bundle();
-                Intent intent = new Intent(LocationActivity.this, Path_planning.class);
+                Intent intent = new Intent(LocationActivity.this, ShowLocation.class);
                 //传入目的地纬度
-                bundle.putDouble("to_Latitude", poi.getLatitude());
+                bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
                 //传入目的地经度
-                bundle.putDouble("to_Longitude", poi.getLongitude());
+                bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
                 //传入目的地经度
                 bundle.putString("location_name", poi_List.get(0).getName());
+                //传入目的地经度
+                bundle.putString("Snippet", poi_List.get(0).getPoiItem().getSnippet());
                 //intent传递bundle
                 intent.putExtras(bundle);
 
+                startActivity(intent);
                 setResult(2, intent);
                 finish();
             }
