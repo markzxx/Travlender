@@ -34,6 +34,7 @@ import butterknife.OnClick;
 import cs309.travelender.R;
 import cs309.travlender.EventActivity.AddEventActivity;
 import cs309.travlender.EventActivity.ViewEventActivity;
+import cs309.travlender.Tools.DensityUtils;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
 
@@ -109,7 +110,7 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
                 deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
                         0x3F, 0x25)));
                 // set item width
-//                deleteItem.setWidth(DensityUtils.dp2px(menu.getContext(),90));
+                deleteItem.setWidth(DensityUtils.dp2px(menu.getContext(),90));
                 // set a icon
                 deleteItem.setIcon(R.drawable.ic_delete_white_24dp);
                 // add to menu
