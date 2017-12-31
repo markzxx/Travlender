@@ -28,7 +28,9 @@ import com.amap.api.services.route.WalkRouteResult;
 import com.amap.api.services.route.WalkStep;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.amap.api.services.routepoisearch.RoutePOISearch.DrivingDefault;
 import static com.amap.api.services.share.ShareSearch.BusDefault;
@@ -51,6 +53,8 @@ public class TravelTimeService extends Service {
 
     private String current_city="深圳";
     private String travel_mode="drive";
+    static public Set<Integer> querySet = new HashSet<>();
+    private int startid;
 
     // TODO: Rename actions, choose action names that describe tasks that this
     // Action的名字
@@ -93,10 +97,11 @@ public class TravelTimeService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
 //        Toast.makeText(getApplicationContext(),"onStartCommand", Toast.LENGTH_SHORT).show();
+        this.startid = startId;
         final double latitude = Double.parseDouble(intent.getStringExtra(EXTRA_PARAM_LATITUDE));
         final double longitude = Double.parseDouble(intent.getStringExtra(EXTRA_PARAM_LONGITUDE));
         final String tp = intent.getStringExtra(EXTRA_PARAM_TRANSPORTATION);
-        final int id = Integer.parseInt(intent.getStringExtra(EXTRA_PARAM_LONGITUDE));
+        final int id = Integer.parseInt(intent.getStringExtra(EXTRA_PARAM_QUERY_ID));
         Toast.makeText(getApplicationContext(),tp, Toast.LENGTH_SHORT).show();
         handleActionTravelTime(latitude, longitude, tp, id);
         return super.onStartCommand(intent, flags, startId);
@@ -106,7 +111,21 @@ public class TravelTimeService extends Service {
         // TODO: Handle action
         // 具体执行一个任务
 //        Toast.makeText(getApplicationContext(),"开始服务", Toast.LENGTH_SHORT).show();
-        travel_mode = transportation;
+        switch (transportation){
+            case "自驾":
+                travel_mode = Transportation.TRANSPORTATION_DRIVE;
+                break;
+            case "骑行":
+                travel_mode = Transportation.TRANSPORTATION_RIDE;
+                break;
+            case "步行":
+                travel_mode = Transportation.TRANSPORTATION_WALK;
+                break;
+            case "公交":
+                travel_mode = Transportation.TRANSPORTATION_BUS;
+                break;
+        }
+
         dst_Lat = to_Latitude;
         dst_Longt = to_Longitude;
         location(id);
@@ -120,7 +139,7 @@ public class TravelTimeService extends Service {
     }
 
     private void sendAsynQuery(LatLonPoint from, LatLonPoint to, String tp, String city, int id){
-//        Toast.makeText(getApplicationContext(),"发送查询", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"发送查询", Toast.LENGTH_SHORT).show();
         routeSearch = new RouteSearch(getApplicationContext());
         final int _id = id;
         routeSearch.setRouteSearchListener(new RouteSearch.OnRouteSearchListener(){
@@ -243,7 +262,11 @@ public class TravelTimeService extends Service {
                         myLongt = amapLocation.getLongitude();//获取经度
                         current_city = amapLocation.getCity();//获取当前城市
                         //定位成功，发起查询请求
-                        sendAsynQuery(new LatLonPoint(myLat, myLongt), new LatLonPoint(dst_Lat, dst_Longt), travel_mode, current_city, _id);
+                        if(!querySet.contains(_id))
+                            sendAsynQuery(new LatLonPoint(myLat, myLongt), new LatLonPoint(dst_Lat, dst_Longt), travel_mode, current_city, _id);
+                        else {
+                            stopSelf(startid);
+                        }
 //                        amapLocation.getAddress();//地址
                     }else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。

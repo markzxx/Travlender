@@ -22,5 +22,6 @@ public class TravelTimeServiceReceiver extends BroadcastReceiver {
         updateIntent.putExtra("id", id);
         updateIntent.putExtra("traveltime", traveltime);
         context.startService(updateIntent);
+        TravelTimeService.querySet.add(id);
     }
 }

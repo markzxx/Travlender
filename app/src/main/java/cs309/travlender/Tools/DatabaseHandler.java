@@ -20,7 +20,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //create tables
     private static final String CREATE_EVENT=
             "create table " + DBevent.TABLE_NAME + " ("
-                    +DBevent._ID + INT_TYPE + " primary key,"
+                    +DBevent._ID + INT_TYPE + " primary key autoincrement,"
                     +DBevent.KEY_TITLE + TEXT_TYPE + COMMA
                     +DBevent.KEY_ADDTIME + INT_TYPE + COMMA
                     +DBevent.KEY_STARTTIME + INT_TYPE + COMMA

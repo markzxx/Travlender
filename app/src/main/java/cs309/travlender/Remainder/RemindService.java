@@ -121,7 +121,7 @@ public class RemindService extends Service {
 			TravelAlarmEvent alarmEvent = (TravelAlarmEvent) AlarmMap.remove(id);
 			alarmEvent.setTraveltime(traveltime);
 			AlarmQueue.add(alarmEvent);
-			System.out.println("Get broadcast");
+			System.out.println("Get broadcast: "+alarmEvent.getTitle()+traveltime/1000+"s");
 			CheckingAlarm();
 		}
 	}
