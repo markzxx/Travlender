@@ -118,7 +118,7 @@ public class CalendarViewFragment extends DialogFragment implements OnDateSelect
                 .commit();
 
         // 设置你选中日期的背景底色
-        mcv.setSelectionColor(getResources().getColor(R.color.calendar_text_default));
+        mcv.setSelectionColor(getResources().getColor(R.color.accent));
 //        mcv.setSelectionColor(0xff4285f4);
 
 //

@@ -1,10 +1,12 @@
 package cs309.travlender.MainActivity;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.sql.Timestamp;
@@ -21,6 +23,7 @@ import cs309.travlender.Tools.Event;
 public class EventAdapter extends BaseAdapter {
     private List<Event> events;
     private Context context;
+
     public EventAdapter(Context context, List<Event> events) {
         super();
         this.events=events;
@@ -44,32 +47,27 @@ public class EventAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        Event event = events.get(i);
         if(view==null){
             view= LayoutInflater.from(context).inflate(R.layout.list_item_new,viewGroup,false);
         }
+        init_info(view, event);
+        return view;
+    }
 
+    private void init_info(View view, Event event) {
         TextView tvName= (TextView) view.findViewById(R.id.title);
         TextView tvStart= (TextView) view.findViewById(R.id.start);
         TextView tvEnd= (TextView) view.findViewById(R.id.end);
         TextView tvId= (TextView) view.findViewById(R.id.id);
-//        TextView tvAddTime= (TextView) view.findViewById(R.id.addtime);
         TextView tvLocation= (TextView) view.findViewById(R.id.location);
-//        TextView tvTransport= (TextView) view.findViewById(R.id.transport);
-//        TextView tvEditTime= (TextView) view.findViewById(R.id.edittime);
-//        TextView tvRemindTime= (TextView) view.findViewById(R.id.remindtime);
-
         SimpleDateFormat df = new SimpleDateFormat("MM-dd HH:mm");
-
-        tvName.setText(""+events.get(i).getTitle());
-        tvStart.setText("开始："+df.format(new Timestamp(events.get(i).getStarttime())));
-        tvEnd.setText("结束："+df.format(new Timestamp(events.get(i).getEndtime())));
-        tvId.setText("Id  "+events.get(i).getEventId());
-//        tvAddTime.setText("Add Time  "+df.format(new Timestamp(events.get(i).getAddtime())));
-        tvLocation.setText("位置:  "+events.get(i).getLocation());
-//        tvTransport.setText("Transport  "+events.get(i).getTransport());
-//        tvEditTime.setText("Edit Time "+df.format(new Timestamp(events.get(i).getEdittime())));
-//        tvRemindTime.setText("Remind Time "+events.get(i).getEarlytime()+"分钟");
-
-        return view;
+        tvName.setText(""+event.getTitle());
+        tvStart.setText("开始："+df.format(new Timestamp(event.getStarttime())));
+        tvEnd.setText("结束："+df.format(new Timestamp(event.getEndtime())));
+        tvId.setText("Id  "+event.getEventId());
+        tvLocation.setText("位置:  "+event.getLocation());
     }
+
+
 }

@@ -5,11 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:id="@+id/detail_layout"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/colorPrimary">
+        android:background="@color/primary">
 
         <ImageButton
             android:id="@+id/left_alarm_back"
@@ -39,7 +40,6 @@
 
     </RelativeLayout>
 
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/update_fab"
         android:layout_width="wrap_content"
@@ -49,7 +49,6 @@
         android:layout_marginTop="-18dp"
         android:src="@drawable/ic_create_white_24dp"
         app:elevation="10dp" />
-
 
     <LinearLayout
         android:id="@+id/detail_alarm_layout"
@@ -77,7 +76,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="40dp"
                 android:text="6:00"
-                android:textColor="#000" />
+                android:textColor="@color/primary_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -99,7 +98,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="40dp"
                 android:text="12:00"
-                android:textColor="#000" />
+                android:textColor="@color/primary_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -121,7 +120,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="40dp"
                 android:text="选择提醒时间"
-                android:textColor="#000" />
+                android:textColor="@color/primary_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -143,7 +142,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="40dp"
                 android:text="北京"
-                android:textColor="#000" />
+                android:textColor="@color/primary_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -165,7 +164,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="40dp"
                 android:text="出行方式"
-                android:textColor="#000" />
+                android:textColor="@color/primary_text" />
         </LinearLayout>
 
     </LinearLayout>

@@ -15,7 +15,7 @@
         android:paddingBottom="4dp"
         android:paddingLeft="10dp"
         android:paddingTop="4dp"
-        android:background="@color/shenkonglan"
+        android:background="@color/accent"
         android:textSize="15dp">
 
         <LinearLayout
@@ -31,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="TITLE"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@color/icons"
                 android:textSize="18dp" />
         </LinearLayout>
 
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="10:10"
-                android:textColor="@color/calendar_text_default"
+                android:textColor="@color/icons"
                  />
 
             <TextView
@@ -67,7 +67,7 @@
                 android:layout_marginLeft="20dp"
                 android:gravity="center"
                 android:text="12:10"
-                android:textColor="@color/calendar_text_default"
+                android:textColor="@color/icons"
                 />
 
         </LinearLayout>
@@ -90,7 +90,7 @@
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:text="Beijing"
-                android:textColor="@color/calendar_text_default"
+                android:textColor="@color/icons"
                  />
 
         </LinearLayout>
