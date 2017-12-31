@@ -1,4 +1,4 @@
-package cs309.travlender.Remainder;
+package cs309.travlender.Remainder.AlarmEvents;
 
 import java.text.SimpleDateFormat;
 
@@ -8,7 +8,7 @@ import cs309.travlender.Tools.Event;
  * Created by alicewu on 11/20/17.
  */
 
-abstract class AlarmEvent implements Comparable{
+public abstract class AlarmEvent implements Comparable{
     final int TransportAlarm = 1;
     final int EarlyAlarm = 2;
     final int CommomAlarm = 3;

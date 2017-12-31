@@ -12,11 +12,11 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import java.util.List;
 
 import cs309.travelender.R;
-import cs309.travlender.Add_Event.AddEventActivity;
-import cs309.travlender.Add_Event.ViewEventActivity;
+import cs309.travlender.EventActivity.AddEventActivity;
+import cs309.travlender.EventActivity.ViewEventActivity;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
-import cs309.travlender.ZSQ.EventAdapter;
+import cs309.travlender.MainActivity.EventAdapter;
 
 public class MainActivity extends Activity implements View.OnClickListener{
     private RapidFloatingActionButton btnAdd,btnSearch,btnClear;

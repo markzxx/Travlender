@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 
-import cs309.travlender.ZSQ.ZHANGSHQIContract;
+import cs309.travlender.MainActivity.ZHANGSHQIContract;
 
 
 /**
