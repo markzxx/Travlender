@@ -25,13 +25,13 @@ public class EarlyAlarmEvent extends AlarmEvent {
     }
 
     public String getformatEarlytime(){
-        String formattime = "提前";
+        String formattime = "还有";
         int earlytime = getEarlytime();
         if(earlytime/60!=0)
             formattime += earlytime/60+"小时";
         if(earlytime%60!=0)
             formattime += earlytime%60+"分钟";
-        return formattime+"提醒";
+        return formattime+"开始";
     }
 
     public int getEarlytime(){

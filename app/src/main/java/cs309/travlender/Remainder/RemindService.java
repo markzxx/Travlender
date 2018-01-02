@@ -1,4 +1,5 @@
 package cs309.travlender.Remainder;
+
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -7,6 +8,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -23,13 +25,10 @@ import cs309.travlender.Remainder.AlarmEvents.EarlyAlarmEvent;
 import cs309.travlender.Remainder.AlarmEvents.TravelAlarmEvent;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
-import cs309.travlender.WHL.TravelTimeService;
+import cs309.travlender.Tools.MyContext;
 
-/**
- * Polling service
- * @Author Ryan
- * @Create 2013-7-13 上午10:18:44
- */
+import static android.support.v4.app.NotificationCompat.CATEGORY_REMINDER;
+
 public class RemindService extends Service {
 
 	public static final String ACTION = "cs309.travlender.Remainder.RemindService";
@@ -58,7 +57,6 @@ public class RemindService extends Service {
 		NextAlarmTime = Long.MAX_VALUE;
 		initNotifiManager();
 		initAlarmManager();
-		initAlarmQueue();
 	}
 
     @Override
@@ -74,10 +72,8 @@ public class RemindService extends Service {
 			case ALARM:
 				CheckingAlarm();
 				break;
-			case INIT:
-				initAlarmQueue();
-				break;
 			default:
+				initAlarmQueue();
 		}
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -88,7 +84,7 @@ public class RemindService extends Service {
 			AlarmEvent alarmEvent = AlarmQueue.poll();
 			if(alarmEvent == null)
 				break;
-			else if(Math.abs(alarmEvent.getAlarmtime()-System.currentTimeMillis()) < 200)
+			else if(alarmEvent.getAlarmtime() - 1000 < System.currentTimeMillis())
 			{
 				showNotification(alarmEvent.getID(), alarmEvent.getTitle(), alarmEvent.getContent());
 				alarmEvent.getFatherEvent().setAlarmStatus(alarmEvent.getAlarmCode());
@@ -100,17 +96,14 @@ public class RemindService extends Service {
 				break;
 			}
 		}
+
 		System.out.println("Next Alarm time:"+df.format(NextAlarmTime));
 	}
 
 	private void SetNextAlarm(long alarmtime){
 		NextAlarmTime = alarmtime;
 		setAlarmManager(alarmtime,ALARM);
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		Toast.makeText(this,"下一次提醒时间"+df.format(NextAlarmTime), Toast.LENGTH_SHORT).show();
 		initAlarmQueue();
 	}
 
@@ -153,6 +146,8 @@ public class RemindService extends Service {
         nbuilder.setSmallIcon(icon);
         nbuilder.setDefaults(Notification.DEFAULT_SOUND);
 		nbuilder.setAutoCancel(true);
+		nbuilder.setPriority(Notification.PRIORITY_HIGH);
+		nbuilder.setCategory(CATEGORY_REMINDER);
 	}
 
 	private void showNotification(int id, String title, String content) {
@@ -170,6 +165,10 @@ public class RemindService extends Service {
         mNotification = nbuilder.build();
         mNotification.flags = Notification.FLAG_AUTO_CANCEL;
 		mManager.notify(0, mNotification);
+		Intent show = new Intent(this, MessageActivity.class);
+		show.putExtra("title", title);
+		show.putExtra("content",content);
+		startActivity(show);
 	}
 
 	//设置AlarmManager
@@ -191,12 +190,7 @@ public class RemindService extends Service {
 				alarmPendingIntent);
         System.out.println("唤醒时间："+df.format(waketime));
     }
-	/**
-	 * Polling thread
-	 * @Author Ryan
-	 * @Create 2013-7-13 上午10:18:34
-	 */
-	int count = 0;
+
 	class TravelThread extends Thread {
 		Event event;
 		Context context;
@@ -207,12 +201,12 @@ public class RemindService extends Service {
 		}
 		@Override
 		public void run() {
-			TravelTimeService.startServiceTravelTime(context, event.getLatitude(), event.getLongitude(), event.getTransport(), event.getEventId());
-//			Intent intent = new Intent(MyContext.getContext(), RemindService.class);
-//			intent.putExtra("type",RemindService.BROADCAST);
-//			intent.putExtra("id",event.getEventId());
-//			intent.putExtra("traveltime",(long)1*60*1000);
-//			MyContext.getContext().startService(intent);
+//			TravelTimeService.startServiceTravelTime(context, event.getLatitude(), event.getLongitude(), event.getTransport(), event.getEventId());
+			Intent intent = new Intent(MyContext.getContext(), RemindService.class);
+			intent.putExtra("type",RemindService.BROADCAST);
+			intent.putExtra("id",event.getEventId());
+			intent.putExtra("traveltime",(long)1*60*1000);
+			MyContext.getContext().startService(intent);
 			System.out.println("Traveltime sent "+event.getTitle());
 		}
 	}

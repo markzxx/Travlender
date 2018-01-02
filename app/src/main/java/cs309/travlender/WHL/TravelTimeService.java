@@ -54,7 +54,7 @@ public class TravelTimeService extends Service {
     private String current_city="深圳";
     private String travel_mode="drive";
     static public Set<Integer> querySet = new HashSet<>();
-    private int startid;
+    private int times;
 
     // TODO: Rename actions, choose action names that describe tasks that this
     // Action的名字
@@ -97,17 +97,17 @@ public class TravelTimeService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
 //        Toast.makeText(getApplicationContext(),"onStartCommand", Toast.LENGTH_SHORT).show();
-        this.startid = startId;
+        times = 3;
         final double latitude = Double.parseDouble(intent.getStringExtra(EXTRA_PARAM_LATITUDE));
         final double longitude = Double.parseDouble(intent.getStringExtra(EXTRA_PARAM_LONGITUDE));
         final String tp = intent.getStringExtra(EXTRA_PARAM_TRANSPORTATION);
         final int id = Integer.parseInt(intent.getStringExtra(EXTRA_PARAM_QUERY_ID));
         Toast.makeText(getApplicationContext(),tp, Toast.LENGTH_SHORT).show();
-        handleActionTravelTime(latitude, longitude, tp, id);
+        handleActionTravelTime(latitude, longitude, tp, id, startId);
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void handleActionTravelTime(double to_Latitude, double to_Longitude, String transportation, int id) {
+    private void handleActionTravelTime(double to_Latitude, double to_Longitude, String transportation, int id, int startid) {
         // TODO: Handle action
         // 具体执行一个任务
 //        Toast.makeText(getApplicationContext(),"开始服务", Toast.LENGTH_SHORT).show();
@@ -128,13 +128,13 @@ public class TravelTimeService extends Service {
 
         dst_Lat = to_Latitude;
         dst_Longt = to_Longitude;
-        location(id);
+        location(id, startid);
     }
 
     private void sendBroadcast(int time, int id){
         Intent intent = new Intent("com.example.dell.map.LocationReceiver");
-        intent.putExtra("time", String.valueOf(time));
-        intent.putExtra("id", String.valueOf(id));
+        intent.putExtra("time", (long)time);
+        intent.putExtra("id", id);
         sendBroadcast(intent);
     }
 
@@ -244,9 +244,11 @@ public class TravelTimeService extends Service {
         }
     }
 
+
     // 开启定位功能
-    private void location(int id){
+    private void location(int id, int startid){
         final int _id = id;
+        final int _startid  = startid;
         //声明定位回调监听器
         mLocationListener = new AMapLocationListener(){
             /**
@@ -262,10 +264,14 @@ public class TravelTimeService extends Service {
                         myLongt = amapLocation.getLongitude();//获取经度
                         current_city = amapLocation.getCity();//获取当前城市
                         //定位成功，发起查询请求
-                        if(!querySet.contains(_id))
+                        if(times>0)
+                        {
                             sendAsynQuery(new LatLonPoint(myLat, myLongt), new LatLonPoint(dst_Lat, dst_Longt), travel_mode, current_city, _id);
+                            times--;
+                            System.out.println(times);
+                        }
                         else {
-                            stopSelf(startid);
+                            stopSelf(_startid);
                         }
 //                        amapLocation.getAddress();//地址
                     }else {
