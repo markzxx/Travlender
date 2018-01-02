@@ -107,8 +107,7 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
                 SwipeMenuItem deleteItem = new SwipeMenuItem(
                         getApplicationContext());
                 // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
-                        0x3F, 0x25)));
+                deleteItem.setBackground(R.color.secondary_text);
                 // set item width
                 deleteItem.setWidth(DensityUtils.dp2px(menu.getContext(),90));
                 // set a icon
