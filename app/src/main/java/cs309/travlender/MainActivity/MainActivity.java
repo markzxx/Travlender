@@ -91,7 +91,6 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
         initFab();
         viewList(current);
         viewEvent();
-
         init_swipe();
 
 
@@ -218,7 +217,7 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
         }
         if (i == 1) {
             EM.deleteAllEvent();
-            onCreate(null);
+            recreate();
         }
     }
 

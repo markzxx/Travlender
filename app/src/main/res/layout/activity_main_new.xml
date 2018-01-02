@@ -27,7 +27,7 @@
                 <ImageButton
                     android:id="@+id/left_menu"
                     style="@style/imageButtonStyle"
-                    android:src="@drawable/ic_list_grey600_24dp" />
+                    android:src="@drawable/ic_list_48px" />
 
                 <LinearLayout
                     android:id="@+id/calendar_open_close"
