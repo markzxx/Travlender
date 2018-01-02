@@ -60,6 +60,20 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.baoyz.swipemenulistview.SwipeMenuListView
+                android:id="@+id/event_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
+                android:divider="@color/divider"></com.baoyz.swipemenulistview.SwipeMenuListView>
+
+        </LinearLayout>
+
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"
             android:id="@+id/fab_button_group"
             android:layout_width="wrap_content"
@@ -77,19 +91,7 @@
             rfab:rfab_shadow_radius="5dp"
             rfab:rfab_size="normal" >
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
-                <com.baoyz.swipemenulistview.SwipeMenuListView
-                    android:id="@+id/event_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="60dp"
-                    android:divider="@color/divider"></com.baoyz.swipemenulistview.SwipeMenuListView>
-
-            </LinearLayout>
         </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton>
 
 
