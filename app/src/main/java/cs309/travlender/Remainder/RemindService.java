@@ -148,7 +148,7 @@ public class RemindService extends Service {
 
 	private void initNotifiManager() {
 		mManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		int icon = R.drawable.ic_notifications_grey_600_24dp;
+		int icon = R.drawable.ic_notifications_grey600_48px;
 		nbuilder = new Notification.Builder(this);
         nbuilder.setSmallIcon(icon);
         nbuilder.setDefaults(Notification.DEFAULT_SOUND);

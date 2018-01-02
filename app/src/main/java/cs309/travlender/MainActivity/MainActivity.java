@@ -110,7 +110,7 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
                 // set item width
                 deleteItem.setWidth(DensityUtils.dp2px(menu.getContext(),90));
                 // set a icon
-                deleteItem.setIcon(R.drawable.ic_delete_white_24dp);
+                deleteItem.setIcon(R.drawable.ic_delete_white_48px);
                 // add to menu
                 menu.addMenuItem(deleteItem);
             }
@@ -174,7 +174,7 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
         List<RFACLabelItem> items = new ArrayList<>();
         items.add(new RFACLabelItem<Integer>()
                 .setLabel("Add Event")
-                .setResId(R.drawable.ic_access_alarms_white_24dp)
+                .setResId(R.drawable.ic_alarm_white_48px)
                 .setIconNormalColor(0xffd84315)
                 .setIconPressedColor(0xffbf360c)
                 .setLabelSizeSp(14)
@@ -182,7 +182,7 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
         );
         items.add(new RFACLabelItem<Integer>()
                 .setLabel("Delete")
-                .setResId(R.drawable.ic_delete_white_24dp)
+                .setResId(R.drawable.ic_delete_white_48px)
                 .setIconNormalColor(0xffd84315)
                 .setIconPressedColor(0xffbf360c)
                 .setLabelSizeSp(14)
