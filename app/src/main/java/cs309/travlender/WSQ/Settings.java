@@ -1,6 +1,7 @@
 package cs309.travlender.WSQ;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -24,17 +25,26 @@ public class Settings extends PreferenceFragment {
         mChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                Toast.makeText(mActivity, key + " : change to " + sharedPreferences.getBoolean(key, true), Toast.LENGTH_SHORT).show();
-//                if ("setting_wifi".equals(key) || "setting_bluetouh".equals(key) || "charge_lock_screen".equals(key) || "never_sleep".equals(key)) {
-//                    Toast.makeText(mActivity, key + " : change to " + sharedPreferences.getBoolean(key, true), Toast.LENGTH_SHORT).show();
-//                } else if ("setting_timezone".equals(key)) {
-//                    findPreference("setting_timezone").setSummary(sharedPreferences.getString(key, "GMY - 02:00"));
-//                }
-                findPreference("remind_before").setSummary(sharedPreferences.getString(key, "GMY - 02:00"));
-
+                //监听到活动后主要在这里调用方法修改数据库
+                if ("pop-up_win".equals(key) || "notifications_vibrate".equals(key)) {
+                    Toast.makeText(mActivity, key + " : change to " + sharedPreferences.getBoolean(key, true), Toast.LENGTH_SHORT).show();
+                    if("pop-up_win".equals(key)){
+                        setDB.isPopWin(sharedPreferences.getBoolean(key, true));
+                    }
+                    else{
+                        setDB.isVibrate(sharedPreferences.getBoolean(key, true));
+                    }
+                } else if ("remind_before".equals(key)) {
+                    setDB.remind_before(sharedPreferences.getString(key, "Never"));
+                    findPreference("remind_before").setSummary(sharedPreferences.getString(key, "Never"));
+                } else if ("notifications_ringtone".equals(key)) {
+                    setDB.modifyRingtone(sharedPreferences.getString(key, "Default ring"));//default ring应修改为系统铃声引用，此处不应为字符串
+                    findPreference("notifications_ringtone").setSummary(sharedPreferences.getString(key, "Default ring"));
+                }
             }
         };
-
+        //监听器引用强存储
+        SharedPreferences.registerOnSharedPreferenceChangeListener(mChangeListener);
         addPreferencesFromResource(R.xml.preference);
     }
 

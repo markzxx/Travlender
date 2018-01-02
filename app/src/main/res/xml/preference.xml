@@ -16,18 +16,18 @@
     <!--铃声选择?-->
     <RingtonePreference
         android:defaultValue="content://settings/system/notification_sound"
-        android:key="notifications_new_message_ringtone"
+        android:key="notifications_ringtone"
         android:ringtoneType="notification"
         android:title="@string/pref_title_ringtone" />
     <!--是否震动-->
     <SwitchPreference
         android:defaultValue="true"
-        android:key="notifications_new_message_vibrate"
+        android:key="notifications_vibrate"
         android:title="@string/pref_title_vibrate" />
     <!--是否自动规划日程-->
     <SwitchPreference
         android:defaultValue="true"
-        android:key="notifications_new_message"
+        android:key="auto_plan"
         android:title="Auto Plan" />
 
     <!-- Allows the user to choose a ringtone in the 'notification' category. -->
