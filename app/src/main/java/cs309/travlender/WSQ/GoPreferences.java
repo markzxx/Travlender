@@ -10,6 +10,6 @@ public class GoPreferences extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(android.R.id.content, new Settings());
+        fragmentTransaction.replace(android.R.id.content, new Settings());//建立setting对象
         fragmentTransaction.commit();    }
 }

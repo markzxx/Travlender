@@ -1,0 +1,50 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cs309.travlender.WSQ.Settings">
+
+    <!--选择提前多久提醒时间-->
+    <ListPreference
+        android:defaultValue="5"
+        android:entries="@array/pref_remind_before_titles"
+        android:entryValues="@array/pref_remind_before_values"
+        android:key="remind_before"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:summary="提前5分钟提醒"
+        android:title="@string/pref_title_remind_before" />
+    <!--选择铃声-->
+    <RingtonePreference
+        android:defaultValue="content://settings/system/notification_sound"
+        android:key="notifications_ringtone"
+        android:ringtoneType="notification"
+        android:title="@string/pref_title_ringtone" />
+    <!--是否震动-->
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="notifications_vibrate"
+        android:title="@string/pref_title_vibrate" />
+    <!--是否自动规划日程-->
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="auto_plan"
+        android:title="@string/pref_title_auto_plan" />
+    <!--是否在提醒时弹窗-->
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="pop-up_win"
+        android:summary="弹窗以显示地图等详细信息，否则仅在任务栏通知"
+        android:title="@string/pref_title_pop_win" />
+    <!--选择出行交通方式-->
+    <ListPreference
+        android:defaultValue="公交"
+        android:entries="@array/pref_transportation_titles"
+        android:entryValues="@array/pref_transportation_values"
+        android:key="transportation"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:summary="公交"
+        android:title="@string/pref_title_transportation" />
+
+</PreferenceScreen>

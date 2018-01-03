@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.sql.Timestamp;
@@ -92,7 +93,7 @@ public class ViewEventActivity extends Activity{
         etTransport.setText(currentEvent.getTransport());
 
         // 单击后打开路线图的按钮
-        Button check_route = (Button) findViewById(R.id.check_route);
+        ImageView check_route = (ImageView) findViewById(R.id.check_route);
         check_route.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
