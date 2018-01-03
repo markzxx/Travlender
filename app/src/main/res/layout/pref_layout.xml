@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
+        <LinearLayout
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/primary"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/back_pref"
+                style="@style/imageButtonStyle"
+                android:src="@drawable/ic_chevron_left_white_48px" />
+
+            <TextView
+                android:id="@+id/pref_text"
+                style="@style/ActivityTitleStyle"
+                android:text="用户偏好" />
+
+            <TextView
+                android:id="@+id/pref_save"
+                style="@style/leftTextViewStyle"
+                android:text="保存"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout">
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="bottom">
+
+        </ListView>
+    </LinearLayout>
+</RelativeLayout>
