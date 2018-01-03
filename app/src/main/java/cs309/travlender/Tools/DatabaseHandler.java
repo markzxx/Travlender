@@ -41,25 +41,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String CREATE_PREF =
             "create table " + DBpreference.TABLE_NAME + " ("
                     + DBpreference._ID + INT_TYPE + " primary key" + COMMA
-                    + DBpreference.KEY_REMINDBEFORE + INT_TYPE
-                    + DBpreference.KEY_TRANSPORT + TEXT_TYPE
-                    + DBpreference.KEY_ISAUTOPLAN + INT_TYPE
-                    + DBpreference.KEY_ISPOPWIN + INT_TYPE
-                    + DBpreference.KEY_ISVIBRATE + INT_TYPE
+                    + DBpreference.KEY_REMINDBEFORE + INT_TYPE+COMMA
+                    + DBpreference.KEY_TRANSPORT + TEXT_TYPE+COMMA
+                    + DBpreference.KEY_ISAUTOPLAN + INT_TYPE+COMMA
+                    + DBpreference.KEY_ISPOPWIN + INT_TYPE+COMMA
+                    + DBpreference.KEY_ISVIBRATE + INT_TYPE+COMMA
                     + DBpreference.KEY_RINGTONE + TEXT_TYPE + ")";
     //插入一行设置默认值
     private static final String INSERT_PREF =
-            "insert or ignore into table " + DBpreference.TABLE_NAME + "("
+            "insert or ignore into " + DBpreference.TABLE_NAME + "("
+                    + DBpreference._ID + COMMA
                     + DBpreference.KEY_REMINDBEFORE + COMMA + DBpreference.KEY_TRANSPORT + COMMA
                     + DBpreference.KEY_ISAUTOPLAN + COMMA + DBpreference.KEY_ISPOPWIN + COMMA
                     + DBpreference.KEY_ISVIBRATE + COMMA + DBpreference.KEY_RINGTONE + ") values ("
                     + DBpreference.UNIQUE_ID + COMMA
                     + MyContext.getContext().getString(R.string.pref_default_remind_before) + COMMA
-                    + MyContext.getContext().getString(R.string.pref_default_transportation) + COMMA
+                    + "'" + MyContext.getContext().getString(R.string.pref_default_transportation) + "'" + COMMA
                     + DBpreference.boolToInt(MyContext.getContext().getString(R.string.pref_default_auto_plan)) + COMMA
                     + DBpreference.boolToInt(MyContext.getContext().getString(R.string.pref_default_pop_win)) + COMMA
                     + DBpreference.boolToInt(MyContext.getContext().getString(R.string.pref_default_vibrate)) + COMMA
-                    + MyContext.getContext().getString(R.string.pref_default_ringtone) + ")";
+                    + "'" + MyContext.getContext().getString(R.string.pref_default_ringtone) + "'" + ")";
     ;
 
     public DatabaseHandler(Context context) {

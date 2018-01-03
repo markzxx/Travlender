@@ -27,6 +27,8 @@ import butterknife.OnClick;
 import cs309.travelender.R;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
+import cs309.travlender.Tools.PrefManager;
+import cs309.travlender.Tools.Preferences;
 import cs309.travlender.WHL.LocationActivity;
 
 public class AddEventActivity extends AppCompatActivity{
@@ -208,6 +210,10 @@ public class AddEventActivity extends AppCompatActivity{
                 today.add(Calendar.HOUR_OF_DAY,+1);
                 end_time.setText(timeFormat.format(today.getTime()));
                 sw_smaart_remind.setChecked(true);
+                Preferences preferences = PrefManager.getInstence().getPref();
+                event_transport.setSelection(Arrays.asList(getResources().getStringArray(R.array.transport)).indexOf(preferences.getTransport()));
+                event_remindtime.setSelection(Arrays.asList(getResources().getStringArray(R.array.remindvalue)).indexOf(preferences.getRemindBefore()));
+                sw_smaart_remind.setChecked(preferences.getIsAutoplan()==1?true:false);
                 event = new Event();
                 break;
             case "EDIT":

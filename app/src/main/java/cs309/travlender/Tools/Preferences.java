@@ -1,15 +1,24 @@
 package cs309.travlender.Tools;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 
 /**
  * Created by alicewu on 1/3/18.
  */
 
-public class Preference {
+public class Preferences {
     private ContentValues value;
 
     private static DatabaseContract.DBpreference DB_pref = new DatabaseContract.DBpreference();
+    public Preferences(){
+        value = new ContentValues();
+    }
+    public Preferences(Cursor cursor){
+        value = new ContentValues();
+        DatabaseUtils.cursorRowToContentValues(cursor,value);
+    }
 
     public ContentValues getValue() {
         return this.value;

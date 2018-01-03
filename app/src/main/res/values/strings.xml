@@ -9,7 +9,7 @@
     <string name="pref_ringtone_silent">静音</string>
     <string name="pref_title_transportation">出行交通方式</string>
     <!--设置默认值-->
-    <string name="pref_default_remind_before">5</string>
+    <string name="pref_default_remind_before">10</string>
     <string name="pref_default_vibrate">true</string>
     <string name="pref_default_transportation">公交</string>
     <string name="pref_default_auto_plan">true</string>
@@ -18,22 +18,18 @@
 
     <!--设置提前提醒时长list-->
     <string-array name="pref_remind_before_titles">
-        <item>5分钟</item>
-        <item>15分钟</item>
-        <item>30分钟</item>
-        <item>1小时</item>
-        <item>1天</item>
-        <item>2天</item>
-        <item>从不</item>
+        <item>发生时</item>
+        <item>提前10分钟</item>
+        <item>提前30分钟</item>
+        <item>提前1小时</item>
+        <item>提前2小时</item>
     </string-array>
     <string-array name="pref_remind_before_values">
-        <item>5</item>
-        <item>15</item>
+        <item>0</item>
+        <item>10</item>
         <item>30</item>
         <item>60</item>
-        <item>1440</item>
-        <item>2880</item>
-        <item>-1</item>
+        <item>120</item>
     </string-array>
     <!--设置出行方式list-->
     <string-array name="pref_transportation_titles">
