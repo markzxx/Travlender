@@ -39,6 +39,7 @@ import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.Polyline;
 import com.amap.api.maps2d.model.PolylineOptions;
+import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.geocoder.GeocodeSearch;
@@ -268,14 +269,14 @@ public class LocationActivity extends AppCompatActivity implements RouteSearch.O
         query = new Query(keyword, null, current_city);
         query.setPageSize(10);
         query.setPageNum(1);
-        query.setLocation(new LatLonPoint(myLat, myLongt));
+//        query.setLocation(new LatLonPoint(myLat, myLongt));
         //Toast.makeText(getApplicationContext(), String.valueOf(query.getLocation()), Toast.LENGTH_SHORT).show();
-        query.setDistanceSort(true);
+//        query.setDistanceSort(true);
 
         // 查询兴趣点
         search = new PoiSearch(this, query);
         //设置查询范围和中心点
-        search.setBound(new PoiSearch.SearchBound(new LatLonPoint(myLat, myLongt), 199999));
+//        search.setBound(new PoiSearch.SearchBound(new LatLonPoint(myLat, myLongt), 199999));
         // 设置回调监听
         search.setOnPoiSearchListener(new OnPoiSearchListener(){
             @Override
@@ -287,7 +288,9 @@ public class LocationActivity extends AppCompatActivity implements RouteSearch.O
                 addresses.clear();
                 if (items != null && items.size() > 0) {
                     for (PoiItem item : items) {
-                        addPOI(item.getTitle(), item.getSnippet(), item.getDistance(), item);
+                        int distance = (int) AMapUtils.calculateLineDistance(new LatLng(myLat, myLongt),
+                                new LatLng(item.getLatLonPoint().getLatitude(), item.getLatLonPoint().getLongitude()));
+                        addPOI(item.getTitle(), item.getSnippet(), distance, item);
                     }
                     // 给ListView赋值，显示结果
                     Point_of_Interest_Adapter poia = new Point_of_Interest_Adapter(LocationActivity.this, R.layout.point_of_interest_layout, poi_List);
@@ -653,6 +656,8 @@ public class LocationActivity extends AppCompatActivity implements RouteSearch.O
         if(aMap==null){
             aMap = mMapView.getMap();
         }
+        latLngs.add(0, new LatLng(myLat, myLongt));
+        latLngs.add(new LatLng(aim_Lat, aim_Longt));
 //        画路线
         Polyline polyline =aMap.addPolyline(new PolylineOptions().
                 addAll(latLngs).width(10).color(Color.argb(255, 1, 1, 1)));

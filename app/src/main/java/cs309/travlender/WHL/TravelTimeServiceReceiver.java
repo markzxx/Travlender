@@ -19,10 +19,9 @@ public class TravelTimeServiceReceiver extends BroadcastReceiver {
 
         //启动服务，传onwayTime和eventID
         Intent updateIntent = new Intent(context, RemindService.class);
-        updateIntent.putExtra("type", RemindService.TRAVELTIME);
-        updateIntent.putExtra("transport", transport);
-        updateIntent.putExtra("id", id);
-        updateIntent.putExtra("traveltime", traveltime*1000); //从秒转换成毫秒
+        updateIntent.putExtra(RemindService.TYPE, RemindService.TYPE_TRAVELTIME);
+        updateIntent.putExtra(RemindService.ID, id);
+        updateIntent.putExtra(RemindService.TRAVELTIME, traveltime*1000); //从秒转换成毫秒
         context.startService(updateIntent);
         TravelTimeService.querySet.add(id);
     }

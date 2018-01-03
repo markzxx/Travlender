@@ -1,16 +1,9 @@
 package cs309.travlender.WSQ;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import cs309.travelender.R;
 
 /**
  * Created by alicewu on 12/31/17.
@@ -46,22 +39,17 @@ public class Settings extends PreferenceFragment {
 //                } else if ("notifications_ringtone".equals(key)) {
 //                    setDB.modifyRingtone(sharedPreferences.getString(key, "Default ring"));//default ring应修改为系统铃声引用，此处不应为字符串
 //                    findPreference("notifications_ringtone").setSummary(sharedPreferences.getString(key, "Default ring"));
-                }
-//            }
+//                }
+            }
         };
-        addPreferencesFromResource(R.layout.preference);
+//        addPreferencesFromResource(R.xml.preference);
     }
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        view.setBackgroundResource(R.color.icons);
-        return view;
-    }
+
     //注册活动
     @Override
     public void onResume() {
         super.onResume();
+
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(mChangeListener);
     }
 

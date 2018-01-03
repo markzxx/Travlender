@@ -27,12 +27,11 @@ public class WeatherServiceReceiver extends BroadcastReceiver {
         String Humidity = intent.getStringExtra(getHumidity);
         String WindPower = intent.getStringExtra(getWindPower)+"级";
         int id = Integer.parseInt(intent.getStringExtra("id"));
-        WeatherService.querySet.add(id);
         // 与提醒功能相关的代码
         Intent updateIntent = new Intent(context, RemindService.class);
-        updateIntent.putExtra("type", RemindService.WEATHER);
-        updateIntent.putExtra("weather", Weather);
-        updateIntent.putExtra("id", id);
+        updateIntent.putExtra(RemindService.TYPE, RemindService.TYPE_WEATHER);
+        updateIntent.putExtra(RemindService.WEATHER, Weather);
+        updateIntent.putExtra(RemindService.ID, id);
         context.startService(updateIntent);
     }
 }

@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -25,7 +26,7 @@ import cs309.travlender.Remainder.AlarmEvents.EarlyAlarmEvent;
 import cs309.travlender.Remainder.AlarmEvents.TravelAlarmEvent;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
-import cs309.travlender.WHL.TravelTimeService;
+import cs309.travlender.Tools.MyContext;
 import cs309.travlender.WHL.WeatherService;
 
 import static android.support.v4.app.NotificationCompat.CATEGORY_REMINDER;
@@ -33,11 +34,19 @@ import static android.support.v4.app.NotificationCompat.CATEGORY_REMINDER;
 public class RemindService extends Service {
 
 	public static final String ACTION = "cs309.travlender.Remainder.RemindService";
-	public static final int ALARM = 1;
-	public static final int INIT = 2;
-	public static final int TRAVELTIME = 3;
-	public static final int WEATHER = 4;
-	public static final int TRAFFIC = 5;
+	public static final int TYPE_ALARM = 1;
+	public static final int TYPE_INIT = 2;
+	public static final int TYPE_TRAVELTIME = 3;
+	public static final int TYPE_WEATHER = 4;
+	public static final int TYPE_TRAFFIC = 5;
+	public static final int TYPE_FASTTRANSPORT = 6;
+	public static final String ID = "ID";
+	public static final String TYPE = "TYPE";
+	public static final String TRAVELTIME = "TYPE_TRAVELTIME";
+	public static final String FASTTRANSPORT = "TYPE_FASTTRANSPORT";
+	public static final String FASTTRAVELTIME = "FASTTRAVELTIME";
+	public static final String WEATHER = "TYPE_WEATHER";
+
 	private Notification mNotification;
 	private Notification.Builder nbuilder;
 	private NotificationManager mManager;
@@ -45,7 +54,7 @@ public class RemindService extends Service {
 	private Intent alarmIntent;
 	private PendingIntent alarmPendingIntent;
 	private Queue<AlarmEvent> AlarmQueue;
-	private Map<Integer, AlarmEvent> NoTravlTimeMap;
+	private Map<Integer, AlarmEvent> TravlTimeMap;
 	private Map<Integer, AlarmEvent> WeatherMap;
 	private EventManager EM;
 	private long NextAlarmTime;
@@ -67,16 +76,16 @@ public class RemindService extends Service {
 	public int onStartCommand(Intent intent,int flags, int startId) {
 		int type = 0;
 		if(intent!=null)
-			type = intent.getIntExtra("type",0);
+			type = intent.getIntExtra(TYPE,0);
 		System.out.println("type:"+type);
 		switch (type){
-			case TRAVELTIME:
+			case TYPE_TRAVELTIME:
 				UpdateTravelTime(intent);
 				break;
-			case WEATHER:
+			case TYPE_WEATHER:
 				UpdateWeather(intent);
 				break;
-			case ALARM:
+			case TYPE_ALARM:
 				CheckingAlarm();
 				break;
 			default:
@@ -91,8 +100,13 @@ public class RemindService extends Service {
 			AlarmEvent alarmEvent = AlarmQueue.poll();
 			if(alarmEvent == null)
 				break;
-			else if(alarmEvent.getAlarmtime() - 1000 < System.currentTimeMillis())
+			else if(alarmEvent.getAlarmtime() < System.currentTimeMillis()-60000) //超时一分钟以上，调用超时提醒方式
 			{
+				alarmEvent.setLate(true);
+				showNotification(alarmEvent.getID(), alarmEvent.getTitle(), alarmEvent.getContent());
+				alarmEvent.getFatherEvent().setAlarmStatus(alarmEvent.getAlarmCode());
+			}
+			else if(Math.abs(alarmEvent.getAlarmtime() - System.currentTimeMillis()) < 60000){ //时间在一分钟内，直接提醒
 				showNotification(alarmEvent.getID(), alarmEvent.getTitle(), alarmEvent.getContent());
 				alarmEvent.getFatherEvent().setAlarmStatus(alarmEvent.getAlarmCode());
 			}
@@ -109,17 +123,21 @@ public class RemindService extends Service {
 
 	private void SetNextAlarm(long alarmtime){
 		NextAlarmTime = alarmtime;
-		setAlarmManager(alarmtime,ALARM);
+		setAlarmManager(alarmtime, TYPE_ALARM);
 		Toast.makeText(this,"下一次提醒时间"+df.format(NextAlarmTime), Toast.LENGTH_SHORT).show();
 		initAlarmQueue();
 	}
 
 	private void UpdateTravelTime(Intent intent){
-		int id = intent.getIntExtra("id",-1);
-		long traveltime = intent.getLongExtra("traveltime",-1);
-		if(id!=-1 && traveltime!=-1 && NoTravlTimeMap.containsKey(id)) {
-			TravelAlarmEvent alarmEvent = (TravelAlarmEvent) NoTravlTimeMap.remove(id);
-			alarmEvent.setTraveltime(traveltime);
+		int id = intent.getIntExtra(ID,-1);
+		long traveltime = intent.getLongExtra(TRAVELTIME,-1);
+		String fastTransport = intent.getStringExtra(FASTTRANSPORT);
+		long fastTraveltime = intent.getLongExtra(FASTTRAVELTIME,-1);
+		if(id!=-1 && traveltime!=-1 && fastTraveltime!=-1 && TravlTimeMap.containsKey(id)) {
+			TravelAlarmEvent alarmEvent = (TravelAlarmEvent) TravlTimeMap.remove(id);
+			alarmEvent.setTravelTime(traveltime);
+			alarmEvent.setFastTransport(fastTransport);
+			alarmEvent.setFastTravelTime(fastTraveltime);
 			AlarmQueue.add(alarmEvent);
 			System.out.println("Get broadcast: "+alarmEvent.getTitle()+traveltime/1000+"s");
 			CheckingAlarm();
@@ -127,16 +145,20 @@ public class RemindService extends Service {
 	}
 
 	private void UpdateWeather(Intent intent){
-		int id = intent.getIntExtra("id",-1);
-		String weather = intent.getStringExtra("weather");
-		((TravelAlarmEvent)WeatherMap.get(id)).setWeather(weather);
+		int id = intent.getIntExtra(ID,-1);
+		String weather = intent.getStringExtra(WEATHER);
+		Log.d("RemindService","88++88 是否包含key：" + WeatherMap.containsKey(id));
+		if (WeatherMap.get(id)==null){
+			return;
+		}
+		((TravelAlarmEvent) (WeatherMap.get(id))).setWeather(weather);
 		System.out.println("Get weather: "+id);
 	}
 
 	private void initAlarmQueue(){
 		EM = EventManager.getInstence();
 		AlarmQueue = new PriorityQueue<>();
-		NoTravlTimeMap = new HashMap<>();
+		TravlTimeMap = new HashMap<>();
 		WeatherMap = new HashMap<>();
 		List<Event> EventList = EM.getEvents_aDay();
 		for(Event event: EventList){
@@ -148,7 +170,7 @@ public class RemindService extends Service {
 			{
 				new TravelThread(event, this);
 				TravelAlarmEvent travelAlarmEvent = new TravelAlarmEvent(event);
-				NoTravlTimeMap.put(event.getEventId(), travelAlarmEvent);
+				TravlTimeMap.put(event.getEventId(), travelAlarmEvent);
 				WeatherMap.put(event.getEventId(), travelAlarmEvent);
 			}
 
@@ -174,7 +196,7 @@ public class RemindService extends Service {
 		nbuilder.setWhen(System.currentTimeMillis());
 		//Navigator to the new activity when click the notification title
 		Intent i = new Intent(this, ViewEventActivity.class);
-		i.putExtra("id",id);
+		i.putExtra(ID,id);
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i,
                 PendingIntent.FLAG_CANCEL_CURRENT);
         nbuilder.setContentText(content);
@@ -200,7 +222,7 @@ public class RemindService extends Service {
 		//包装需要执行Service的Intent
 		alarmIntent = new Intent(this, RemindService.class);
 		alarmIntent.setAction(ACTION);
-		alarmIntent.putExtra("type", ALARM);
+		alarmIntent.putExtra(TYPE, TYPE_ALARM);
 		alarmPendingIntent = PendingIntent.getService(this, 0,
 				alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         //设置唤醒时间
@@ -219,13 +241,15 @@ public class RemindService extends Service {
 		}
 		@Override
 		public void run() {
-			TravelTimeService.startServiceTravelTime(context, event.getLatitude(), event.getLongitude(), event.getTransport(), event.getEventId());
+//			TravelTimeService.startServiceTravelTime(context, event.getLatitude(), event.getLongitude(), event.getTransport(), event.getEventId());
 			WeatherService.startServiceWeatherWithDestination(context, event.getLatitude(), event.getLongitude(), event.getEventId());
-//			Intent intent = new Intent(MyContext.getContext(), RemindService.class);
-//			intent.putExtra("type",RemindService.TRAVELTIME);
-//			intent.putExtra("id",event.getEventId());
-//			intent.putExtra("traveltime",(long)1*60*1000);
-//			MyContext.getContext().startService(intent);
+			Intent intent = new Intent(MyContext.getContext(), RemindService.class);
+			intent.putExtra(TYPE,RemindService.TYPE_TRAVELTIME);
+			intent.putExtra(ID,event.getEventId());
+			intent.putExtra(TRAVELTIME,(long)1*60*10000);
+			intent.putExtra(FASTTRANSPORT,"自驾");
+			intent.putExtra(FASTTRAVELTIME,(long)1*60*1000);
+			MyContext.getContext().startService(intent);
 			System.out.println("Traveltime sent "+event.getTitle());
 		}
 	}

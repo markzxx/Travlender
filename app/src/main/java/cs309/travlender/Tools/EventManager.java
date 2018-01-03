@@ -35,7 +35,7 @@ public class EventManager implements EventManagerContract.Manager {
 
     public void update(){
         Intent i = new Intent(MyContext.getContext(), RemindService.class);
-        i.putExtra("type", RemindService.INIT);
+        i.putExtra(RemindService.TYPE, RemindService.TYPE_INIT);
         MyContext.getContext().startService(i);
     }
 
