@@ -41,6 +41,7 @@ import cs309.travlender.Tools.DensityUtils;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
 import cs309.travlender.WSQ.PrefActivity;
+import cs309.travlender.ZN.AboutUs;
 
 public class MainActivity extends Activity implements CalendarViewFragment.OnFrgDataListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
@@ -117,6 +118,8 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
                         break;
                     case R.id.aboutMe:
                         System.out.println("aboutme clicked!");
+                        Intent about_me_intent=new Intent(MainActivity.this,AboutUs.class);
+                        startActivity(about_me_intent);
                         break;
                 }
                 item.setChecked(true);//点击了设置为选中状态

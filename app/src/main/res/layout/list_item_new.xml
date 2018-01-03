@@ -11,11 +11,12 @@
         android:id="@+id/view_agenda_event_description_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/accent"
+        android:elevation="2dp"
         android:orientation="vertical"
         android:paddingBottom="4dp"
         android:paddingLeft="10dp"
         android:paddingTop="4dp"
-        android:background="@color/accent"
         android:textSize="15dp">
 
         <LinearLayout
@@ -57,8 +58,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="10:10"
-                android:textColor="@color/icons"
-                 />
+                android:textColor="@color/icons" />
 
             <TextView
                 android:id="@+id/end"
@@ -67,8 +67,7 @@
                 android:layout_marginLeft="20dp"
                 android:gravity="center"
                 android:text="12:10"
-                android:textColor="@color/icons"
-                />
+                android:textColor="@color/icons" />
 
         </LinearLayout>
 
@@ -90,8 +89,7 @@
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:text="Beijing"
-                android:textColor="@color/icons"
-                 />
+                android:textColor="@color/icons" />
 
         </LinearLayout>
 

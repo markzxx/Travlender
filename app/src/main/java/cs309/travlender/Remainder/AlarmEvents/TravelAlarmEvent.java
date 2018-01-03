@@ -24,9 +24,9 @@ public class TravelAlarmEvent extends AlarmEvent {
         if(!isLate())
             content = getWeather()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+", 现在要准备出发喽！";
         else if(Transport.equals(FastTransport))
-            content = getWeather()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+"似乎已经赶不上了，并且没有更好的交通方式能帮你，请想办法吧。";
+            content = "来不及了！\n"+getWeather()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+"，用其他交通方式也不能按时到了。";
         else if(!Transport.equals(FastTransport))
-            content = getWeather()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+"但是似乎赶不上了,你可以改为"+getFastTransport()+"只需要"+getformatTraveltime(getFastTravelTime())+",祝你好运！";
+            content = "时间有点晚了！\n"+getWeather()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+",如果"+getFastTransport()+"只需要"+getformatTraveltime(getFastTravelTime())+",祝你好运！";
         return content;
     }
 

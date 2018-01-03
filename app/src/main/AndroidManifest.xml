@@ -182,6 +182,13 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name="cs309.travlender.ZN.AboutUs"
+            android:parentActivityName="cs309.travlender.MainActivity.MainActivity">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cs309.travlender.MainActivity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
