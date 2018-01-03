@@ -1,11 +1,11 @@
-package cs309.travlender.WHL;
+package cs309.travlender.MAPService;
 
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -28,8 +28,12 @@ import com.amap.api.services.route.WalkRouteResult;
 import com.amap.api.services.route.WalkStep;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static com.amap.api.services.routepoisearch.RoutePOISearch.DrivingDefault;
@@ -52,9 +56,10 @@ public class TravelTimeService extends Service {
     private double dst_Longt;
 
     private String current_city="深圳";
-    private String travel_mode="drive";
+    private String required_travel_mode="drive";
     static public Set<Integer> querySet = new HashSet<>();
     private int times;
+    private Map<String, Integer> Result= new HashMap<String, Integer>();
 
     // TODO: Rename actions, choose action names that describe tasks that this
     // Action的名字
@@ -73,6 +78,7 @@ public class TravelTimeService extends Service {
     // 开启服务用的函数
     public static void startServiceTravelTime(Context context, double latitude, double longitude, String transportatiton, int id) {
 //        Toast.makeText(context,"startActionTravelTime", Toast.LENGTH_SHORT).show();
+        Log.e("MyService", "startActionTravelTime");
         Intent intent = new Intent(context, TravelTimeService.class);
         intent.setAction(ACTION_TRAVEL_TIME);
         intent.putExtra(EXTRA_PARAM_LATITUDE, String.valueOf(latitude));
@@ -96,14 +102,15 @@ public class TravelTimeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
-//        Toast.makeText(getApplicationContext(),"onStartCommand", Toast.LENGTH_SHORT).show();
+        if (intent.getAction() == ACTION_TRAVEL_TIME){
+            final double latitude = Double.parseDouble(intent.getStringExtra(EXTRA_PARAM_LATITUDE));
+            final double longitude = Double.parseDouble(intent.getStringExtra(EXTRA_PARAM_LONGITUDE));
+            final String tp = intent.getStringExtra(EXTRA_PARAM_TRANSPORTATION);
+            final int id = Integer.parseInt(intent.getStringExtra(EXTRA_PARAM_QUERY_ID));
+//            Toast.makeText(getApplicationContext(),tp, Toast.LENGTH_SHORT).show();
+            handleActionTravelTime(latitude, longitude, tp, id, startId);
+        }
         times = 3;
-        final double latitude = Double.parseDouble(intent.getStringExtra(EXTRA_PARAM_LATITUDE));
-        final double longitude = Double.parseDouble(intent.getStringExtra(EXTRA_PARAM_LONGITUDE));
-        final String tp = intent.getStringExtra(EXTRA_PARAM_TRANSPORTATION);
-        final int id = Integer.parseInt(intent.getStringExtra(EXTRA_PARAM_QUERY_ID));
-        Toast.makeText(getApplicationContext(),tp, Toast.LENGTH_SHORT).show();
-        handleActionTravelTime(latitude, longitude, tp, id, startId);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -111,36 +118,61 @@ public class TravelTimeService extends Service {
         // TODO: Handle action
         // 具体执行一个任务
 //        Toast.makeText(getApplicationContext(),"开始服务", Toast.LENGTH_SHORT).show();
-        switch (transportation){
-            case "自驾":
-                travel_mode = Transportation.TRANSPORTATION_DRIVE;
-                break;
-            case "骑行":
-                travel_mode = Transportation.TRANSPORTATION_RIDE;
-                break;
-            case "步行":
-                travel_mode = Transportation.TRANSPORTATION_WALK;
-                break;
-            case "公交":
-                travel_mode = Transportation.TRANSPORTATION_BUS;
-                break;
-        }
-
+//        switch (transportation){
+//            case "自驾":
+//                required_travel_mode = Transportation.TRANSPORTATION_DRIVE;
+//                break;
+//            case "骑行":
+//                required_travel_mode = Transportation.TRANSPORTATION_RIDE;
+//                break;
+//            case "步行":
+//                required_travel_mode = Transportation.TRANSPORTATION_WALK;
+//                break;
+//            case "公交":
+//                required_travel_mode = Transportation.TRANSPORTATION_BUS;
+//                break;
+//        }
+        required_travel_mode = transportation;
         dst_Lat = to_Latitude;
         dst_Longt = to_Longitude;
         location(id, startid);
     }
 
     private void sendBroadcast(String transport, int time, int id){
-        Intent intent = new Intent("com.example.dell.map.LocationReceiver");
-        intent.putExtra("transport", transport);
-        intent.putExtra("time", (long)time);
-        intent.putExtra("id", id);
-        sendBroadcast(intent);
+        if (!Result.containsKey(transport)){
+            Result.put(transport, time);
+        }
+        if (Result.size()>3){
+            Intent intent = new Intent("com.example.dell.map.LocationReceiver");
+            Bundle bundle = new Bundle();
+            bundle.putInt("required_transport_travel_time", Result.get(required_travel_mode));
+            bundle.putString("required_transport", required_travel_mode);
+            Object[] objects = Result.values().toArray();
+            Arrays.sort(objects);
+            int fastest_transport_travel_time = (int) objects[0];
+            String fastest_transport="";
+            Iterator it = Result.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry entry = (Map.Entry) it.next();
+                Object obj = entry.getValue();
+                if (obj != null && obj.equals(fastest_transport_travel_time)) {
+                    fastest_transport=(String) entry.getKey();
+                }
+            }
+            bundle.putInt("id", id);
+            bundle.putInt("fastest_transport_travel_time", fastest_transport_travel_time);
+            bundle.putString("fastest_transport", fastest_transport);
+            intent.putExtras(bundle);
+            Log.d("TravelTimeService", "999 "+required_travel_mode);
+            Log.d("TravelTimeService", "999 "+Result.get(required_travel_mode));
+            Log.d("TravelTimeService", "999 "+fastest_transport_travel_time);
+            Log.d("TravelTimeService", "999 "+fastest_transport);
+            sendBroadcast(intent);
+        }
     }
 
     private void sendAsynQuery(LatLonPoint from, LatLonPoint to, String tp, String city, int id){
-        Toast.makeText(getApplicationContext(),"发送查询", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(),"发送查询", Toast.LENGTH_SHORT).show();
         routeSearch = new RouteSearch(getApplicationContext());
         final int _id = id;
         routeSearch.setRouteSearchListener(new RouteSearch.OnRouteSearchListener(){
@@ -171,7 +203,10 @@ public class TravelTimeService extends Service {
                         bus_time_avg += bus_path_time;
                     }
                     bus_time_avg /= busPaths.size();
-                    sendBroadcast("公交", (int)bus_time_avg, _id);
+                    if (bus_time_avg<1)
+                        sendBroadcast("公交", Integer.MAX_VALUE, _id);
+                    else
+                        sendBroadcast("公交", (int)bus_time_avg, _id);
                 }
             }
 
@@ -187,7 +222,7 @@ public class TravelTimeService extends Service {
                         drive_time += ds.getDuration();
                     }
 //                    Toast.makeText(getApplicationContext(),"发广播", Toast.LENGTH_SHORT).show();
-                    sendBroadcast("驾车", (int)drive_time, _id);
+                    sendBroadcast("自驾", (int)drive_time, _id);
                 }
             }
 
@@ -222,27 +257,14 @@ public class TravelTimeService extends Service {
             }
         });
         RouteSearch.FromAndTo fat = new RouteSearch.FromAndTo(from, to);
-        switch (tp) {
-            case Transportation.TRANSPORTATION_BUS:
-                RouteSearch.BusRouteQuery busRouteQuery = new RouteSearch.BusRouteQuery(fat, BusDefault, city, 1);
-                routeSearch.calculateBusRouteAsyn(busRouteQuery);
-                break;
-            case Transportation.TRANSPORTATION_WALK:
-                RouteSearch.WalkRouteQuery walkRouteQuery = new RouteSearch.WalkRouteQuery(fat);
-                routeSearch.calculateWalkRouteAsyn(walkRouteQuery);
-                break;
-            case Transportation.TRANSPORTATION_RIDE:
-                RouteSearch.RideRouteQuery rideRouteQuery = new RouteSearch.RideRouteQuery(fat);
-                routeSearch.calculateRideRouteAsyn(rideRouteQuery);
-                break;
-            case Transportation.TRANSPORTATION_DRIVE:
-                RouteSearch.DriveRouteQuery driveRouteQuery = new RouteSearch.DriveRouteQuery(fat, DrivingDefault, null, null, "");
-                routeSearch.calculateDriveRouteAsyn(driveRouteQuery);
-                break;
-            default:
-                Toast.makeText(getApplicationContext(), "请选择合适的交通工具", Toast.LENGTH_SHORT).show();
-                break;
-        }
+        RouteSearch.BusRouteQuery busRouteQuery = new RouteSearch.BusRouteQuery(fat, BusDefault, city, 1);
+        routeSearch.calculateBusRouteAsyn(busRouteQuery);
+        RouteSearch.DriveRouteQuery driveRouteQuery = new RouteSearch.DriveRouteQuery(fat, DrivingDefault, null, null, "");
+        routeSearch.calculateDriveRouteAsyn(driveRouteQuery);
+        RouteSearch.RideRouteQuery rideRouteQuery = new RouteSearch.RideRouteQuery(fat);
+        routeSearch.calculateRideRouteAsyn(rideRouteQuery);
+        RouteSearch.WalkRouteQuery walkRouteQuery = new RouteSearch.WalkRouteQuery(fat);
+        routeSearch.calculateWalkRouteAsyn(walkRouteQuery);
     }
 
 
@@ -267,7 +289,7 @@ public class TravelTimeService extends Service {
                         //定位成功，发起查询请求
                         if(times>0)
                         {
-                            sendAsynQuery(new LatLonPoint(myLat, myLongt), new LatLonPoint(dst_Lat, dst_Longt), travel_mode, current_city, _id);
+                            sendAsynQuery(new LatLonPoint(myLat, myLongt), new LatLonPoint(dst_Lat, dst_Longt), required_travel_mode, current_city, _id);
                             times--;
                             System.out.println(times);
                         }

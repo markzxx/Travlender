@@ -1,4 +1,4 @@
-package cs309.travlender.WHL;
+package cs309.travlender.MAPService;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -89,12 +89,11 @@ public class ShowRoute extends AppCompatActivity implements RouteSearch.OnRouteS
         if(ContextCompat.checkSelfPermission(this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
+        Log.d("555","555");
         mMapView = (MapView) findViewById(R.id.draw_route);
 //        Log.d("DrawRoute", "88++88  mMapView "+(mMapView==null));
 //        Log.d("DrawRoute", "88++88  savedInstanceState "+(savedInstanceState==null));
-        try{
-            mMapView.onCreate(savedInstanceState);// 此方法必须重写
-        }catch (Exception e){}
+        mMapView.onCreate(savedInstanceState);// 此方法必须重写
         aMap = mMapView.getMap();
         aMap.getUiSettings().setMyLocationButtonEnabled(false);// 隐藏原有定位按钮
         aMap.getUiSettings().setZoomControlsEnabled(false); // 隐藏默认缩放按钮
@@ -115,12 +114,12 @@ public class ShowRoute extends AppCompatActivity implements RouteSearch.OnRouteS
             aim_Lat = bundle.getDouble(DRAWROUTE_LATITUDE);
             //传入目的地经度
             aim_Longt = bundle.getDouble(DRAWROUTE_LONGITUDE);
-            if(bundle.getString(DRAWROUTE_TRANSPORTATION)!=null){
-                transportation = bundle.getString(DRAWROUTE_TRANSPORTATION);
-            }
-            if(bundle.getString(DRAWROUTE_TITLE)!=null){
-                title = bundle.getString(DRAWROUTE_TITLE);
-            }else{ }
+            transportation = bundle.getString(DRAWROUTE_TRANSPORTATION);
+            title = bundle.getString(DRAWROUTE_TITLE);
+            Log.d("99999",""+aim_Lat);
+            Log.d("99999",""+aim_Longt);
+            Log.d("99999",""+transportation);
+            Log.d("99999",""+title);
 
 //            path_plan(new LatLonPoint(myLat,myLongt), new LatLonPoint(aim_Lat, aim_Longt), transportation, current_city);
 
@@ -466,6 +465,8 @@ public class ShowRoute extends AppCompatActivity implements RouteSearch.OnRouteS
         if(aMap==null){
             aMap = mMapView.getMap();
         }
+        latLngs.add(0, new LatLng(myLat, myLongt));
+        latLngs.add(new LatLng(aim_Lat, aim_Longt));
 //        画路线
         Polyline polyline =aMap.addPolyline(new PolylineOptions().
                 addAll(latLngs).width(10).color(Color.argb(255, 1, 1, 1)));

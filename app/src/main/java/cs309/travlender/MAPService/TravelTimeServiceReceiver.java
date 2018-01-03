@@ -1,10 +1,10 @@
-package cs309.travlender.WHL;
+package cs309.travlender.MAPService;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.util.Log;
 
 import cs309.travlender.Remainder.RemindService;
 
@@ -22,11 +22,14 @@ public class TravelTimeServiceReceiver extends BroadcastReceiver {
 
         //启动服务，传onwayTime和eventID
         Intent updateIntent = new Intent(context, RemindService.class);
-        updateIntent.putExtra(RemindService.TRAVELTIME, required_transport_travel_time);
+        updateIntent.putExtra(RemindService.TYPE, RemindService.TYPE_TRAVELTIME);
+        Log.d("9898", String.valueOf((long)required_transport_travel_time));
+        Log.d("9898", fastest_transport);
+        Log.d("9898", ""+(long) fastest_transport_travel_time);
+        updateIntent.putExtra(RemindService.TRAVELTIME, (long)required_transport_travel_time*1000);
         updateIntent.putExtra(RemindService.FASTTRANSPORT, fastest_transport);
-        updateIntent.putExtra(RemindService.FASTTRAVELTIME, (long) fastest_transport_travel_time);
+        updateIntent.putExtra(RemindService.FASTTRAVELTIME, (long) fastest_transport_travel_time*1000);
         updateIntent.putExtra(RemindService.ID, id);
         context.startService(updateIntent);
-        TravelTimeService.querySet.add(id);
     }
 }

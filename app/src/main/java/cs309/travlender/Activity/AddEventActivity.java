@@ -1,4 +1,4 @@
-package cs309.travlender.EventActivity;
+package cs309.travlender.Activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -29,7 +29,7 @@ import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
 import cs309.travlender.Tools.PrefManager;
 import cs309.travlender.Tools.Preferences;
-import cs309.travlender.WHL.LocationActivity;
+import cs309.travlender.MAPService.LocationActivity;
 
 public class AddEventActivity extends AppCompatActivity{
     private DatePickerDialog mDataPicker;
@@ -212,7 +212,7 @@ public class AddEventActivity extends AppCompatActivity{
                 sw_smaart_remind.setChecked(true);
                 Preferences preferences = PrefManager.getInstence().getPref();
                 event_transport.setSelection(Arrays.asList(getResources().getStringArray(R.array.transport)).indexOf(preferences.getTransport()));
-                event_remindtime.setSelection(Arrays.asList(getResources().getStringArray(R.array.remindvalue)).indexOf(preferences.getRemindBefore()));
+                event_remindtime.setSelection(Arrays.asList(getResources().getStringArray(R.array.remindvalue)).indexOf(String.valueOf(preferences.getRemindBefore())));
                 sw_smaart_remind.setChecked(preferences.getIsAutoplan()==1?true:false);
                 event = new Event();
                 break;
@@ -228,7 +228,7 @@ public class AddEventActivity extends AppCompatActivity{
                 event_location.setText(event.getLocation());
                 sw_smaart_remind.setChecked(event.getSmartRemind()==1?true:false);
                 event_content.setText(event.getContent());
-                event_remindtime.setSelection(Arrays.asList(getResources().getStringArray(R.array.remindvalue)).indexOf(event.getEarlytime()));
+                event_remindtime.setSelection(Arrays.asList(getResources().getStringArray(R.array.remindvalue)).indexOf(String.valueOf(event.getEarlytime())));
                 event_transport.setSelection(Arrays.asList(getResources().getStringArray(R.array.transport)).indexOf(event.getTransport()));
         }
 

@@ -1,4 +1,4 @@
-package cs309.travlender.WHL;
+package cs309.travlender.MAPService;
 
 /**
  * Created by Dell on 2017/11/3.

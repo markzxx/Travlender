@@ -9,7 +9,7 @@
     <string name="pref_ringtone_silent">静音</string>
     <string name="pref_title_transportation">出行交通方式</string>
     <!--设置默认值-->
-    <string name="pref_default_remind_before">10</string>
+    <string name="pref_default_remind_before">0</string>
     <string name="pref_default_vibrate">true</string>
     <string name="pref_default_transportation">公交</string>
     <string name="pref_default_auto_plan">true</string>

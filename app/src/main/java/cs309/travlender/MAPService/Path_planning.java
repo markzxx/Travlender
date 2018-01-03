@@ -1,11 +1,10 @@
-package cs309.travlender.WHL;
+package cs309.travlender.MAPService;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.services.core.LatLonPoint;

@@ -1,15 +1,11 @@
 package cs309.travlender.MainActivity;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,13 +31,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cs309.travelender.R;
-import cs309.travlender.EventActivity.AddEventActivity;
-import cs309.travlender.EventActivity.ViewEventActivity;
+import cs309.travlender.Activity.AddEventActivity;
+import cs309.travlender.Activity.ViewEventActivity;
 import cs309.travlender.Tools.DensityUtils;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
-import cs309.travlender.WSQ.PrefActivity;
-import cs309.travlender.ZN.AboutUs;
+import cs309.travlender.Activity.PrefActivity;
+import cs309.travlender.Activity.AboutUs;
 
 public class MainActivity extends Activity implements CalendarViewFragment.OnFrgDataListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 

@@ -1,11 +1,11 @@
-package cs309.travlender.EventActivity;
+package cs309.travlender.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +19,7 @@ import butterknife.OnClick;
 import cs309.travelender.R;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
-import cs309.travlender.WHL.ShowRoute;
+import cs309.travlender.MAPService.ShowRoute;
 
 /**
  * Created by Jeremy Zhang PC on 2017/11/21.
@@ -98,8 +98,10 @@ public class ViewEventActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString(ShowRoute.DRAWROUTE_LATITUDE, String.valueOf(currentEvent.getLatitude()));
-                bundle.putString(ShowRoute.DRAWROUTE_LONGITUDE, String.valueOf(currentEvent.getLongitude()));
+                Log.d("888888",""+currentEvent.getLatitude());
+                Log.d("888888",""+currentEvent.getLongitude());
+                bundle.putDouble(ShowRoute.DRAWROUTE_LATITUDE, currentEvent.getLatitude());
+                bundle.putDouble(ShowRoute.DRAWROUTE_LONGITUDE, currentEvent.getLongitude());
                 bundle.putString(ShowRoute.DRAWROUTE_TITLE, String.valueOf(currentEvent.getLocation()));
                 bundle.putString(ShowRoute.DRAWROUTE_TRANSPORTATION, String.valueOf(currentEvent.getTransport()));
                 Intent intent = new Intent(ViewEventActivity.this, ShowRoute.class);

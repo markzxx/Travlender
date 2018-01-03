@@ -1,4 +1,4 @@
-package cs309.travlender.WHL;
+package cs309.travlender.MAPService;
 
 import android.Manifest;
 import android.content.Context;
@@ -111,7 +111,8 @@ public class LocationActivity extends AppCompatActivity implements RouteSearch.O
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
         setUpLocation(savedInstanceState);
-        transportation = getIntent().getStringExtra(transportation);
+        if (getIntent().getStringExtra("transportation")!=null)
+            transportation = getIntent().getStringExtra("transportation");
     }
 
     @Override
@@ -198,12 +199,18 @@ public class LocationActivity extends AppCompatActivity implements RouteSearch.O
             @Override
             public  void onClick(View v){
                 if (!poi_List.isEmpty()){
-                    showLocationInMap(poi_List.get(0).getLatitude(), poi_List.get(0).getLongitude(), poi_List.get(0).getPoiItem().getTitle(), poi_List.get(0).getPoiItem().getSnippet());
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(input.getWindowToken(), 0) ;
-                    aim_Lat = poi_List.get(0).getLatitude();
-                    aim_Longt = poi_List.get(0).getLongitude();
-                    location_title = poi_List.get(0).getPoiItem().getTitle();
+                    Intent intent = new Intent();
+                    Bundle bundle=new Bundle();
+                    //传入目的地纬度
+                    bundle.putDouble("to_Latitude", aim_Lat);
+                    //传入目的地经度
+                    bundle.putDouble("to_Longitude", aim_Longt);
+                    //传入目的地名称
+                    bundle.putString("location_name", location_title);
+                    //intent传递bundle
+                    intent.putExtras(bundle);
+                    setResult(2, intent);
+                    finish();
                 }
             }
         });
@@ -230,12 +237,13 @@ public class LocationActivity extends AppCompatActivity implements RouteSearch.O
                 if (keyCode == event.KEYCODE_ENTER) {
                     // do some your things
                     if (!poi_List.isEmpty()){
-                        showLocationInMap(poi_List.get(0).getLatitude(), poi_List.get(0).getLongitude(), poi_List.get(0).getPoiItem().getTitle(), poi_List.get(0).getPoiItem().getSnippet());
+//                        showLocationInMap(poi_List.get(0).getLatitude(), poi_List.get(0).getLongitude(), poi_List.get(0).getPoiItem().getTitle(), poi_List.get(0).getPoiItem().getSnippet());
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(input.getWindowToken(), 0) ;
                         aim_Lat = poi_List.get(0).getLatitude();
                         aim_Longt = poi_List.get(0).getLongitude();
                         location_title = poi_List.get(0).getPoiItem().getTitle();
+                        path_plan(new LatLonPoint(myLat,myLongt), new LatLonPoint(aim_Lat, aim_Longt), transportation, current_city);
                     }
                 }
                 return false;
@@ -247,12 +255,13 @@ public class LocationActivity extends AppCompatActivity implements RouteSearch.O
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Point_of_Interest poi = poi_List.get(position);
-                showLocationInMap(poi.getLatitude(), poi.getLongitude(), poi.getPoiItem().getTitle(), poi.getPoiItem().getSnippet());
+//                showLocationInMap(poi.getLatitude(), poi.getLongitude(), poi.getPoiItem().getTitle(), poi.getPoiItem().getSnippet());
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(input.getWindowToken(), 0) ;
                 aim_Lat = poi.getLatitude();
                 aim_Longt = poi.getLongitude();
                 location_title = poi.getPoiItem().getTitle();
+                path_plan(new LatLonPoint(myLat,myLongt), new LatLonPoint(aim_Lat, aim_Longt), transportation, current_city);
             }
         });
     }
@@ -429,6 +438,11 @@ public class LocationActivity extends AppCompatActivity implements RouteSearch.O
         if(routeSearch==null){
             routeSearch = new RouteSearch(getApplicationContext());
         }
+
+        listView.setVisibility(View.INVISIBLE);
+        mMapView.setVisibility(View.VISIBLE); // 设置地图可见
+        location_info_button.setVisibility(View.VISIBLE); // 设置按钮可见
+
         routeSearch.setRouteSearchListener(this);
         RouteSearch.FromAndTo fat = new RouteSearch.FromAndTo(from, to);
         Log.d("MainActivity", "88++88 path_plan");

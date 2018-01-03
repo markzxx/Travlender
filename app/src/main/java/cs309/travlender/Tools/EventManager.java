@@ -16,7 +16,7 @@ import cs309.travlender.Remainder.RemindService;
  * Created by markz on 2017-10-24.
  */
 
-public class EventManager implements EventManagerContract.Manager {
+public class EventManager{
     private static EventManager instence;
     public DatabaseHandler dbHelper;
     public static Event event;

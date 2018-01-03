@@ -4,14 +4,12 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 
-import cs309.travlender.MainActivity.ZHANGSHQIContract;
-
 
 /**
  * Created by Administrator on 2017/10/16.
  */
 
-public class Event implements ZHANGSHQIContract.EventInterface {
+public class Event{
 
     public static final int TRAVELCODE = 4; //binary 100
     public static final int EARLYCODE = 2; //binary 010
@@ -141,27 +139,4 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     public boolean isCommomAlarm(){
         return (getAlarmStatus()&COMMOMCODE)==0;
     }
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel out, int flags) {
-//        out.writeString(title);
-//    }
-//    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>(){
-//        public Event createFromParcel(Parcel in)
-//        {
-//            return new Event(in);
-//        }
-//
-//        public Event[] newArray(int size)
-//        {
-//            return new Event[size];
-//        }
-//    };
-//    public Event(Parcel in){
-//        title = in.readString();
-//    }
 }

@@ -21,7 +21,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String DEFAULT = " DEFAULT 0";
     //create tables
     private static final String CREATE_EVENT =
-            "create table " + DBevent.TABLE_NAME + " ("
+            "create table IF NOT EXISTS " + DBevent.TABLE_NAME + " ("
                     + DBevent._ID + INT_TYPE + " primary key autoincrement,"
                     + DBevent.KEY_TITLE + TEXT_TYPE + COMMA
                     + DBevent.KEY_ADDTIME + INT_TYPE + COMMA
@@ -39,7 +39,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + ")";
 
     private static final String CREATE_PREF =
-            "create table " + DBpreference.TABLE_NAME + " ("
+            "create table IF NOT EXISTS " + DBpreference.TABLE_NAME + " ("
                     + DBpreference._ID + INT_TYPE + " primary key" + COMMA
                     + DBpreference.KEY_REMINDBEFORE + INT_TYPE+COMMA
                     + DBpreference.KEY_TRANSPORT + TEXT_TYPE+COMMA

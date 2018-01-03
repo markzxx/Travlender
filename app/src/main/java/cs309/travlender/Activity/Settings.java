@@ -1,4 +1,4 @@
-package cs309.travlender.WSQ;
+package cs309.travlender.Activity;
 
 import android.content.SharedPreferences;
 import android.media.Ringtone;
@@ -11,9 +11,6 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import cs309.travelender.R;
 import cs309.travlender.Tools.MyContext;
@@ -26,15 +23,24 @@ import cs309.travlender.Tools.Preferences;
 
 public class Settings extends PreferenceFragment {
     SharedPreferences.OnSharedPreferenceChangeListener mChangeListener;
-    Boolean isPopWin = true, isVibrate = true, isAutoPlan = true;
-    String modifyRingtone = MyContext.getContext().getString(R.string.pref_default_ringtone),
-            transport = MyContext.getContext().getString(R.string.pref_default_transportation);
-    int remind_before = Integer.parseInt(MyContext.getContext().getString(R.string.pref_default_remind_before));
+    Preferences preferences ;
+
+    Boolean isPopWin;
+    Boolean isVibrate;
+    Boolean isAutoPlan;
+    String modifyRingtone, transport;
+    int remind_before;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        preferences = PrefManager.getInstence().getPref();
+        isPopWin = preferences.getIsPopwin()==1?true:false;
+        isVibrate = preferences.getIsVibrate()==1?true:false;
+        isAutoPlan = preferences.getIsAutoplan()==1?true:false;
+        remind_before = preferences.getRemindBefore();
+        modifyRingtone = preferences.getRingtone();
+        transport = preferences.getTransport();
         mChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

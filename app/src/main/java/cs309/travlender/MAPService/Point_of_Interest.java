@@ -1,4 +1,4 @@
-package cs309.travlender.WHL;
+package cs309.travlender.MAPService;
 
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;

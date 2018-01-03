@@ -1,4 +1,4 @@
-package cs309.travlender.WHL;
+package cs309.travlender.MAPService;
 
 import android.content.Context;
 import android.view.LayoutInflater;
