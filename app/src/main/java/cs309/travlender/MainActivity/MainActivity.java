@@ -41,7 +41,6 @@ import cs309.travlender.Tools.DensityUtils;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
 import cs309.travlender.WSQ.PrefActivity;
-import cs309.travlender.WSQ.Settings;
 import cs309.travlender.ZN.AboutUs;
 
 public class MainActivity extends Activity implements CalendarViewFragment.OnFrgDataListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
