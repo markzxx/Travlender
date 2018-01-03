@@ -1,11 +1,15 @@
 package cs309.travlender.MainActivity;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -35,6 +39,7 @@ import cs309.travlender.EventActivity.ViewEventActivity;
 import cs309.travlender.Tools.DensityUtils;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
+import cs309.travlender.WSQ.Settings;
 
 public class MainActivity extends Activity implements CalendarViewFragment.OnFrgDataListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
@@ -63,6 +68,7 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
     void open_calendar(){
         calendarViewFragment.show(getFragmentManager(),"calendar_layout");
     }
+
     //left_menu点击打开关闭侧边栏
     @OnClick(R.id.left_menu)
     void openLeftDrawe() {
@@ -90,10 +96,35 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
         viewList(current);
         viewEvent();
         init_swipe();
-
+        init_navigation_select();
 
     }
-
+    private void init_navigation_select(){
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.preference:
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(android.R.id.content, new Settings());
+                        fragmentTransaction.commit();
+                        break;
+                    case R.id.setting:
+                        System.out.println("setting clicked!");
+                        break;
+                    case R.id.mode:
+                        System.out.println("mode clicked!");
+                        break;
+                    case R.id.aboutMe:
+                        System.out.println("aboutme clicked!");
+                        break;
+                }
+                item.setChecked(true);//点击了设置为选中状态
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
+    }
     private void init_swipe() {
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 

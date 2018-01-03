@@ -1,5 +1,7 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <!-- A 'parent' preference, which enables/disables child preferences (below)
          when checked/unchecked. -->
     <!--设置提前多久提醒时间-->
