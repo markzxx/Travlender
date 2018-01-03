@@ -111,8 +111,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="cs309.travlender.WHL.DrawRoute"></activity>
-        <activity android:name="cs309.travlender.WHL.ShowLocation"></activity>
+        <activity android:name="cs309.travlender.WHL.ShowRoute"></activity>
 
         <service
             android:name="cs309.travlender.WHL.TravelTimeService"
@@ -131,6 +130,8 @@
 
         <receiver android:name="cs309.travlender.WSQ.AlarmReceiver">
         </receiver>
+
+
 
         <receiver
             android:name="cs309.travlender.WHL.TravelTimeServiceReceiver"

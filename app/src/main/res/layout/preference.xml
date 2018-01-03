@@ -1,21 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- A 'parent' preference, which enables/disables child preferences (below)
-         when checked/unchecked. -->
-    <!--设置提前多久提醒时间-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--选择提前多久提醒时间-->
     <ListPreference
-        android:defaultValue="180"
+        android:defaultValue="5"
         android:entries="@array/pref_remind_before_titles"
         android:entryValues="@array/pref_remind_before_values"
         android:key="remind_before"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:summary="提前多久提醒"
-        android:title="Remind before" />
-
-    <!--铃声选择?-->
+        android:summary="提前5分钟提醒"
+        android:title="@string/pref_title_remind_before" />
+    <!--选择铃声-->
     <RingtonePreference
         android:defaultValue="content://settings/system/notification_sound"
         android:key="notifications_ringtone"
@@ -30,18 +25,22 @@
     <SwitchPreference
         android:defaultValue="true"
         android:key="auto_plan"
-        android:title="Auto Plan" />
-
-    <!-- Allows the user to choose a ringtone in the 'notification' category. -->
-    <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
-    <!-- NOTE: RingtonePreference's summary should be set to its value by the activity code. -->
-
-    <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
-    <!--提醒时是否弹窗-->
+        android:title="@string/pref_title_auto_plan" />
+    <!--是否在提醒时弹窗-->
     <SwitchPreference
         android:defaultValue="true"
         android:key="pop-up_win"
         android:summary="弹窗以显示地图等详细信息，否则仅在任务栏通知"
-        android:title="弹窗通知" />
+        android:title="@string/pref_title_pop_win" />
+    <!--选择出行交通方式-->
+    <ListPreference
+        android:defaultValue="公交"
+        android:entries="@array/pref_transportation_titles"
+        android:entryValues="@array/pref_transportation_values"
+        android:key="transportation"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:summary="公交"
+        android:title="@string/pref_title_transportation" />
 
 </PreferenceScreen>
