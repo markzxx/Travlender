@@ -1,9 +1,11 @@
 package cs309.travlender.WHL;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -12,7 +14,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,13 +28,17 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.AMapException;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.LatLngBounds;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
+import com.amap.api.maps2d.model.Polyline;
+import com.amap.api.maps2d.model.PolylineOptions;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.geocoder.GeocodeSearch;
@@ -38,13 +46,30 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener;
 import com.amap.api.services.poisearch.PoiSearch.Query;
+import com.amap.api.services.route.BusPath;
+import com.amap.api.services.route.BusRouteResult;
+import com.amap.api.services.route.BusStep;
+import com.amap.api.services.route.DrivePath;
+import com.amap.api.services.route.DriveRouteResult;
+import com.amap.api.services.route.DriveStep;
+import com.amap.api.services.route.RidePath;
+import com.amap.api.services.route.RideRouteResult;
+import com.amap.api.services.route.RideStep;
+import com.amap.api.services.route.RouteBusLineItem;
+import com.amap.api.services.route.RouteSearch;
+import com.amap.api.services.route.WalkPath;
+import com.amap.api.services.route.WalkRouteResult;
+import com.amap.api.services.route.WalkStep;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cs309.travelender.R;
 
-public class LocationActivity extends AppCompatActivity{
+import static com.amap.api.services.routepoisearch.RoutePOISearch.DrivingDefault;
+import static com.amap.api.services.share.ShareSearch.BusDefault;
+
+public class LocationActivity extends AppCompatActivity implements RouteSearch.OnRouteSearchListener{
 
     private List<Point_of_Interest> poi_List = new ArrayList<Point_of_Interest>();
     private Button search_button;
@@ -55,6 +80,7 @@ public class LocationActivity extends AppCompatActivity{
     private GeocodeSearch geocoderSearch;
     private String address;
     private List<String> addresses = new ArrayList<String>();
+    private Button location_info_button;
 
     private AMap aMap;
     private LocationSource.OnLocationChangedListener mListener;
@@ -64,11 +90,16 @@ public class LocationActivity extends AppCompatActivity{
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption;
     private Marker locationMarker;
+    private RouteSearch routeSearch;
+
     private double myLat;
     private double myLongt;
+    private double aim_Lat;
+    private double aim_Longt;
 
     private String current_city="深圳";
     private String transportation="drive";
+    private String location_title="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,30 +130,79 @@ public class LocationActivity extends AppCompatActivity{
 
     //初始化三个UI组件：search按钮、EditText和ListView
     private void initView(){
+
+        //初始化地图下方的悬浮按钮
+        location_info_button = (Button) findViewById(R.id.location_info_button);
+        location_info_button.setOnTouchListener(new View.OnTouchListener() {
+            private int times = 0;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN)
+                {
+//                    Log.i("log", "88++88 action_down");
+                    return false;
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP)
+                {
+//                    Log.i("log", "88++88 action_up");
+                    return false;
+                }
+                else if (event.getAction() == MotionEvent.ACTION_MOVE)
+                {
+//                    Log.i("log", "88++88 action_move");
+                    times++;
+                    if (times>5){
+//                        Log.i("log", "88++88 long");
+                        times = 0;
+                    }
+                    return false;
+                }
+                return false;
+            }
+        });
+        location_info_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+//                单击就算是选中
+                Log.d("MainActivity","88++88 单击就算是选中");
+                Intent intent = new Intent();
+                Bundle bundle=new Bundle();
+                //传入目的地纬度
+                bundle.putDouble("to_Latitude", aim_Lat);
+                //传入目的地经度
+                bundle.putDouble("to_Longitude", aim_Longt);
+                //传入目的地名称
+                bundle.putString("location_name", location_title);
+                //intent传递bundle
+                intent.putExtras(bundle);
+                setResult(2, intent);
+                finish();
+            }
+        });
+        location_info_button.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v){
+//                长按显示路线图
+                Log.d("MainActivity","88++88 长按显示路线图");
+                aMap.clear();
+                path_plan(new LatLonPoint(myLat,myLongt), new LatLonPoint(aim_Lat, aim_Longt), transportation, current_city);
+                return true;
+            }
+        });
+
         //初始化search按钮，加监听器
         search_button = (Button) findViewById(R.id.search_button);
         search_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View v){
-                Intent intent = new Intent(LocationActivity.this, ShowLocation.class);
                 if (!poi_List.isEmpty()){
-                    Bundle bundle=new Bundle();
-
-                    //传入目的地纬度
-                    bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
-                    //传入目的地经度
-                    bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
-                    //传入目的地经度
-                    bundle.putString("location_name", poi_List.get(0).getName());
-                    //传入目的地经度
-                    bundle.putString("Snippet", poi_List.get(0).getPoiItem().getSnippet());
-                    //intent传递bundle
-                    intent.putExtras(bundle);
-
-                    startActivity(intent);
+                    showLocationInMap(poi_List.get(0).getLatitude(), poi_List.get(0).getLongitude(), poi_List.get(0).getPoiItem().getTitle(), poi_List.get(0).getPoiItem().getSnippet());
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(input.getWindowToken(), 0) ;
+                    aim_Lat = poi_List.get(0).getLatitude();
+                    aim_Longt = poi_List.get(0).getLongitude();
+                    location_title = poi_List.get(0).getPoiItem().getTitle();
                 }
-                setResult(2, intent);
-                finish();
             }
         });
         //初始化EditText，加监听器
@@ -133,7 +213,11 @@ public class LocationActivity extends AppCompatActivity{
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("MainActivity", "88++88 Text change");
                 search(s.toString());
+                listView.setVisibility(View.VISIBLE);
+                location_info_button.setVisibility(View.INVISIBLE);
+                mMapView.setVisibility(View.INVISIBLE);
             }
         };
         input = (EditText)findViewById(R.id.input_destination);
@@ -143,25 +227,14 @@ public class LocationActivity extends AppCompatActivity{
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == event.KEYCODE_ENTER) {
                     // do some your things
-                    Intent intent = new Intent(LocationActivity.this, ShowLocation.class);
                     if (!poi_List.isEmpty()){
-                        Bundle bundle=new Bundle();
-
-                        //传入目的地纬度
-                        bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
-                        //传入目的地经度
-                        bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
-                        //传入目的地经度
-                        bundle.putString("location_name", poi_List.get(0).getName());
-                        //传入目的地经度
-                        bundle.putString("Snippet", poi_List.get(0).getPoiItem().getSnippet());
-                        //intent传递bundle
-                        intent.putExtras(bundle);
-
-                        startActivity(intent);
+                        showLocationInMap(poi_List.get(0).getLatitude(), poi_List.get(0).getLongitude(), poi_List.get(0).getPoiItem().getTitle(), poi_List.get(0).getPoiItem().getSnippet());
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(input.getWindowToken(), 0) ;
+                        aim_Lat = poi_List.get(0).getLatitude();
+                        aim_Longt = poi_List.get(0).getLongitude();
+                        location_title = poi_List.get(0).getPoiItem().getTitle();
                     }
-                    setResult(2, intent);
-                    finish();
                 }
                 return false;
             }
@@ -172,22 +245,12 @@ public class LocationActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Point_of_Interest poi = poi_List.get(position);
-                Bundle bundle=new Bundle();
-                Intent intent = new Intent(LocationActivity.this, ShowLocation.class);
-                //传入目的地纬度
-                bundle.putDouble("to_Latitude", poi_List.get(0).getLatitude());
-                //传入目的地经度
-                bundle.putDouble("to_Longitude", poi_List.get(0).getLongitude());
-                //传入目的地经度
-                bundle.putString("location_name", poi_List.get(0).getName());
-                //传入目的地经度
-                bundle.putString("Snippet", poi_List.get(0).getPoiItem().getSnippet());
-                //intent传递bundle
-                intent.putExtras(bundle);
-
-                startActivity(intent);
-                setResult(2, intent);
-                finish();
+                showLocationInMap(poi.getLatitude(), poi.getLongitude(), poi.getPoiItem().getTitle(), poi.getPoiItem().getSnippet());
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(input.getWindowToken(), 0) ;
+                aim_Lat = poi.getLatitude();
+                aim_Longt = poi.getLongitude();
+                location_title = poi.getPoiItem().getTitle();
             }
         });
     }
@@ -281,7 +344,7 @@ public class LocationActivity extends AppCompatActivity{
                                     myLat = amapLocation.getLatitude();//获取纬度
                                     myLongt = amapLocation.getLongitude();//获取经度
                                     current_city = amapLocation.getCity();
-                                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLongt), 14));
+//                                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLongt), 14));
                                     mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
                                 } else {
                                     String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
@@ -334,6 +397,292 @@ public class LocationActivity extends AppCompatActivity{
             locationMarker.showInfoWindow();
         }
         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLongt), 14));
+    }
+
+    private void showLocationInMap(double Lat, double Longt, String title, String snippet){
+        location_info_button.setVisibility(View.VISIBLE); // 设置按钮可见
+        location_info_button.setText(title+'\n'+snippet); // 设置按钮文字
+
+        listView.setVisibility(View.INVISIBLE);
+
+        mMapView.setVisibility(View.VISIBLE); // 设置地图可见
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Lat, Longt), 14)); // 调整取景
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+        aMap.clear(); // 删除地图上原有标记
+        aMap.getUiSettings().setMyLocationButtonEnabled(false);// 隐藏原有定位按钮
+        aMap.getUiSettings().setZoomControlsEnabled(false); // 隐藏默认缩放按钮
+
+//        对目的地添加标记添加
+        LatLng latLng = new LatLng(Lat,Longt);
+        MarkerOptions markerOption = new MarkerOptions().anchor(0.5f, 0.5f).anchor(0.5f, 0.5f)
+                .icon(BitmapDescriptorFactory
+                        .fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.small_location)))
+                .position(new LatLng(Lat, Longt)).	draggable(false);
+        locationMarker = aMap.addMarker(markerOption);
+    }
+
+    private void path_plan(LatLonPoint from, LatLonPoint to, String transportation, String city) {
+        if(routeSearch==null){
+            routeSearch = new RouteSearch(getApplicationContext());
+        }
+        routeSearch.setRouteSearchListener(this);
+        RouteSearch.FromAndTo fat = new RouteSearch.FromAndTo(from, to);
+        Log.d("MainActivity", "88++88 path_plan");
+        switch (transportation) {
+            case Transportation.TRANSPORTATION_BUS:
+                RouteSearch.BusRouteQuery busRouteQuery = new RouteSearch.BusRouteQuery(fat, BusDefault, city, 1);
+                routeSearch.calculateBusRouteAsyn(busRouteQuery);
+                break;
+            case Transportation.TRANSPORTATION_WALK:
+                RouteSearch.WalkRouteQuery walkRouteQuery = new RouteSearch.WalkRouteQuery(fat);
+                routeSearch.calculateWalkRouteAsyn(walkRouteQuery);
+                break;
+            case Transportation.TRANSPORTATION_RIDE:
+                RouteSearch.RideRouteQuery rideRouteQuery = new RouteSearch.RideRouteQuery(fat);
+                routeSearch.calculateRideRouteAsyn(rideRouteQuery);
+                break;
+            case Transportation.TRANSPORTATION_DRIVE:
+                Log.d("DrawRoute", "88++88 drive");
+                RouteSearch.DriveRouteQuery driveRouteQuery = new RouteSearch.DriveRouteQuery(fat, DrivingDefault, null, null, "");
+                routeSearch.calculateDriveRouteAsyn(driveRouteQuery);
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), "请选择合适的交通工具", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    @Override
+    public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
+        if (i == 1000 && busRouteResult != null) {
+            ArrayList<Float> time_RouteBusLineItem = new ArrayList<Float>();
+            float bus_time_max = 0;
+            float bus_time_min = Float.MAX_VALUE;
+            float bus_time_avg = 0;
+            float bus_distance_max = 0;
+            float bus_distance_min = Float.MAX_VALUE;
+            float bus_distance_avg = 0;
+            List<BusPath> busPaths = busRouteResult.getPaths();
+            BusPath fastest_path = busPaths.get(0);
+            for (BusPath dp : busPaths) {
+                List<BusStep> busSteps = dp.getSteps();
+                float bus_path_time = 0;
+                float bus_path_distance = 0;
+                for (BusStep ds : busSteps) {
+                    for (RouteBusLineItem routeBusLineItem : ds.getBusLines()) {
+                        bus_path_time += routeBusLineItem.getDuration();
+                        bus_path_distance += routeBusLineItem.getDistance();
+                    }
+                }
+                if (bus_path_time > bus_time_max) {
+                    bus_time_max = bus_path_time;
+                    bus_distance_max = bus_path_distance;
+                }
+                if (bus_path_time < bus_time_min) {
+                    bus_time_min = bus_path_time;
+                    bus_distance_min = bus_path_distance;
+                    fastest_path = dp;
+                }
+                bus_time_avg += bus_path_time;
+                bus_distance_avg += bus_path_distance;
+            }
+            bus_time_avg /= busPaths.size();
+            bus_distance_avg /= busPaths.size();
+            location_info_button.setText(location_title+"\n公交距离："+format_distance(bus_distance_min)+"\n公交用时："+format_time(bus_time_min));
+
+            List<LatLng> latLngs = new ArrayList<LatLng>();
+//            LatLonPoint northeast = dp.getSteps().get(0).getPolyline().get(0);
+//            LatLonPoint southwest = dp.getSteps().get(0).getPolyline().get(0);
+            LatLonPoint northeast = new LatLonPoint(myLat, myLongt);
+            LatLonPoint southwest = new LatLonPoint(myLat, myLongt);
+            latLngs.add(convertLatLonPoint(southwest));
+            for(BusStep driveStep : fastest_path.getSteps()){
+                for(RouteBusLineItem tbli : driveStep.getBusLines()){
+                    for(LatLonPoint lp : tbli.getPolyline()){
+                        latLngs.add(convertLatLonPoint(lp));
+                        if(lp.getLatitude() > northeast.getLatitude()){
+                            northeast.setLatitude(lp.getLatitude());
+                        }if(lp.getLongitude() > northeast.getLongitude()){
+                            northeast.setLongitude(lp.getLongitude());
+                        }
+                        if(lp.getLatitude() < southwest.getLatitude()){
+                            southwest.setLatitude(lp.getLatitude());
+                        }if(lp.getLongitude() < southwest.getLongitude()){
+                            southwest.setLongitude(lp.getLongitude());
+                        }
+                    }
+                }
+            }
+            Log.d("DrawRoute", "88++88 list"+latLngs.size());
+            latLngs.add(convertLatLonPoint(new LatLonPoint(aim_Lat, aim_Longt)));
+            drawPolyLines(latLngs, southwest, northeast);
+        }
+    }
+
+    @Override
+    public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
+        if (i == 1000 && driveRouteResult != null) {
+            Log.d("DrawRoute", "88++88 onDriveRouteSearched " + i + " " + ((driveRouteResult == null)?"null":" not null"));
+            List<DrivePath> drivePaths = driveRouteResult.getPaths();
+            float drive_time = 0;
+            float drive_distance = 0;
+            DrivePath dp = drivePaths.get(0);
+            List<DriveStep> driveSteps = dp.getSteps();
+
+            List<LatLng> latLngs = new ArrayList<LatLng>();
+//            LatLonPoint northeast = dp.getSteps().get(0).getPolyline().get(0);
+//            LatLonPoint southwest = dp.getSteps().get(0).getPolyline().get(0);
+            LatLonPoint northeast = new LatLonPoint(myLat, myLongt);
+            LatLonPoint southwest = new LatLonPoint(myLat, myLongt);
+
+            for (DriveStep ds : driveSteps) {
+                drive_time += ds.getDuration();
+                drive_distance += ds.getDistance();
+                for(LatLonPoint lp : ds.getPolyline()){
+                    latLngs.add(convertLatLonPoint(lp));
+                    if(lp.getLatitude() > northeast.getLatitude()){
+                        northeast.setLatitude(lp.getLatitude());
+                    }if(lp.getLongitude() > northeast.getLongitude()){
+                        northeast.setLongitude(lp.getLongitude());
+                    }
+                    if(lp.getLatitude() < southwest.getLatitude()){
+                        southwest.setLatitude(lp.getLatitude());
+                    }if(lp.getLongitude() < southwest.getLongitude()){
+                        southwest.setLongitude(lp.getLongitude());
+                    }
+                }
+            }
+            location_info_button.setText(location_title+"\n驾车距离："+format_distance(drive_distance)+"\n驾车用时："+format_time(drive_time));
+
+            drawPolyLines(latLngs, southwest, northeast);
+        }
+    }
+
+    @Override
+    public void onWalkRouteSearched(WalkRouteResult walkRouteResult, int i) {
+        if (i == 1000 && walkRouteResult != null) {
+            float walk_time = 0;
+            float walk_distance = 0;
+            WalkPath walkPath = walkRouteResult.getPaths().get(0);
+            List<WalkStep> walkSteps = walkPath.getSteps();
+
+            List<LatLng> latLngs = new ArrayList<LatLng>();
+            LatLonPoint northeast = new LatLonPoint(myLat, myLongt);
+            LatLonPoint southwest = new LatLonPoint(myLat, myLongt);
+
+            for (WalkStep ds : walkSteps) {
+                walk_time += ds.getDuration();
+                walk_distance += ds.getDistance();
+                for(LatLonPoint lp : ds.getPolyline()){
+                    latLngs.add(convertLatLonPoint(lp));
+                    if(lp.getLatitude() > northeast.getLatitude()){
+                        northeast.setLatitude(lp.getLatitude());
+                    }if(lp.getLongitude() > northeast.getLongitude()){
+                        northeast.setLongitude(lp.getLongitude());
+                    }
+                    if(lp.getLatitude() < southwest.getLatitude()){
+                        southwest.setLatitude(lp.getLatitude());
+                    }if(lp.getLongitude() < southwest.getLongitude()){
+                        southwest.setLongitude(lp.getLongitude());
+                    }
+                }
+            }
+
+            location_info_button.setText(location_title+"\n步行距离："+format_distance(walk_distance)+"\n步行用时："+format_time(walk_time));
+
+            drawPolyLines(latLngs, southwest, northeast);
+        }
+    }
+
+    @Override
+    public void onRideRouteSearched(RideRouteResult rideRouteResult, int i) {
+        if (i == 1000) {
+            float ride_time = 0;
+            float ride_distance = 0;
+            RidePath ridePath = rideRouteResult.getPaths().get(0);
+            List<RideStep> rideSteps = ridePath.getSteps();
+
+            List<LatLng> latLngs = new ArrayList<LatLng>();
+            LatLonPoint northeast = new LatLonPoint(myLat, myLongt);
+            LatLonPoint southwest = new LatLonPoint(myLat, myLongt);
+
+            for (RideStep ds : rideSteps) {
+                ride_time += ds.getDuration();
+                ride_distance += ds.getDistance();
+                for(LatLonPoint lp : ds.getPolyline()){
+                    latLngs.add(convertLatLonPoint(lp));
+                    if(lp.getLatitude() > northeast.getLatitude()){
+                        northeast.setLatitude(lp.getLatitude());
+                    }if(lp.getLongitude() > northeast.getLongitude()){
+                        northeast.setLongitude(lp.getLongitude());
+                    }
+                    if(lp.getLatitude() < southwest.getLatitude()){
+                        southwest.setLatitude(lp.getLatitude());
+                    }if(lp.getLongitude() < southwest.getLongitude()){
+                        southwest.setLongitude(lp.getLongitude());
+                    }
+                }
+            }
+
+            location_info_button.setText(location_title+"\n骑行距离："+format_distance(ride_distance)+"\n骑行用时："+format_time(ride_time));
+
+            drawPolyLines(latLngs, southwest, northeast);
+        }
+    }
+
+    private String format_time(double time){
+        int second = (int)time;
+        int hour = second/3600;
+        int minute = (second%3600)/60;
+        return String.format("%d小时%d分钟%d秒", hour, minute, second%60);
+    }
+
+    private String format_distance(double meters){
+        if (meters<100){
+            return String.format("100米内");
+        }
+        else if (meters<1000){
+            return String.format("%d米", (int)meters);
+        }
+        else{
+            return String.format("%.1f千米", (meters/1000));
+        }
+    }
+
+    private void drawPolyLines(List<LatLng> latLngs, LatLonPoint southwest, LatLonPoint northeast){
+        if(aMap==null){
+            aMap = mMapView.getMap();
+        }
+//        画路线
+        Polyline polyline =aMap.addPolyline(new PolylineOptions().
+                addAll(latLngs).width(10).color(Color.argb(255, 1, 1, 1)));
+
+        try {
+//            调整画面位置
+            aMap.moveCamera(new CameraUpdateFactory().newLatLngBounds(new LatLngBounds(convertLatLonPoint(southwest), convertLatLonPoint(northeast)), 25));
+//            给目的地添加logo
+            MarkerOptions markerOption = new MarkerOptions()
+                    .icon(BitmapDescriptorFactory
+                            .fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.small_location)))
+                    .position(new LatLng(aim_Lat,aim_Longt)).	draggable(false);//.title("目的地");
+            Marker locationMarker_1 = aMap.addMarker(markerOption);
+//            locationMarker_1.showInfoWindow();
+//            给出发地（当前定位）添加logo
+            MarkerOptions markerOption_2 = new MarkerOptions()
+                    .anchor((float) 0.5, (float)0.5)
+                    .icon(BitmapDescriptorFactory
+                            .fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.location_arrow)))
+                    .position(new LatLng(myLat,myLongt)).	draggable(false);//.title("您的位置");
+            Marker locationMarker_2 = aMap.addMarker(markerOption_2);
+//            locationMarker_2.showInfoWindow();
+
+        }catch (AMapException e){
+            Log.d("DrawRoute", "88++88 AMapException");
+        }
+    }
+
+    private LatLng convertLatLonPoint(LatLonPoint lp){
+        return new LatLng(lp.getLatitude(), lp.getLongitude());
     }
 
 }
