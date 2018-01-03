@@ -46,8 +46,6 @@ public class Settings extends PreferenceFragment {
                 }
             }
         };
-        //监听器引用强存储
-        SharedPreferences.registerOnSharedPreferenceChangeListener(mChangeListener);
         addPreferencesFromResource(R.xml.preference);
     }
 
