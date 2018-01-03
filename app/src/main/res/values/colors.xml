@@ -9,5 +9,7 @@
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dialog_confirm">#2196F3</color>
 
 </resources>
