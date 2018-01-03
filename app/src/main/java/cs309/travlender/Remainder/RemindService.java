@@ -29,7 +29,9 @@ import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
 
 import static android.support.v4.app.NotificationCompat.CATEGORY_REMINDER;
-
+/**
+ * Created by markz on 2017-12-24.
+ */
 public class RemindService extends Service {
 
 	public static final String ACTION = "cs309.travlender.Remainder.RemindService";
@@ -92,7 +94,7 @@ public class RemindService extends Service {
 				CheckingAlarm();
 				break;
 			case TYPE_WEAKUP:
-				setAlarmManager(System.currentTimeMillis(), TYPE_WEAKUP);
+				setAlarmManager(System.currentTimeMillis()+30*60*1000, TYPE_WEAKUP);  //每半小时周期性唤醒
 				initAlarmQueue();
 				break;
 			default:
@@ -124,7 +126,6 @@ public class RemindService extends Service {
 				break;
 			}
 		}
-
 		System.out.println("Next Alarm time:"+df.format(NextAlarmTime));
 	}
 

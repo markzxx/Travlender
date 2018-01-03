@@ -3,7 +3,7 @@ package cs309.travlender.Remainder.AlarmEvents;
 import cs309.travlender.Tools.Event;
 
 /**
- * Created by alicewu on 11/20/17.
+ * Created by markz on 2017-12-29.
  */
 
 public class CommomAlarmEvent extends AlarmEvent{

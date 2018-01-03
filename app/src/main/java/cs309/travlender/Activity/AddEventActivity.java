@@ -30,7 +30,9 @@ import cs309.travlender.Tools.EventManager;
 import cs309.travlender.Tools.PrefManager;
 import cs309.travlender.Tools.Preferences;
 import cs309.travlender.MAPService.LocationActivity;
-
+/**
+ * Created by markz on 2017-10-29.
+ */
 public class AddEventActivity extends AppCompatActivity{
     private DatePickerDialog mDataPicker;
     private TimePickerDialog mTimePicker;

@@ -77,7 +77,7 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_new);
+        setContentView(R.layout.activity_main);
         EM = EventManager.getInstence();
         EM.update();
         Events= (SwipeMenuListView) findViewById(R.id.event_list);
@@ -106,12 +106,12 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
                         Intent intent = new Intent(MainActivity.this, PrefActivity.class);
                         startActivityForResult(intent,0);
                         break;
-                    case R.id.setting:
-                        System.out.println("setting clicked!");
-                        break;
-                    case R.id.mode:
-                        System.out.println("mode clicked!");
-                        break;
+//                    case R.id.setting:
+//                        System.out.println("setting clicked!");
+//                        break;
+//                    case R.id.mode:
+//                        System.out.println("mode clicked!");
+//                        break;
                     case R.id.aboutMe:
                         System.out.println("aboutme clicked!");
                         Intent about_me_intent=new Intent(MainActivity.this,AboutUs.class);

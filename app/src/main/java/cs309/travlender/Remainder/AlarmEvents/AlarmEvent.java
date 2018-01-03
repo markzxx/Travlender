@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import cs309.travlender.Tools.Event;
 
 /**
- * Created by alicewu on 11/20/17.
+ * Created by markz on 2017-12-29.
  */
 
 public abstract class AlarmEvent implements Comparable{

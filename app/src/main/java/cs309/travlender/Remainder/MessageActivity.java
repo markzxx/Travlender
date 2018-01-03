@@ -11,7 +11,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cs309.travelender.R;
-
+/**
+ * Created by markz on 2017-12-24.
+ */
 public class MessageActivity extends AppCompatActivity  {
 
 	private MediaPlayer mediaPlayer;
@@ -36,6 +38,7 @@ public class MessageActivity extends AppCompatActivity  {
 		setContentView(R.layout.remainder_message);
 		ButterKnife.bind(this);
 		mediaPlayer = MediaPlayer.create(this, R.raw.bgm);
+		mediaPlayer.start();
 		Intent intent=getIntent();
 		String title = intent.getStringExtra("title");
 		String content = intent.getStringExtra("content");
