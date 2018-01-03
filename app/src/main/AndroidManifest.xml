@@ -143,6 +143,41 @@
             </intent-filter>
         </receiver>
 
+        <service
+            android:name="cs309.travlender.WHL.WeatherService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name="cs309.travlender.WHL.WeatherServiceReceiver"
+            android:enabled="true"
+            android:exported="true">
+
+            <!-- 设置广播接收器的优先级，优先级高的接收器会先接到有序广播，甚至可以决定是否继续传递广播给下一个程序 -->
+            <intent-filter>
+
+                <!-- 设置广播接收器的接收内容，这样它才知道自己要接收哪个广播 -->
+                <action android:name="com.example.dell.map.WeatherServiceReceiver" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="cs309.travlender.WHL.TrafficService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name="cs309.travlender.WHL.TrafficServiceReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <!-- 设置广播接收器的优先级，优先级高的接收器会先接到有序广播，甚至可以决定是否继续传递广播给下一个程序 -->
+            <intent-filter>
+
+                <!-- 设置广播接收器的接收内容，这样它才知道自己要接收哪个广播 -->
+                <action android:name="com.example.dell.map.TrafficServiceReceiver" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
