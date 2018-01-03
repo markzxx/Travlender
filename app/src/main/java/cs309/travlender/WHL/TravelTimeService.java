@@ -131,8 +131,9 @@ public class TravelTimeService extends Service {
         location(id, startid);
     }
 
-    private void sendBroadcast(int time, int id){
+    private void sendBroadcast(String transport, int time, int id){
         Intent intent = new Intent("com.example.dell.map.LocationReceiver");
+        intent.putExtra("transport", transport);
         intent.putExtra("time", (long)time);
         intent.putExtra("id", id);
         sendBroadcast(intent);
@@ -170,7 +171,7 @@ public class TravelTimeService extends Service {
                         bus_time_avg += bus_path_time;
                     }
                     bus_time_avg /= busPaths.size();
-                    sendBroadcast((int)bus_time_avg, _id);
+                    sendBroadcast("公交", (int)bus_time_avg, _id);
                 }
             }
 
@@ -186,7 +187,7 @@ public class TravelTimeService extends Service {
                         drive_time += ds.getDuration();
                     }
 //                    Toast.makeText(getApplicationContext(),"发广播", Toast.LENGTH_SHORT).show();
-                    sendBroadcast((int)drive_time, _id);
+                    sendBroadcast("驾车", (int)drive_time, _id);
                 }
             }
 
@@ -201,7 +202,7 @@ public class TravelTimeService extends Service {
                             walk_time += ds.getDuration();
                         }
                     }
-                    sendBroadcast((int)walk_time, _id);
+                    sendBroadcast("步行", (int)walk_time, _id);
                 }
             }
 
@@ -216,7 +217,7 @@ public class TravelTimeService extends Service {
                             ride_time += ds.getDuration();
                         }
                     }
-                    sendBroadcast((int)ride_time, _id);
+                    sendBroadcast("骑行", (int)ride_time, _id);
                 }
             }
         });
