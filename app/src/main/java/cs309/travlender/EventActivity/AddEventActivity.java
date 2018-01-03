@@ -96,7 +96,9 @@ public class AddEventActivity extends AppCompatActivity{
 
     @OnClick(R.id.layout_location)
     void openSetLocalActivity() {
-        startActivityForResult(new Intent(AddEventActivity.this, LocationActivity.class), 2);
+        Intent intent = new Intent(AddEventActivity.this, LocationActivity.class);
+        intent.putExtra("transportation", event_transport.getSelectedItem().toString());
+        startActivityForResult(intent, 2);
     }
 
     @Bind(R.id.layout_smart_transport)
