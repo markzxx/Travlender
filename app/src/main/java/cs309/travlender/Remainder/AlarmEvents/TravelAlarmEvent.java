@@ -9,6 +9,7 @@ import cs309.travlender.Tools.Event;
 public class TravelAlarmEvent extends AlarmEvent {
     private long Traveltime = -1; //初始化为-1 ， 等待更新
     private String Transport;
+    private String Weather="";
     public TravelAlarmEvent(Event father) {
         super(father);
         setAlarmtype(TransportAlarm);
@@ -17,7 +18,7 @@ public class TravelAlarmEvent extends AlarmEvent {
 
     @Override
     public String getContent() {
-        return getTransport()+"需要"+getformatTraveltime()+", 现在要准备出发喽！";
+        return getWeather()+getTransport()+"需要"+getformatTraveltime()+", 现在要准备出发喽！";
     }
 
     @Override
@@ -49,6 +50,14 @@ public class TravelAlarmEvent extends AlarmEvent {
 
     public void setTransport(String transport) {
         Transport = transport;
+    }
+
+    public String getWeather() {
+        return Weather;
+    }
+
+    public void setWeather(String weather) {
+        Weather = "今天"+weather+",";
     }
 
 }
