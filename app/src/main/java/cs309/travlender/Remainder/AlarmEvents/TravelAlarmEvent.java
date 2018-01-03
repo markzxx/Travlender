@@ -7,8 +7,11 @@ import cs309.travlender.Tools.Event;
  */
 
 public class TravelAlarmEvent extends AlarmEvent {
-    private long Traveltime = -1; //初始化为-1 ， 等待更新
+    private long TravelTime = -1; //初始化为-1 ， 等待更新
     private String Transport;
+    private String FastTransport;
+    private long FastTravelTime= -1;
+    private String Weather="";
     public TravelAlarmEvent(Event father) {
         super(father);
         setAlarmtype(TransportAlarm);
@@ -17,7 +20,14 @@ public class TravelAlarmEvent extends AlarmEvent {
 
     @Override
     public String getContent() {
-        return getTransport()+"需要"+getformatTraveltime()+", 现在要准备出发喽！";
+        String content = "";
+        if(!isLate())
+            content = getWeather()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+", 现在要准备出发喽！";
+        else if(Transport.equals(FastTransport))
+            content = getWeather()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+"似乎已经赶不上了，并且没有更好的交通方式能帮你，请想办法吧。";
+        else if(!Transport.equals(FastTransport))
+            content = getWeather()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+"但是似乎赶不上了,你可以改为"+getFastTransport()+"只需要"+getformatTraveltime(getFastTravelTime())+",祝你好运！";
+        return content;
     }
 
     @Override
@@ -25,9 +35,8 @@ public class TravelAlarmEvent extends AlarmEvent {
         return Event.TRAVELCODE;
     }
 
-    public String getformatTraveltime(){
+    public String getformatTraveltime(long traveltime){
         String formattime = "";
-        long traveltime = getTraveltime();
         if(traveltime/(60*60*1000)!=0)
             formattime += traveltime/(60*60*1000)+"小时";
         if(traveltime%(60*60*1000)/(60*1000)!=0)
@@ -35,12 +44,12 @@ public class TravelAlarmEvent extends AlarmEvent {
         return formattime;
     }
 
-    public long getTraveltime(){
-        return Traveltime;
+    public long getTravelTime(){
+        return TravelTime;
     }  //单位毫秒
 
-    public void setTraveltime(long transporttime){
-        Traveltime = transporttime;
+    public void setTravelTime(long transporttime){
+        TravelTime = transporttime;
         setAlarmtime(getStarttime()-transporttime-1*60*1000); //提前10分钟提醒
     }
     public String getTransport() {
@@ -49,6 +58,30 @@ public class TravelAlarmEvent extends AlarmEvent {
 
     public void setTransport(String transport) {
         Transport = transport;
+    }
+
+    public String getWeather() {
+        return Weather;
+    }
+
+    public void setWeather(String weather) {
+        Weather = "今天"+weather+",";
+    }
+
+    public String getFastTransport() {
+        return FastTransport;
+    }
+
+    public void setFastTransport(String fastTransport) {
+        FastTransport = fastTransport;
+    }
+
+    public long getFastTravelTime() {
+        return FastTravelTime;
+    }
+
+    public void setFastTravelTime(long fastTravelTime) {
+        FastTravelTime = fastTravelTime;
     }
 
 }

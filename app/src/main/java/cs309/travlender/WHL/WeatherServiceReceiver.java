@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import cs309.travlender.Remainder.RemindService;
+
 public class WeatherServiceReceiver extends BroadcastReceiver {
 
     public static String BROADCAST_SIGNAL = "com.example.dell.map.WeatherServiceReceiver";
@@ -23,10 +25,13 @@ public class WeatherServiceReceiver extends BroadcastReceiver {
         String Weather = intent.getStringExtra(getWeather);
         String Temperature = intent.getStringExtra(getTemperature);
         String Humidity = intent.getStringExtra(getHumidity);
-        String WindPower = intent.getStringExtra(getWindPower);
+        String WindPower = intent.getStringExtra(getWindPower)+"级";
         int id = Integer.parseInt(intent.getStringExtra("id"));
-        WeatherService.querySet.add(id);
         // 与提醒功能相关的代码
-
+        Intent updateIntent = new Intent(context, RemindService.class);
+        updateIntent.putExtra(RemindService.TYPE, RemindService.TYPE_WEATHER);
+        updateIntent.putExtra(RemindService.WEATHER, Weather);
+        updateIntent.putExtra(RemindService.ID, id);
+        context.startService(updateIntent);
     }
 }

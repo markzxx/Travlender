@@ -12,6 +12,7 @@ public abstract class AlarmEvent implements Comparable{
     final int TransportAlarm = 1;
     final int EarlyAlarm = 2;
     final int CommomAlarm = 3;
+    protected boolean late = false;
     private Event fatherEvent;
     private int Alarmtype;//闹铃类型
     private long Starttime;
@@ -67,4 +68,11 @@ public abstract class AlarmEvent implements Comparable{
             return -1;
     }
 
+    public void setLate(boolean late) {
+        this.late = late;
+    }
+
+    public boolean isLate() {
+        return late;
+    }
 }
