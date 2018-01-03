@@ -59,15 +59,15 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
 
     public long getStarttime() {
-        return value.getAsLong("starttime");
+        return value.getAsLong(DB.KEY_STARTTIME);
     }
 
     public void setStarttime(long starttime) {
-        value.put("starttime",starttime);
+        value.put(DB.KEY_STARTTIME,starttime);
     }
 
     public long getEndtime() {
-        return value.getAsLong("endtime");
+        return value.getAsLong(DB.KEY_ENDTIME);
     }
 
     public void setEndtime(long endtime) {
@@ -76,45 +76,45 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
 
     public long getAddtime() {
-        return value.getAsLong("addtime");
+        return value.getAsLong(DB.KEY_ADDTIME);
     }
     public void setAddtime(long addtime) {
-        value.put("addtime",addtime);
+        value.put(DB.KEY_ADDTIME,addtime);
     }
     public long getEdittime(){
-        return value.getAsLong("edittime");
+        return value.getAsLong(DB.KEY_EDITTIME);
     }
     public void setEdittime(long edittime){
-        value.put("edittime",edittime);
+        value.put(DB.KEY_EDITTIME,edittime);
     }
     public String getLocation(){
-        return value.getAsString("location");
+        return value.getAsString(DB.KEY_LOCATION);
     }
     public void setLocation(String location){
-        value.put("location",location);
+        value.put(DB.KEY_LOCATION,location);
     }
     public String getTransport(){
-        return value.getAsString("transport");
+        return value.getAsString(DB.KEY_TRANSPORT);
     }
     public void setTransport(String transport){
-        value.put("transport",transport);
+        value.put(DB.KEY_TRANSPORT,transport);
     }
-    public int getEarlytime(){ return value.getAsInteger("remindtime");}
+    public int getEarlytime(){ return value.getAsInteger(DB.KEY_REMINDTIME);}
     public void setEarlytime(String remindtime){ value.put(DB.KEY_REMINDTIME,remindtime);}
     public double getLongitude(){
-        return value.getAsDouble("longitude");
+        return value.getAsDouble(DB.KEY_LONGITUDE);
     }
     public void setLongitude(double longitude){
         value.put(DB.KEY_LONGITUDE,longitude);
     }
     public double getLatitude(){
-        return value.getAsDouble("latitude");
+        return value.getAsDouble(DB.KEY_LATITUDE);
     }
     public void setLatitude(double latitude){
         value.put(DB.KEY_LATITUDE,latitude);
     }
     public String  getContent(){
-        return value.getAsString("content");
+        return value.getAsString(DB.KEY_CONTENT);
     }
     public void setContent(String content){
         value.put(DB.KEY_CONTENT,content);
