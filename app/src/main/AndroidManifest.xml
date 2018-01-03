@@ -105,6 +105,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="cs309.travlender.WSQ.PrefActivity">
+        </activity>
+
         <activity android:name="cs309.travlender.EventActivity.AddEventActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

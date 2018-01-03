@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -39,7 +40,7 @@ import cs309.travlender.EventActivity.ViewEventActivity;
 import cs309.travlender.Tools.DensityUtils;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
-import cs309.travlender.WSQ.Settings;
+import cs309.travlender.WSQ.PrefActivity;
 
 public class MainActivity extends Activity implements CalendarViewFragment.OnFrgDataListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
@@ -105,9 +106,8 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.preference:
-                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(android.R.id.content, new Settings());
-                        fragmentTransaction.commit();
+                        Intent intent = new Intent(MainActivity.this, PrefActivity.class);
+                        startActivityForResult(intent,0);
                         break;
                     case R.id.setting:
                         System.out.println("setting clicked!");
