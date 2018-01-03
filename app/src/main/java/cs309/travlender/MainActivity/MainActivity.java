@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -39,6 +40,7 @@ import cs309.travlender.EventActivity.ViewEventActivity;
 import cs309.travlender.Tools.DensityUtils;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
+import cs309.travlender.WSQ.PrefActivity;
 import cs309.travlender.WSQ.Settings;
 import cs309.travlender.ZN.AboutUs;
 
@@ -106,9 +108,8 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.preference:
-                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(android.R.id.content, new Settings());
-                        fragmentTransaction.commit();
+                        Intent intent = new Intent(MainActivity.this, PrefActivity.class);
+                        startActivityForResult(intent,0);
                         break;
                     case R.id.setting:
                         System.out.println("setting clicked!");
@@ -118,8 +119,8 @@ public class MainActivity extends Activity implements CalendarViewFragment.OnFrg
                         break;
                     case R.id.aboutMe:
                         System.out.println("aboutme clicked!");
-                        Intent intent=new Intent(MainActivity.this,AboutUs.class);
-                        startActivity(intent);
+                        Intent about_me_intent=new Intent(MainActivity.this,AboutUs.class);
+                        startActivity(about_me_intent);
                         break;
                 }
                 item.setChecked(true);//点击了设置为选中状态

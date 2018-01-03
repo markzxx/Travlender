@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:widgetLayout="@layout/pref_layout"
     tools:context="cs309.travlender.WSQ.Settings">
+
 
     <!--选择提前多久提醒时间-->
     <ListPreference
