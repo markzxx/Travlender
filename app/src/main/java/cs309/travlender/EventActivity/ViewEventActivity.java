@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.sql.Timestamp;
@@ -16,6 +19,7 @@ import butterknife.OnClick;
 import cs309.travelender.R;
 import cs309.travlender.Tools.Event;
 import cs309.travlender.Tools.EventManager;
+import cs309.travlender.WHL.ShowRoute;
 
 /**
  * Created by Jeremy Zhang PC on 2017/11/21.
@@ -88,6 +92,21 @@ public class ViewEventActivity extends Activity{
         etLocation.setText(currentEvent.getLocation());
         etTransport.setText(currentEvent.getTransport());
 
+        // 单击后打开路线图的按钮
+        ImageView check_route = (ImageView) findViewById(R.id.check_route);
+        check_route.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(ShowRoute.DRAWROUTE_LATITUDE, String.valueOf(currentEvent.getLatitude()));
+                bundle.putString(ShowRoute.DRAWROUTE_LONGITUDE, String.valueOf(currentEvent.getLongitude()));
+                bundle.putString(ShowRoute.DRAWROUTE_TITLE, String.valueOf(currentEvent.getLocation()));
+                bundle.putString(ShowRoute.DRAWROUTE_TRANSPORTATION, String.valueOf(currentEvent.getTransport()));
+                Intent intent = new Intent(ViewEventActivity.this, ShowRoute.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
