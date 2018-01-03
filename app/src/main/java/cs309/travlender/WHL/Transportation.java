@@ -6,10 +6,10 @@ package cs309.travlender.WHL;
 
 public class Transportation {
 
-    public static final String TRANSPORTATION_BUS = "bus";
-    public static final String TRANSPORTATION_DRIVE = "drive";
-    public static final String TRANSPORTATION_RIDE = "ride";
-    public static final String TRANSPORTATION_WALK = "walk";
+    public static final String TRANSPORTATION_BUS = "公交";
+    public static final String TRANSPORTATION_DRIVE = "自驾";
+    public static final String TRANSPORTATION_RIDE = "骑行";
+    public static final String TRANSPORTATION_WALK = "步行";
 
     private float drive_time;
     private float walk_time;

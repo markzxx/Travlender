@@ -99,7 +99,7 @@ public class LocationActivity extends AppCompatActivity implements RouteSearch.O
     private double aim_Longt;
 
     private String current_city="深圳";
-    private String transportation="drive";
+    private String transportation="自驾";
     private String location_title="";
 
     @Override
@@ -111,6 +111,7 @@ public class LocationActivity extends AppCompatActivity implements RouteSearch.O
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
         setUpLocation(savedInstanceState);
+        transportation = getIntent().getStringExtra(transportation);
     }
 
     @Override
