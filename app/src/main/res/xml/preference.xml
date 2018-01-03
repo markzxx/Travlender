@@ -2,11 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:widgetLayout="@layout/pref_layout"
     tools:context="cs309.travlender.WSQ.Settings">
 
+    <PreferenceCategory
+        android:layout="@layout/pref_layout">
 
-    <!--选择提前多久提醒时间-->
+
+        <!--选择提前多久提醒时间-->
     <ListPreference
         android:defaultValue="5"
         android:entries="@array/pref_remind_before_titles"
@@ -16,6 +18,7 @@
         android:positiveButtonText="@null"
         android:summary="提前5分钟提醒"
         android:title="@string/pref_title_remind_before" />
+
     <!--选择铃声-->
     <RingtonePreference
         android:defaultValue="@string/pref_default_ringtone"
@@ -38,6 +41,7 @@
         android:key="pop-up_win"
         android:summary="弹窗以显示地图等详细信息，否则仅在任务栏通知"
         android:title="@string/pref_title_pop_win" />
+
     <!--选择出行交通方式-->
     <ListPreference
         android:defaultValue="@string/pref_default_transportation"
@@ -49,4 +53,6 @@
         android:summary="公交"
         android:title="@string/pref_title_transportation" />
 
-</PreferenceScreen>
+    </PreferenceCategory>
+
+    </PreferenceScreen>
