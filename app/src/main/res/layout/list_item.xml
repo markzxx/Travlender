@@ -8,7 +8,6 @@
     <!-- Description -->
     <!-- 日程显示布局-->
     <LinearLayout
-        android:id="@+id/view_agenda_event_description_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/accent"
@@ -43,7 +42,6 @@
             android:visibility="gone" />
 
         <LinearLayout
-            android:id="@+id/view_agenda_event_location_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"

@@ -88,10 +88,10 @@ public class Path_planning extends AppCompatActivity implements RouteSearch.OnRo
          * transportation 选择的交通方式
          * city 城市
          */
-        this.out_from_Latitude = from_Latitude;
-        this.out_from_Longitude = from_Longitude;
-        this.out_to_Latitude = to_Latitude;
-        this.out_to_Longitude = to_Longitude;
+        out_from_Latitude = from_Latitude;
+        out_from_Longitude = from_Longitude;
+        out_to_Latitude = to_Latitude;
+        out_to_Longitude = to_Longitude;
         this.out_transportation = transport;
         this.out_city = city;
 

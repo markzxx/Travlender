@@ -170,7 +170,7 @@ public class CalendarViewFragment extends DialogFragment implements OnDateSelect
      * 定义接口，向Activity传递数据
      */
     public interface OnFrgDataListener {
-        public void progress(Date date);
+        void progress(Date date);
     }
 
     /**

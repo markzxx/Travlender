@@ -29,51 +29,51 @@ public class Preferences {
     }
 
     public String getTransport() {
-        return value.getAsString(DB_pref.KEY_TRANSPORT);
+        return value.getAsString(DatabaseContract.DBpreference.KEY_TRANSPORT);
     }
 
     public void setTransport(String transport) {
-        value.put(DB_pref.KEY_TRANSPORT, transport);
+        value.put(DatabaseContract.DBpreference.KEY_TRANSPORT, transport);
     }
 
     public int getIsVibrate() {
-        return value.getAsInteger(DB_pref.KEY_ISVIBRATE);
+        return value.getAsInteger(DatabaseContract.DBpreference.KEY_ISVIBRATE);
     }
 
     public void setIsVibrate(int isVibrate) {
-        value.put(DB_pref.KEY_ISVIBRATE, isVibrate);
+        value.put(DatabaseContract.DBpreference.KEY_ISVIBRATE, isVibrate);
     }
 
     public String getRingtone() {
-        return value.getAsString(DB_pref.KEY_RINGTONE);
+        return value.getAsString(DatabaseContract.DBpreference.KEY_RINGTONE);
     }
 
     public void setRingtone(String ringtone) {
-        value.put(DB_pref.KEY_RINGTONE, ringtone);
+        value.put(DatabaseContract.DBpreference.KEY_RINGTONE, ringtone);
     }
 
     public int getIsAutoplan() {
-        return value.getAsInteger(DB_pref.KEY_ISAUTOPLAN);
+        return value.getAsInteger(DatabaseContract.DBpreference.KEY_ISAUTOPLAN);
     }
 
     public void setIsAutoplan(int isAutoplan) {
-        value.put(DB_pref.KEY_ISAUTOPLAN, isAutoplan);
+        value.put(DatabaseContract.DBpreference.KEY_ISAUTOPLAN, isAutoplan);
     }
 
     public int getIsPopwin() {
-        return value.getAsInteger(DB_pref.KEY_ISPOPWIN);
+        return value.getAsInteger(DatabaseContract.DBpreference.KEY_ISPOPWIN);
     }
 
     public void setIsPopwin(int isPopwin) {
-        value.put(DB_pref.KEY_ISPOPWIN, isPopwin);
+        value.put(DatabaseContract.DBpreference.KEY_ISPOPWIN, isPopwin);
     }
 
     public int getRemindBefore() {
-        return value.getAsInteger(DB_pref.KEY_REMINDBEFORE);
+        return value.getAsInteger(DatabaseContract.DBpreference.KEY_REMINDBEFORE);
     }
 
     public void setRemindBefore(int remindBefore) {
-        value.put(DB_pref.KEY_REMINDBEFORE, remindBefore);
+        value.put(DatabaseContract.DBpreference.KEY_REMINDBEFORE, remindBefore);
     }
 
 }

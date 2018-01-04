@@ -201,7 +201,7 @@ public class AddEventActivity extends AppCompatActivity{
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         switch (request){
             case "ADD":
-                String[] titlelist = {"音乐会","狼人杀","跨年","发呆"};
+                String[] titlelist = {"音乐会","狼人杀","跨年","发呆","考试","约会"};
                 insert_update_title.setText("新建活动");
                 event_title.setText(titlelist[(int)(Math.random()*4)]);
                 Calendar today = getToDay();
@@ -215,7 +215,7 @@ public class AddEventActivity extends AppCompatActivity{
                 Preferences preferences = PrefManager.getInstence().getPref();
                 event_transport.setSelection(Arrays.asList(getResources().getStringArray(R.array.transport)).indexOf(preferences.getTransport()));
                 event_remindtime.setSelection(Arrays.asList(getResources().getStringArray(R.array.remindvalue)).indexOf(String.valueOf(preferences.getRemindBefore())));
-                sw_smaart_remind.setChecked(preferences.getIsAutoplan()==1?true:false);
+                sw_smaart_remind.setChecked(preferences.getIsAutoplan() == 1);
                 event = new Event();
                 break;
             case "EDIT":
@@ -228,7 +228,7 @@ public class AddEventActivity extends AppCompatActivity{
                 start_time.setText(timeFormat.format(event.getStarttime()));
                 end_time.setText(timeFormat.format(event.getEndtime()));
                 event_location.setText(event.getLocation());
-                sw_smaart_remind.setChecked(event.getSmartRemind()==1?true:false);
+                sw_smaart_remind.setChecked(event.getSmartRemind() == 1);
                 event_content.setText(event.getContent());
                 event_remindtime.setSelection(Arrays.asList(getResources().getStringArray(R.array.remindvalue)).indexOf(String.valueOf(event.getEarlytime())));
                 event_transport.setSelection(Arrays.asList(getResources().getStringArray(R.array.transport)).indexOf(event.getTransport()));

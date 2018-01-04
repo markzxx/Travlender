@@ -7,7 +7,6 @@
     tools:context="cs309.travlender.Activity.AboutUs">
 
     <TextView
-        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Team\n曾歆勋、张诗奇、魏唅霖、吴书琴、张楠"

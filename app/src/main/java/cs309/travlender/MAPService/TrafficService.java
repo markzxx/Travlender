@@ -189,9 +189,6 @@ public class TrafficService extends Service  implements RouteSearch.OnRouteSearc
                     Log.d("TrafficService", "路况："+tmc.getStatus());
                 }
             }
-            /**
-             *  根据畅通路段占所有经过路段的比例来评定交通状况
-             */
             if (good_traffic*1.0/roads_situation.size() > 0.8){
                 sendBroadcast(TRAFFIC_STATE_1);
             }

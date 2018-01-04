@@ -41,31 +41,31 @@ public class Event{
     }
 
     public int getEventId() {
-        return value.getAsInteger(DB._ID);
+        return value.getAsInteger(DatabaseContract.DBevent._ID);
     }
 
     public void setEventId(int id) {
-        value.put(DB._ID,id);
+        value.put(DatabaseContract.DBevent._ID,id);
     }
 
     public String getTitle() {
-        return value.getAsString(DB.KEY_TITLE);
+        return value.getAsString(DatabaseContract.DBevent.KEY_TITLE);
     }
 
     public void setTitle(String title) {
-        value.put(DB.KEY_TITLE,title);
+        value.put(DatabaseContract.DBevent.KEY_TITLE,title);
     }
 
     public long getStarttime() {
-        return value.getAsLong(DB.KEY_STARTTIME);
+        return value.getAsLong(DatabaseContract.DBevent.KEY_STARTTIME);
     }
 
     public void setStarttime(long starttime) {
-        value.put(DB.KEY_STARTTIME,starttime);
+        value.put(DatabaseContract.DBevent.KEY_STARTTIME,starttime);
     }
 
     public long getEndtime() {
-        return value.getAsLong(DB.KEY_ENDTIME);
+        return value.getAsLong(DatabaseContract.DBevent.KEY_ENDTIME);
     }
 
     public void setEndtime(long endtime) {
@@ -74,60 +74,60 @@ public class Event{
     }
 
     public long getAddtime() {
-        return value.getAsLong(DB.KEY_ADDTIME);
+        return value.getAsLong(DatabaseContract.DBevent.KEY_ADDTIME);
     }
     public void setAddtime(long addtime) {
-        value.put(DB.KEY_ADDTIME,addtime);
+        value.put(DatabaseContract.DBevent.KEY_ADDTIME,addtime);
     }
     public long getEdittime(){
-        return value.getAsLong(DB.KEY_EDITTIME);
+        return value.getAsLong(DatabaseContract.DBevent.KEY_EDITTIME);
     }
     public void setEdittime(long edittime){
-        value.put(DB.KEY_EDITTIME,edittime);
+        value.put(DatabaseContract.DBevent.KEY_EDITTIME,edittime);
     }
     public String getLocation(){
-        return value.getAsString(DB.KEY_LOCATION);
+        return value.getAsString(DatabaseContract.DBevent.KEY_LOCATION);
     }
     public void setLocation(String location){
-        value.put(DB.KEY_LOCATION,location);
+        value.put(DatabaseContract.DBevent.KEY_LOCATION,location);
     }
     public String getTransport(){
-        return value.getAsString(DB.KEY_TRANSPORT);
+        return value.getAsString(DatabaseContract.DBevent.KEY_TRANSPORT);
     }
     public void setTransport(String transport){
-        value.put(DB.KEY_TRANSPORT,transport);
+        value.put(DatabaseContract.DBevent.KEY_TRANSPORT,transport);
     }
-    public int getEarlytime(){ return value.getAsInteger(DB.KEY_REMINDTIME);}
-    public void setEarlytime(String remindtime){ value.put(DB.KEY_REMINDTIME,remindtime);}
+    public int getEarlytime(){ return value.getAsInteger(DatabaseContract.DBevent.KEY_REMINDTIME);}
+    public void setEarlytime(String remindtime){ value.put(DatabaseContract.DBevent.KEY_REMINDTIME,remindtime);}
     public double getLongitude(){
-        return value.getAsDouble(DB.KEY_LONGITUDE);
+        return value.getAsDouble(DatabaseContract.DBevent.KEY_LONGITUDE);
     }
     public void setLongitude(double longitude){
-        value.put(DB.KEY_LONGITUDE,longitude);
+        value.put(DatabaseContract.DBevent.KEY_LONGITUDE,longitude);
     }
     public double getLatitude(){
-        return value.getAsDouble(DB.KEY_LATITUDE);
+        return value.getAsDouble(DatabaseContract.DBevent.KEY_LATITUDE);
     }
     public void setLatitude(double latitude){
-        value.put(DB.KEY_LATITUDE,latitude);
+        value.put(DatabaseContract.DBevent.KEY_LATITUDE,latitude);
     }
     public String  getContent(){
-        return value.getAsString(DB.KEY_CONTENT);
+        return value.getAsString(DatabaseContract.DBevent.KEY_CONTENT);
     }
     public void setContent(String content){
-        value.put(DB.KEY_CONTENT,content);
+        value.put(DatabaseContract.DBevent.KEY_CONTENT,content);
     }
     public int getSmartRemind(){
-        return value.getAsInteger(DB.KEY_SMARTREMIND);
+        return value.getAsInteger(DatabaseContract.DBevent.KEY_SMARTREMIND);
     }
     public void setSmartRemind(int smartRemind){
-        value.put(DB.KEY_SMARTREMIND,smartRemind);
+        value.put(DatabaseContract.DBevent.KEY_SMARTREMIND,smartRemind);
     }
     public int getAlarmStatus(){
-        return value.getAsInteger(DB.KEY_ALARMSTATUS);
+        return value.getAsInteger(DatabaseContract.DBevent.KEY_ALARMSTATUS);
     }
     public void setAlarmStatus(int alarmcode){
-        value.put(DB.KEY_ALARMSTATUS, getAlarmStatus()|alarmcode);
+        value.put(DatabaseContract.DBevent.KEY_ALARMSTATUS, getAlarmStatus()|alarmcode);
         EventManager.getInstence().editEvent(this);
     }
     public boolean isTravelAlarm(){

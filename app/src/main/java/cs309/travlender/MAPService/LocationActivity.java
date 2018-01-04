@@ -234,7 +234,7 @@ public class LocationActivity extends AppCompatActivity implements RouteSearch.O
         input.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == event.KEYCODE_ENTER) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
                     // do some your things
                     if (!poi_List.isEmpty()){
 //                        showLocationInMap(poi_List.get(0).getLatitude(), poi_List.get(0).getLongitude(), poi_List.get(0).getPoiItem().getTitle(), poi_List.get(0).getPoiItem().getSnippet());

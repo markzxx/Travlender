@@ -35,9 +35,9 @@ public class Settings extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferences = PrefManager.getInstence().getPref();
-        isPopWin = preferences.getIsPopwin()==1?true:false;
-        isVibrate = preferences.getIsVibrate()==1?true:false;
-        isAutoPlan = preferences.getIsAutoplan()==1?true:false;
+        isPopWin = preferences.getIsPopwin() == 1;
+        isVibrate = preferences.getIsVibrate() == 1;
+        isAutoPlan = preferences.getIsAutoplan() == 1;
         remind_before = preferences.getRemindBefore();
         modifyRingtone = preferences.getRingtone();
         transport = preferences.getTransport();

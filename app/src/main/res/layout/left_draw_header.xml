@@ -16,7 +16,6 @@
         android:layout_gravity=""
         android:layout_marginLeft="10dp"
         android:src="@drawable/ic_android_grey_900_24dp"
-        android:id="@+id/imageView"
         android:layout_marginStart="17dp"
         android:layout_marginBottom="19dp"
         android:layout_above="@+id/textView"

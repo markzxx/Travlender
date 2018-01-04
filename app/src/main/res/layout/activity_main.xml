@@ -31,7 +31,6 @@
                     android:src="@drawable/ic_list_grey600_48px" />
 
                 <LinearLayout
-                    android:id="@+id/calendar_open_close"
                     android:layout_width="270dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"

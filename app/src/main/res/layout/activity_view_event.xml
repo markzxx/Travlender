@@ -7,7 +7,6 @@
 
 
     <RelativeLayout
-        android:id="@+id/detail_layout"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:background="@color/primary">
@@ -51,7 +50,6 @@
         app:elevation="10dp" />
 
     <LinearLayout
-        android:id="@+id/detail_alarm_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

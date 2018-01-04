@@ -10,17 +10,14 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/back_pref"
                 style="@style/imageButtonStyle"
                 android:src="@drawable/ic_chevron_left_white_48px" />
 
             <TextView
-                android:id="@+id/pref_text"
                 style="@style/ActivityTitleStyle"
                 android:text="用户偏好" />
 
             <TextView
-                android:id="@+id/pref_save"
                 style="@style/leftTextViewStyle"
                 android:text="保存"/>
         </LinearLayout>

@@ -27,7 +27,7 @@ public class PrefManager {
     }
 
     public void editPref(Preferences pref) {
-        this.pref = pref;
+        PrefManager.pref = pref;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = pref.getValue();
         String table_name = DatabaseContract.DBpreference.TABLE_NAME;

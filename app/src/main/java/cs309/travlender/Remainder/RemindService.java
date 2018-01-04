@@ -49,16 +49,12 @@ public class RemindService extends Service {
 	public static final String WEATHER = "WEATHER";
 	public static final String TRAFFIC = "TRAFFIC";
 
-	private Notification mNotification;
 	private Notification.Builder nbuilder;
 	private NotificationManager mManager;
 	private AlarmManager alarmManager;
-	private Intent alarmIntent;
-	private PendingIntent alarmPendingIntent;
 	private Queue<AlarmEvent> AlarmQueue;
 	private Map<Integer, AlarmEvent> TravlTimeMap;
 	private Map<Integer, AlarmEvent> AlarmMap;
-	private EventManager EM;
 	private long NextAlarmTime;
 	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
 
@@ -72,6 +68,8 @@ public class RemindService extends Service {
 		NextAlarmTime = Long.MAX_VALUE;
 		initNotifiManager();
 		initAlarmManager();
+		initAlarmQueue();
+		setAlarmManager(System.currentTimeMillis()+30*60*1000, TYPE_WEAKUP); //每半小时周期性唤醒
 	}
 
     @Override
@@ -133,7 +131,7 @@ public class RemindService extends Service {
 		NextAlarmTime = alarmtime;
 		setAlarmManager(alarmtime, TYPE_ALARM);
 		Toast.makeText(this,"下一次提醒时间"+df.format(NextAlarmTime), Toast.LENGTH_SHORT).show();
-		initAlarmQueue();
+
 	}
 
 	private void UpdateTravelTime(Intent intent){
@@ -173,7 +171,7 @@ public class RemindService extends Service {
 	}
 
 	private void initAlarmQueue(){
-		EM = EventManager.getInstence();
+		EventManager EM = EventManager.getInstence();
 		AlarmQueue = new PriorityQueue<>();
 		TravlTimeMap = new HashMap<>();
 		AlarmMap = new HashMap<>();
@@ -190,7 +188,6 @@ public class RemindService extends Service {
 				TravlTimeMap.put(event.getEventId(), travelAlarmEvent);
 				AlarmMap.put(event.getEventId(), travelAlarmEvent);
 			}
-
 		}
 		System.out.println("Queue:"+AlarmQueue.size());
 		CheckingAlarm();
@@ -219,7 +216,7 @@ public class RemindService extends Service {
         nbuilder.setContentText(content);
         nbuilder.setFullScreenIntent(pendingIntent,true);
         nbuilder.setContentIntent(pendingIntent);
-        mNotification = nbuilder.build();
+		Notification mNotification = nbuilder.build();
         mNotification.flags = Notification.FLAG_AUTO_CANCEL;
 		mManager.notify(0, mNotification);
 		Intent show = new Intent(this, MessageActivity.class);
@@ -230,17 +227,15 @@ public class RemindService extends Service {
 
 	//设置AlarmManager
 	public void initAlarmManager(){
-
-	}
-    public void setAlarmManager(long waketime, int type) {
 		//获取AlarmManager系统服务
 		alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-
+	}
+    public void setAlarmManager(long waketime, int type) {
 		//包装需要执行Service的Intent
-		alarmIntent = new Intent(this, RemindService.class);
+		Intent alarmIntent = new Intent(this, RemindService.class);
 		alarmIntent.setAction(ACTION);
 		alarmIntent.putExtra(TYPE, type);
-		alarmPendingIntent = PendingIntent.getService(this, 0,
+		PendingIntent alarmPendingIntent = PendingIntent.getService(this, 0,
 				alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         //设置唤醒时间
 		alarmManager.setExact(AlarmManager.RTC_WAKEUP, waketime,
@@ -251,7 +246,7 @@ public class RemindService extends Service {
 	class TravelThread extends Thread {
 		Event event;
 		Context context;
-		public TravelThread(Event event, Context context){
+		private TravelThread(Event event, Context context){
 			this.event = event;
 			this.context = context;
 			start();
