@@ -1,44 +1,49 @@
 <resources>
     <string name="app_name">Travelendar</string>
+    <!--设置标题-->
     <string name="pref_title_remind_before">提前提醒时长</string>
-    <string-array name="pref_remind_before_titles">
-        <item>5 minutes</item>
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>1 days</item>
-        <item>2 days</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_remind_before_values">
-        <item>5</item>
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>1440</item>
-        <item>2880</item>
-        <item>-1</item>
-    </string-array>
+    <string name="pref_title_auto_plan">自动规划路线</string>
+    <string name="pref_title_pop_win">弹窗通知</string>
     <string name="pref_title_ringtone">铃声</string>
     <string name="pref_title_vibrate">振动</string>
-
     <string name="pref_ringtone_silent">静音</string>
     <string name="pref_title_transportation">出行交通方式</string>
+    <!--设置默认值-->
+    <string name="pref_default_remind_before">0</string>
+    <string name="pref_default_vibrate">true</string>
+    <string name="pref_default_transportation">公交</string>
+    <string name="pref_default_auto_plan">true</string>
+    <string name="pref_default_pop_win">true</string>
+    <string name="pref_default_ringtone">content://settings/system/notification_sound</string>
 
+    <!--设置提前提醒时长list-->
+    <string-array name="pref_remind_before_titles">
+        <item>发生时</item>
+        <item>提前10分钟</item>
+        <item>提前30分钟</item>
+        <item>提前1小时</item>
+        <item>提前2小时</item>
+    </string-array>
+    <string-array name="pref_remind_before_values">
+        <item>0</item>
+        <item>10</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+    </string-array>
+    <!--设置出行方式list-->
     <string-array name="pref_transportation_titles">
         <item>自驾</item>
         <item>公交</item>
         <item>步行</item>
         <item>骑行</item>
     </string-array>
-
     <string-array name="pref_transportation_values">
         <item>自驾</item>
         <item>公交</item>
         <item>步行</item>
         <item>骑行</item>
     </string-array>
-    <string name="pref_title_auto_plan">自动规划路线</string>
-    <string name="pref_title_pop_win">弹窗通知</string>
+
 
 </resources>

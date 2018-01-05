@@ -4,14 +4,12 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 
-import cs309.travlender.MainActivity.ZHANGSHQIContract;
-
 
 /**
  * Created by Administrator on 2017/10/16.
  */
 
-public class Event implements ZHANGSHQIContract.EventInterface {
+public class Event{
 
     public static final int TRAVELCODE = 4; //binary 100
     public static final int EARLYCODE = 2; //binary 010
@@ -43,31 +41,31 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
 
     public int getEventId() {
-        return value.getAsInteger(DB._ID);
+        return value.getAsInteger(DatabaseContract.DBevent._ID);
     }
 
     public void setEventId(int id) {
-        value.put(DB._ID,id);
+        value.put(DatabaseContract.DBevent._ID,id);
     }
 
     public String getTitle() {
-        return value.getAsString(DB.KEY_TITLE);
+        return value.getAsString(DatabaseContract.DBevent.KEY_TITLE);
     }
 
     public void setTitle(String title) {
-        value.put(DB.KEY_TITLE,title);
+        value.put(DatabaseContract.DBevent.KEY_TITLE,title);
     }
 
     public long getStarttime() {
-        return value.getAsLong("starttime");
+        return value.getAsLong(DatabaseContract.DBevent.KEY_STARTTIME);
     }
 
     public void setStarttime(long starttime) {
-        value.put("starttime",starttime);
+        value.put(DatabaseContract.DBevent.KEY_STARTTIME,starttime);
     }
 
     public long getEndtime() {
-        return value.getAsLong("endtime");
+        return value.getAsLong(DatabaseContract.DBevent.KEY_ENDTIME);
     }
 
     public void setEndtime(long endtime) {
@@ -76,60 +74,60 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     }
 
     public long getAddtime() {
-        return value.getAsLong("addtime");
+        return value.getAsLong(DatabaseContract.DBevent.KEY_ADDTIME);
     }
     public void setAddtime(long addtime) {
-        value.put("addtime",addtime);
+        value.put(DatabaseContract.DBevent.KEY_ADDTIME,addtime);
     }
     public long getEdittime(){
-        return value.getAsLong("edittime");
+        return value.getAsLong(DatabaseContract.DBevent.KEY_EDITTIME);
     }
     public void setEdittime(long edittime){
-        value.put("edittime",edittime);
+        value.put(DatabaseContract.DBevent.KEY_EDITTIME,edittime);
     }
     public String getLocation(){
-        return value.getAsString("location");
+        return value.getAsString(DatabaseContract.DBevent.KEY_LOCATION);
     }
     public void setLocation(String location){
-        value.put("location",location);
+        value.put(DatabaseContract.DBevent.KEY_LOCATION,location);
     }
     public String getTransport(){
-        return value.getAsString("transport");
+        return value.getAsString(DatabaseContract.DBevent.KEY_TRANSPORT);
     }
     public void setTransport(String transport){
-        value.put("transport",transport);
+        value.put(DatabaseContract.DBevent.KEY_TRANSPORT,transport);
     }
-    public int getEarlytime(){ return value.getAsInteger("remindtime");}
-    public void setEarlytime(String remindtime){ value.put(DB.KEY_REMINDTIME,remindtime);}
+    public int getEarlytime(){ return value.getAsInteger(DatabaseContract.DBevent.KEY_REMINDTIME);}
+    public void setEarlytime(String remindtime){ value.put(DatabaseContract.DBevent.KEY_REMINDTIME,remindtime);}
     public double getLongitude(){
-        return value.getAsDouble("longitude");
+        return value.getAsDouble(DatabaseContract.DBevent.KEY_LONGITUDE);
     }
     public void setLongitude(double longitude){
-        value.put(DB.KEY_LONGITUDE,longitude);
+        value.put(DatabaseContract.DBevent.KEY_LONGITUDE,longitude);
     }
     public double getLatitude(){
-        return value.getAsDouble("latitude");
+        return value.getAsDouble(DatabaseContract.DBevent.KEY_LATITUDE);
     }
     public void setLatitude(double latitude){
-        value.put(DB.KEY_LATITUDE,latitude);
+        value.put(DatabaseContract.DBevent.KEY_LATITUDE,latitude);
     }
     public String  getContent(){
-        return value.getAsString("content");
+        return value.getAsString(DatabaseContract.DBevent.KEY_CONTENT);
     }
     public void setContent(String content){
-        value.put(DB.KEY_CONTENT,content);
+        value.put(DatabaseContract.DBevent.KEY_CONTENT,content);
     }
     public int getSmartRemind(){
-        return value.getAsInteger(DB.KEY_SMARTREMIND);
+        return value.getAsInteger(DatabaseContract.DBevent.KEY_SMARTREMIND);
     }
     public void setSmartRemind(int smartRemind){
-        value.put(DB.KEY_SMARTREMIND,smartRemind);
+        value.put(DatabaseContract.DBevent.KEY_SMARTREMIND,smartRemind);
     }
     public int getAlarmStatus(){
-        return value.getAsInteger(DB.KEY_ALARMSTATUS);
+        return value.getAsInteger(DatabaseContract.DBevent.KEY_ALARMSTATUS);
     }
     public void setAlarmStatus(int alarmcode){
-        value.put(DB.KEY_ALARMSTATUS, getAlarmStatus()|alarmcode);
+        value.put(DatabaseContract.DBevent.KEY_ALARMSTATUS, getAlarmStatus()|alarmcode);
         EventManager.getInstence().editEvent(this);
     }
     public boolean isTravelAlarm(){
@@ -141,27 +139,4 @@ public class Event implements ZHANGSHQIContract.EventInterface {
     public boolean isCommomAlarm(){
         return (getAlarmStatus()&COMMOMCODE)==0;
     }
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel out, int flags) {
-//        out.writeString(title);
-//    }
-//    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>(){
-//        public Event createFromParcel(Parcel in)
-//        {
-//            return new Event(in);
-//        }
-//
-//        public Event[] newArray(int size)
-//        {
-//            return new Event[size];
-//        }
-//    };
-//    public Event(Parcel in){
-//        title = in.readString();
-//    }
 }

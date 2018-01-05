@@ -7,17 +7,17 @@
             android:icon="@drawable/ic_accessibility_black_48px"
             android:title="Preference" />
 
-        <item
-            android:id="@+id/setting"
-            android:checkable="true"
-            android:icon="@drawable/ic_settings_black_48px"
-            android:title="Setting" />
+        <!--<item-->
+            <!--android:id="@+id/setting"-->
+            <!--android:checkable="true"-->
+            <!--android:icon="@drawable/ic_settings_black_48px"-->
+            <!--android:title="Setting" />-->
 
-        <item
-            android:id="@+id/mode"
-            android:checkable="true"
-            android:icon="@drawable/ic_devices_black_48px"
-            android:title="Mode" />
+        <!--<item-->
+            <!--android:id="@+id/mode"-->
+            <!--android:checkable="true"-->
+            <!--android:icon="@drawable/ic_devices_black_48px"-->
+            <!--android:title="Mode" />-->
         <item
             android:id="@+id/aboutMe"
             android:checkable="true"

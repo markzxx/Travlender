@@ -52,18 +52,7 @@
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService" />
 
-        <activity android:name="cs309.travlender.ZXX.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-
         <!-- remainder 相关的注册 -->
-        <activity android:name="cs309.travlender.Remainder.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
 
         <!-- Message Activity -->
         <activity android:name="cs309.travlender.Remainder.MessageActivity"
@@ -77,7 +66,7 @@
         </service>
 
         <!-- remainder 相关的注册 -->
-        <activity android:name="cs309.travlender.EventActivity.ViewEventActivity">
+        <activity android:name="cs309.travlender.Activity.ViewEventActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -90,34 +79,26 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="cs309.travlender.MainActivity.EventActivity"
-            android:theme="@android:style/Theme.Dialog" />
-        <activity
-            android:name="cs309.travlender.ZXX.SearchActivity"
-            android:theme="@android:style/Theme.Dialog" />
-        <activity android:name="cs309.travlender.ZXX.SearchResultActivity" />
 
-
-        <activity android:name="cs309.travlender.WHL.LocationActivity">
+        <activity android:name="cs309.travlender.MAPService.LocationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-        <activity android:name="cs309.travlender.WSQ.PrefActivity">
+        <activity android:name="cs309.travlender.Activity.PrefActivity">
         </activity>
 
-        <activity android:name="cs309.travlender.EventActivity.AddEventActivity">
+        <activity android:name="cs309.travlender.Activity.AddEventActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-        <activity android:name="cs309.travlender.WHL.ShowRoute"></activity>
+        <activity android:name="cs309.travlender.MAPService.ShowRoute"></activity>
 
         <service
-            android:name="cs309.travlender.WHL.TravelTimeService"
+            android:name="cs309.travlender.MAPService.TravelTimeService"
             android:label="SmartCamService"
             android:enabled="true"
             android:exported="true"
@@ -128,16 +109,8 @@
             </intent-filter>
         </service>
 
-        <service android:name="cs309.travlender.WSQ.Alarm" />
-
-
-        <receiver android:name="cs309.travlender.WSQ.AlarmReceiver">
-        </receiver>
-
-
-
         <receiver
-            android:name="cs309.travlender.WHL.TravelTimeServiceReceiver"
+            android:name="cs309.travlender.MAPService.TravelTimeServiceReceiver"
             android:enabled="true"
             android:exported="true">
             <!-- 设置广播接收器的优先级，优先级高的接收器会先接到有序广播，甚至可以决定是否继续传递广播给下一个程序 -->
@@ -148,12 +121,12 @@
         </receiver>
 
         <service
-            android:name="cs309.travlender.WHL.WeatherService"
+            android:name="cs309.travlender.MAPService.WeatherService"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name="cs309.travlender.WHL.WeatherServiceReceiver"
+            android:name="cs309.travlender.MAPService.WeatherServiceReceiver"
             android:enabled="true"
             android:exported="true">
 
@@ -166,12 +139,12 @@
         </receiver>
 
         <service
-            android:name="cs309.travlender.WHL.TrafficService"
+            android:name="cs309.travlender.MAPService.TrafficService"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name="cs309.travlender.WHL.TrafficServiceReceiver"
+            android:name="cs309.travlender.MAPService.TrafficServiceReceiver"
             android:enabled="true"
             android:exported="true">
             <!-- 设置广播接收器的优先级，优先级高的接收器会先接到有序广播，甚至可以决定是否继续传递广播给下一个程序 -->
@@ -182,7 +155,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name="cs309.travlender.ZN.AboutUs"
+        <activity android:name="cs309.travlender.Activity.AboutUs"
             android:parentActivityName="cs309.travlender.MainActivity.MainActivity">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data

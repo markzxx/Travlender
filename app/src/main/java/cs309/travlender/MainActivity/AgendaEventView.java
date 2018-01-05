@@ -21,7 +21,7 @@ public class AgendaEventView extends LinearLayout {
      * @return
      */
     public static AgendaEventView inflate(ViewGroup parent) {
-        return (AgendaEventView) LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_new, parent, false);
+        return (AgendaEventView) LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
     }
 
     // region Constructors

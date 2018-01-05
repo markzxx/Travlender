@@ -16,7 +16,7 @@ import cs309.travlender.Remainder.RemindService;
  * Created by markz on 2017-10-24.
  */
 
-public class EventManager implements EventManagerContract.Manager {
+public class EventManager{
     private static EventManager instence;
     public DatabaseHandler dbHelper;
     public static Event event;
@@ -48,7 +48,7 @@ public class EventManager implements EventManagerContract.Manager {
 //    }
 
     public int addEvent(Event event) {
-        this.event = event;
+        EventManager.event = event;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values=event.getValue();
         long id = db.insert(DatabaseContract.DBevent.TABLE_NAME, null, values);
@@ -68,7 +68,7 @@ public class EventManager implements EventManagerContract.Manager {
     }
 
     public void editEvent(Event event) {
-        this.event = event;
+        EventManager.event = event;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values=event.getValue();
         String where = DatabaseContract.DBevent._ID+" = " + event.getEventId();
@@ -86,7 +86,7 @@ public class EventManager implements EventManagerContract.Manager {
         String[] whereArgs = {String.valueOf(id)};
         Cursor cursor = db.query(table_name,selection,where,whereArgs,null,null,null);
         cursor.moveToFirst();
-        this.event = new Event(cursor);
+        event = new Event(cursor);
         db.close();
         return event;
     }
@@ -138,8 +138,8 @@ public class EventManager implements EventManagerContract.Manager {
 
     public List<Event> getEvents_aDay(){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        long starttime = new Date().getTime();
-        long endtime = starttime + 86400000;
+        long starttime = new Date().getTime()-10*60*1000;
+        long endtime = starttime + 24*60*60*1000;
         List<Event> list = new ArrayList<>();
         String table_name = DatabaseContract.DBevent.TABLE_NAME;
         String[] selection = {"*"};
@@ -201,8 +201,8 @@ public class EventManager implements EventManagerContract.Manager {
 
     public List<Event> getEvents(String starttime,String endtime){
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        long start = ts.valueOf(starttime).getTime();
-        long end = ts.valueOf(endtime.toString()).getTime();
+        long start = Timestamp.valueOf(starttime).getTime();
+        long end = Timestamp.valueOf(endtime.toString()).getTime();
         return getEvents(start,end);
 
     }

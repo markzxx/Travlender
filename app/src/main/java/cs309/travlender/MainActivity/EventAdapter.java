@@ -1,12 +1,10 @@
 package cs309.travlender.MainActivity;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.sql.Timestamp;
@@ -49,7 +47,7 @@ public class EventAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         Event event = events.get(i);
         if(view==null){
-            view= LayoutInflater.from(context).inflate(R.layout.list_item_new,viewGroup,false);
+            view= LayoutInflater.from(context).inflate(R.layout.list_item,viewGroup,false);
         }
         init_info(view, event);
         return view;

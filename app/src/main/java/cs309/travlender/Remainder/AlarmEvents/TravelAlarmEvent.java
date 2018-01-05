@@ -12,6 +12,7 @@ public class TravelAlarmEvent extends AlarmEvent {
     private String FastTransport;
     private long FastTravelTime= -1;
     private String Weather="";
+    private String Traffic="";
     public TravelAlarmEvent(Event father) {
         super(father);
         setAlarmtype(TransportAlarm);
@@ -22,11 +23,11 @@ public class TravelAlarmEvent extends AlarmEvent {
     public String getContent() {
         String content = "";
         if(!isLate())
-            content = getWeather()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+", 现在要准备出发喽！";
+            content = getWeather()+getTraffic()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+", 现在要准备出发喽！";
         else if(Transport.equals(FastTransport))
-            content = "来不及了！\n"+getWeather()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+"，用其他交通方式也不能按时到了。";
+            content = "来不及了！\n"+getWeather()+getTraffic()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+"，用其他交通方式也不能按时到了。";
         else if(!Transport.equals(FastTransport))
-            content = "时间有点晚了！\n"+getWeather()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+",如果"+getFastTransport()+"只需要"+getformatTraveltime(getFastTravelTime())+",祝你好运！";
+            content = "为你预留了10分钟，   时间有点晚了！\n"+getWeather()+getTraffic()+getTransport()+"需要"+getformatTraveltime(getTravelTime())+",如果"+getFastTransport()+"只需要"+getformatTraveltime(getFastTravelTime())+",祝你好运！";
         return content;
     }
 
@@ -50,7 +51,7 @@ public class TravelAlarmEvent extends AlarmEvent {
 
     public void setTravelTime(long transporttime){
         TravelTime = transporttime;
-        setAlarmtime(getStarttime()-transporttime-1*60*1000); //提前10分钟提醒
+        setAlarmtime(getStarttime()-transporttime-10*60*1000); //提前10分钟提醒
     }
     public String getTransport() {
         return Transport;
@@ -84,4 +85,11 @@ public class TravelAlarmEvent extends AlarmEvent {
         FastTravelTime = fastTravelTime;
     }
 
+    public String getTraffic() {
+        return Traffic;
+    }
+
+    public void setTraffic(String traffic) {
+        Traffic = "交通"+traffic+",";
+    }
 }
